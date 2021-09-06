@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.footer`
@@ -37,16 +38,18 @@ const GithubLink = styled.a`
   color: white;
 `;
 
-export const Footer = (): JSX.Element =>  (
+export const Footer = (): JSX.Element => (
   <Wrapper>
     <Content>
       <LinkWrapper>
-        <GithubLink href="https://github.com/KorvinAtreides">@KorvinAtreides</GithubLink>
+        <GithubLink href="https://github.com/KorvinAtreides">
+          @KorvinAtreides
+        </GithubLink>
         <GithubLink href="https://github.com/evgennn32">@evgennn32</GithubLink>
         <GithubLink href="https://github.com/IamDarya">@IamDarya</GithubLink>
       </LinkWrapper>
       <a href="https://rs.school/react/">
-        <RSLogo src="https://rs.school/images/rs_school_js.svg" alt="RS-logo"/>
+        <RSLogo src="https://rs.school/images/rs_school_js.svg" alt="RS-logo" />
       </a>
     </Content>
   </Wrapper>
