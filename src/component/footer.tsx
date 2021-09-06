@@ -18,7 +18,7 @@ const Content = styled.div`
   margin: 0 auto;
   padding: 20px;
 
-  @media(max-width: 745px) {
+  @media (max-width: 745px) {
     justify-content: center;
   }
 `;
@@ -57,7 +57,7 @@ export const Footer = (): JSX.Element => (
       <LogoWrapper>
         <Logo />
         2021
-      </LogoWrapper> 
+      </LogoWrapper>
       <LinkWrapper>
         <GithubLink href="https://github.com/KorvinAtreides">
           @KorvinAtreides
