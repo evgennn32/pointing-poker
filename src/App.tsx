@@ -1,5 +1,4 @@
 import "./App.css";
-import { UserAvatar } from "./user/user-avatar";
 
 function App() {
   return (

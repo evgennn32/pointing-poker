@@ -46,7 +46,7 @@ padding: 0;
 background-color: white;
 `;
 
-export function UserAvatar(props: UserAvatarProps): JSX.Element {
+export const UserAvatar = (props: UserAvatarProps): JSX.Element => {
   return (
     <Wrapper>
       <Avatar avatar={props.avatar}></Avatar>
