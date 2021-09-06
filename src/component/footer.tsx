@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Logo from "./Logo/Logo";
 
 const Wrapper = styled.footer`
   width: 100%;
@@ -16,10 +17,22 @@ const Content = styled.div`
   justify-content: space-between;
   margin: 0 auto;
   padding: 20px;
+
+  @media(max-width: 745px) {
+    justify-content: center;
+  }
 `;
 
 const RSLogo = styled.img`
   height: 50px;
+`;
+
+const LogoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 22px;
+  text-decoration: none;
+  color: white;
 `;
 
 const LinkWrapper = styled.div`
@@ -41,6 +54,10 @@ const GithubLink = styled.a`
 export const Footer = (): JSX.Element => (
   <Wrapper>
     <Content>
+      <LogoWrapper>
+        <Logo />
+        2021
+      </LogoWrapper> 
       <LinkWrapper>
         <GithubLink href="https://github.com/KorvinAtreides">
           @KorvinAtreides
