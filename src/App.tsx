@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Footer } from "./component/footer";
+import { Footer } from "./component/Footer/Footer";
 
 function App(): JSX.Element {
   return (
