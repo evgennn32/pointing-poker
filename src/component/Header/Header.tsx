@@ -17,13 +17,19 @@ const BottomBackground = styled.div`
   background-color: #66999b;
 `;
 const ContentWrapper = styled.div`
+  position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  position: absolute;
+  display: flex;
+  justify-content: center;
+`;
+const Content = styled.div`
   display: flex;
   justify-content: space-between;
+  width: 100%;
+  max-width: 1920px;
   padding: 10px 27px;
 `;
 const ChatIconWrapper = styled.div`
@@ -44,14 +50,16 @@ const Header = (): JSX.Element => {
       <TopBackground />
       <BottomBackground />
       <ContentWrapper>
-        <LogoWrapper href="/">
-          <Logo />
-        </LogoWrapper>
-        {chatActive && (
-          <ChatIconWrapper>
-            <ChatIcon />
-          </ChatIconWrapper>
-        )}
+        <Content>
+          <LogoWrapper href="/">
+            <Logo />
+          </LogoWrapper>
+          {chatActive && (
+            <ChatIconWrapper>
+              <ChatIcon />
+            </ChatIconWrapper>
+          )}
+        </Content>
       </ContentWrapper>
     </HeaderWrapper>
   );
