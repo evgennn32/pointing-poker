@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Button } from "../Button/Button";
 
 const Main = styled.main`
   width: 100%;
@@ -48,25 +49,6 @@ const Label = styled.label`
   line-height: 28px;
 `;
 
-const Button = styled.button`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 240px;
-  height: 45px;
-  font-family: Ruda;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 24px;
-  line-height: 30px;
-  color: white;
-  cursor: pointer;
-  background-color: #2b3a67;
-  border: 1px solid #496a81;
-  border-radius: 0px 3px 3px 0px;
-  box-sizing: border-box;
-`;
-
 const InputWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -87,6 +69,10 @@ const Input = styled.input`
   border-radius: 0px 0px 0px 10px;
 `;
 
+const clickHandler = () => {
+  console.log("click");
+};
+
 export const MainPage = (): JSX.Element => (
   <Main>
     <MainLogo src="./images/MainLogo.png" />
@@ -94,14 +80,22 @@ export const MainPage = (): JSX.Element => (
       <MainPageTitle>Start your planning:</MainPageTitle>
       <Label>
         Create session:
-        <Button>Start new game</Button>
+        <Button
+          textContent={"Start new game"}
+          onClick={clickHandler}
+          isLightTheme={false}
+        />
       </Label>
       <MainPageTitle>OR</MainPageTitle>
       <Label>
         Connect to lobby by URL:
         <InputWrapper>
           <Input />
-          <Button>Connect</Button>
+          <Button
+            textContent={"Connect"}
+            onClick={clickHandler}
+            isLightTheme={false}
+          />
         </InputWrapper>
       </Label>
     </Content>

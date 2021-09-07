@@ -1,0 +1,9 @@
+.darkButton {
+  background-color: #2b3a67;
+  color: white;
+}
+
+.lightButton {
+  background-color: white;
+  color: #2b3a67;
+}
