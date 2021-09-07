@@ -2,9 +2,9 @@ import React from "react";
 import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import "./App.css";
 import { Footer } from "./component/Footer/Footer";
-
 import { MainPage } from "./component/MainPage/MainPage";
 import Header from "./component/Header/Header";
+
 function App(): JSX.Element {
   const location = useLocation();
   return (

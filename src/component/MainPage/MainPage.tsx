@@ -81,7 +81,7 @@ export const MainPage = (): JSX.Element => (
       <Label>
         Create session:
         <Button
-          textContent={"Start new game"}
+          textContent="Start new game"
           onClick={clickHandler}
           isLightTheme={false}
         />
@@ -92,7 +92,7 @@ export const MainPage = (): JSX.Element => (
         <InputWrapper>
           <Input />
           <Button
-            textContent={"Connect"}
+            textContent="Connect"
             onClick={clickHandler}
             isLightTheme={false}
           />
