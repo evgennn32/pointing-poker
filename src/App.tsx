@@ -2,12 +2,14 @@ import React from "react";
 import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import "./App.css";
 import { Footer } from "./component/Footer/Footer";
-import { MainPage } from "./component/MainPage/MainPage";
 
+import { MainPage } from "./component/MainPage/MainPage";
+import Header from "./component/Header/Header";
 function App(): JSX.Element {
   const location = useLocation();
   return (
     <div className="App">
+      <Header />
       <Switch location={location}>
         <Route exact path="/">
           <MainPage />
@@ -17,7 +19,7 @@ function App(): JSX.Element {
         </Route>
         <Redirect to="/404" />
       </Switch>
-      <Footer></Footer>
+      <Footer />
     </div>
   );
 }
