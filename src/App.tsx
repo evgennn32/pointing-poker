@@ -3,7 +3,6 @@ import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import "./App.css";
 import { Footer } from "./component/Footer/Footer";
 import Header from "./component/Header/Header";
-import Timer from "./component/Timer/Timer";
 
 function App(): JSX.Element {
   const location = useLocation();
