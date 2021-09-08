@@ -3,6 +3,7 @@ import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import "./App.css";
 import { Footer } from "./component/Footer/Footer";
 import Header from "./component/Header/Header";
+import Timer from "./component/Timer/Timer";
 
 function App(): JSX.Element {
   const location = useLocation();
@@ -11,7 +12,7 @@ function App(): JSX.Element {
       <Header />
       <Switch location={location}>
         <Route exact path="/">
-          Main page
+          <Timer readOnly={false} />
         </Route>
         <Route exact path="/404">
           404
