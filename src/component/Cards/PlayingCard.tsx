@@ -12,6 +12,7 @@ import {
 interface CardProps {
   value: string;
   type: string;
+  shortType: string;
   selected: boolean;
   closed: boolean;
 }
@@ -26,10 +27,10 @@ const PlayingCard = (props: CardProps): JSX.Element => {
         <span>{props.value}</span>
       </TopContent>
       <CenterContent>
-        {props.type === "cup" ? <CupIcon /> : <span>SP</span>}
+        {props.type === "cup" ? <CupIcon /> : <span>{props.shortType}</span>}
       </CenterContent>
       <BottomContent>
-        <span>12</span>
+        <span>{props.value}</span>
       </BottomContent>
     </Card>
   );
