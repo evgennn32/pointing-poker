@@ -36,3 +36,12 @@ export const EditIcon = styled.div<EditIconProps>`
   display: ${(props) => (props.isActive ? "block" : "none")};
   cursor: pointer;
 `;
+export const CartAdd = styled(Card)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+    box-shadow: -1px 5px 15px 0 rgba(0, 0, 0, 0.5);
+  }
+`;
