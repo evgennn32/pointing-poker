@@ -12,6 +12,7 @@ function App(): JSX.Element {
       <Header />
       <Switch location={location}>
         <Route exact path="/">
+          Main page
         </Route>
         <Route exact path="/404">
           404
