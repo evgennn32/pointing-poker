@@ -12,7 +12,6 @@ function App(): JSX.Element {
       <Header />
       <Switch location={location}>
         <Route exact path="/">
-          <Timer readOnly={false} />
         </Route>
         <Route exact path="/404">
           404

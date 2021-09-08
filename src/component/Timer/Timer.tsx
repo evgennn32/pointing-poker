@@ -18,44 +18,42 @@ const changeHandler = (value: string, max: string) => {
   if (Number(currentValue) < 10) currentValue = `0${currentValue}`;
   return currentValue;
 };
+
 /* eslint max-lines-per-function: 0 */
+
 const Timer = ({ readOnly }: Props): JSX.Element => {
   const [minutesValue, setMinutesValue] = React.useState("02");
   const [secondsValue, setSecondsValue] = React.useState("30");
-  const [ticking, setTicking] = React.useState(true);
+  const [ticking, setTicking] = React.useState(false);
 
   React.useEffect(() => {
     if (ticking) {
-      const tickInterval = setInterval(() => {
-        if (secondsValue === "00") {
-          setSecondsValue("60");
+      setTimeout(() => {
+        if (secondsValue === "00" && minutesValue !== "00") {
+          setSecondsValue("59");
           const newMinutes = changeHandler(
             String(Number(minutesValue) - 1),
-            "5",
+            "4",
           );
           setMinutesValue(newMinutes);
+        } else if (secondsValue === "00" && minutesValue === "00") {
+          setTicking(false);
         } else {
           const newSeconds = changeHandler(
             String(Number(secondsValue) - 1),
-            "60",
+            "59",
           );
           setSecondsValue(newSeconds);
         }
-        if (secondsValue === "00" && minutesValue === "00") {
-          setTicking(false);
-          clearInterval(tickInterval);
-          console.log("off");
-        }
-        console.log("tick", secondsValue);
       }, 1000);
     }
-  }, [ticking]);
+  }, [ticking, secondsValue]);
   return (
     <TimerWrapper>
       <TimerMinutesInput
         readOnly={readOnly}
         min="0"
-        max="5"
+        max="4"
         step="1"
         type="number"
         value={minutesValue}
@@ -67,7 +65,7 @@ const Timer = ({ readOnly }: Props): JSX.Element => {
       <TimerSecondsInput
         readOnly={readOnly}
         min="0"
-        max="60"
+        max="59"
         step="1"
         type="number"
         value={secondsValue}
