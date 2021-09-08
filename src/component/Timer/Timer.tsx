@@ -28,7 +28,7 @@ const Timer = ({ readOnly }: Props): JSX.Element => {
 
   React.useEffect(() => {
     if (ticking) {
-      setTimeout(() => {
+      const timerTimeout = setTimeout(() => {
         if (secondsValue === "00" && minutesValue !== "00") {
           setSecondsValue("59");
           const newMinutes = changeHandler(
@@ -45,6 +45,7 @@ const Timer = ({ readOnly }: Props): JSX.Element => {
           );
           setSecondsValue(newSeconds);
         }
+        clearTimeout(timerTimeout);
       }, 1000);
     }
   }, [ticking, secondsValue]);
