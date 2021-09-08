@@ -22,13 +22,7 @@ const changeHandler = (value: string, max: string) => {
 const Timer = ({ readOnly }: Props): JSX.Element => {
   const [minutesValue, setMinutesValue] = React.useState("02");
   const [secondsValue, setSecondsValue] = React.useState("30");
-  const [currentValue, setCurrentValue] = React.useState("150");
   const [ticking, setTicking] = React.useState(true);
-
-  React.useEffect(() => {
-    setCurrentValue(String(60 * Number(minutesValue) + Number(secondsValue)));
-    console.log(currentValue);
-  }, [minutesValue, secondsValue]);
 
   React.useEffect(() => {
     if (ticking) {
