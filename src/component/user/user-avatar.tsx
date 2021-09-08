@@ -3,7 +3,8 @@ import styled from "styled-components";
 
 type UserAvatarProps = {
   avatar: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   position: string;
   currentUser: boolean;
 };
@@ -53,7 +54,7 @@ export const UserAvatar = (props: UserAvatarProps): JSX.Element => {
       <Avatar avatar={props.avatar}></Avatar>
       <NameAndPosition>
         {props.currentUser && <SmallTxt>It&apos;s you!</SmallTxt>}
-        <Name>{props.name}</Name>
+        <Name>{props.firstName + ' ' + props.lastName}</Name>
         {props.position !== "" && <SmallTxt>{props.position}</SmallTxt>}
       </NameAndPosition>
       <Button>
