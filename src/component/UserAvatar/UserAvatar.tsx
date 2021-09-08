@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, Initials } from "../PopUps/PopUpConnectToLobby";
+import { Avatar, Initials } from "../PopUps/PopUps.styled";
 import {
   Button,
   Name,
