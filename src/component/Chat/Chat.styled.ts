@@ -17,6 +17,7 @@ export const ChatWrapper = styled.aside<{ active: boolean }>`
 export const ChatHistoryWrapper = styled.div`
   width: 100%;
   height: calc(100% - 50px);
+  overflow-y: scroll;
 `;
 export const ChatEnterWrapper = styled.div`
   display: flex;
