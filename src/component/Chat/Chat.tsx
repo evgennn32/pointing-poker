@@ -15,7 +15,7 @@ const Chat = (): JSX.Element => {
     <ChatWrapper active={chatActive}>
       <ChatHistoryWrapper />
       <ChatEnterWrapper>
-        <Input width="230" />
+        <Input />
         <EnterButton isLight={true}>➔</EnterButton>
       </ChatEnterWrapper>
     </ChatWrapper>
