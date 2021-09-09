@@ -2,6 +2,7 @@ import React from "react";
 import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import "./App.css";
 import { Footer } from "./component/Footer/Footer";
+import { MainPage } from "./component/MainPage/MainPage";
 import Header from "./component/Header/Header";
 
 function App(): JSX.Element {
@@ -11,7 +12,7 @@ function App(): JSX.Element {
       <Header />
       <Switch location={location}>
         <Route exact path="/">
-          Main page
+          <MainPage />
         </Route>
         <Route exact path="/404">
           404
