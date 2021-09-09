@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import { ReactComponent as Plus } from "./../../assets/icons/plus-in-sircule.svg";
+import { ReactComponent as Pencil } from "./../../assets/icons/pen.svg";
+import { ReactComponent as Delete } from "./../../assets/icons/del.svg";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -27,10 +30,20 @@ export const IssueName = styled.p`
   text-align: center;
   color: #000000;
 `;
-export const SVG = styled.svg`
+export const SVGPlus = styled(Plus)`
   width: 3em;
   height: 3em;
   vertical-align: middle;
   fill: #565d64;
   overflow: hidden;
+`;
+export const SVGPencil = styled(Pencil)`
+  height: 3em;
+  width: 3em;
+  vertical-align: middle;
+`;
+export const SVGDelete = styled(Delete)`
+  width: 3em;
+  height: 3em;
+  vertical-align: middle;
 `;

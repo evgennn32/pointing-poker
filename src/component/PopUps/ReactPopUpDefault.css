@@ -2,7 +2,7 @@
   position: absolute;
   margin: auto;
   background: #fff;
-  width: 776px;
+  width: 776px !important;
   padding: 5px;
-  border: none;
+  border: none !important;
 }
