@@ -5,6 +5,12 @@ import {
   BottomContent,
   Card,
   CenterContent,
+  CheckedCover,
+  Checkmark,
+  Checkmark_bottom,
+  Checkmark_circle,
+  Checkmark_kick,
+  Checkmark_stem,
   EditIcon,
   TopContent,
 } from "./PlayingCard.styled";
@@ -15,14 +21,17 @@ interface CardProps {
   shortType: string;
   selected: boolean;
   closed: boolean;
+  editable: boolean;
 }
 
 const PlayingCard = (props: CardProps): JSX.Element => {
   return (
     <Card>
-      <EditIcon isActive={true}>
-        <PenIcon />
-      </EditIcon>
+      {props.editable && (
+        <EditIcon>
+          <PenIcon />
+        </EditIcon>
+      )}
       <TopContent>
         <span>{props.value}</span>
       </TopContent>
@@ -32,6 +41,16 @@ const PlayingCard = (props: CardProps): JSX.Element => {
       <BottomContent>
         <span>{props.value}</span>
       </BottomContent>
+      {props.selected && (
+        <CheckedCover>
+          <Checkmark>
+            <Checkmark_circle />
+            <Checkmark_stem />
+            <Checkmark_kick />
+            <Checkmark_bottom />
+          </Checkmark>
+        </CheckedCover>
+      )}
     </Card>
   );
 };

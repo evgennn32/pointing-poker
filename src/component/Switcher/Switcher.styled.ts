@@ -10,7 +10,7 @@ export const CheckBoxLabel = styled.label`
   width: 55px;
   height: 30px;
   border-radius: 15px;
-  background: #60dabf;
+  background: #c4c4c4;
   cursor: pointer;
   &::after {
     content: "";
@@ -31,7 +31,7 @@ export const CheckBox = styled.input`
   width: 55px;
   height: 30px;
   &:checked + ${CheckBoxLabel} {
-    background: #c4c4c4;
+    background: #60dabf;
     &::after {
       content: "";
       display: block;
