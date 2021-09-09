@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 type Props = {
   isLightTheme: boolean;
-  onClick: (event: React.MouseEvent<HTMLElement>) => void;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
   textContent: string;
 };
 

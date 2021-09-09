@@ -1,59 +1,35 @@
 import React from "react";
-import styled from "styled-components";
+import { Avatar, Initials } from "../PopUps/PopUps.styled";
+import {
+  Button,
+  Name,
+  NameAndPosition,
+  SmallTxt,
+  Wrapper,
+} from "./UserAvatar.styled";
 
 type UserAvatarProps = {
-  avatar: string;
-  name: string;
+  avatar: string | null;
+  firstName: string;
+  lastName: string;
   position: string;
   currentUser: boolean;
 };
-type AvatarImg = {
-  avatar: string;
-};
-const Avatar = styled.div<AvatarImg>`
-  background-image: url(${(props) => props.avatar});
-  width: 76px;
-  height: 76px;
-  background-position: center;
-  background-size: cover;
-  border-radius: 50%;
-`;
-const Wrapper = styled.div`
-  width: 300px;
-  height: 100px;
-  display: flex;
-  align-items: center;
-  padding: 5px;
-  justify-content: space-around;
-  background-color: white;
-`;
-const NameAndPosition = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-const Name = styled.p`
-  margin: 3px;
-  font-weight: bold;
-`;
-const SmallTxt = styled.p`
-  margin: 3px;
-`;
-const Button = styled.button`
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: none;
-  padding: 0;
-  background-color: white;
-`;
 
 export const UserAvatar = (props: UserAvatarProps): JSX.Element => {
   return (
     <Wrapper>
-      <Avatar avatar={props.avatar}></Avatar>
+      <Avatar avatar={props.avatar}>
+        {props.firstName !== "" && props.avatar === null && (
+          <Initials>{props.firstName[0]}</Initials>
+        )}
+        {props.lastName !== "" && props.avatar === null && (
+          <Initials>{props.lastName[0]}</Initials>
+        )}
+      </Avatar>
       <NameAndPosition>
         {props.currentUser && <SmallTxt>It&apos;s you!</SmallTxt>}
-        <Name>{props.name}</Name>
+        <Name>{props.firstName + " " + props.lastName}</Name>
         {props.position !== "" && <SmallTxt>{props.position}</SmallTxt>}
       </NameAndPosition>
       <Button>

@@ -26,14 +26,10 @@ export const BottomContent = styled.div`
   height: 20%;
   transform: rotate(180deg);
 `;
-interface EditIconProps {
-  readonly isActive: boolean;
-}
-export const EditIcon = styled.div<EditIconProps>`
+export const EditIcon = styled.div`
   position: absolute;
   top: 10px;
   right: 15px;
-  display: ${(props) => (props.isActive ? "block" : "none")};
   cursor: pointer;
 `;
 export const CartAdd = styled(Card)`
@@ -44,4 +40,60 @@ export const CartAdd = styled(Card)`
   &:hover {
     box-shadow: -1px 5px 15px 0 rgba(0, 0, 0, 0.5);
   }
+`;
+
+export const Checkmark = styled.div`
+  display: inline-block;
+  width: 45px;
+  height: 45px;
+  -ms-transform: rotate(45deg); /* IE 9 */
+  -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+  transform: rotate(45deg);
+`;
+export const Checkmark_circle = styled.div`
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  background-color: #60dabf;
+  border-radius: 50%;
+  left: 0;
+  top: 0;
+`;
+export const Checkmark_stem = styled.div`
+  position: absolute;
+  width: 3px;
+  height: 20px;
+  background-color: #fff;
+  left: 21px;
+  top: 7px;
+`;
+export const Checkmark_kick = styled.div`
+  position: absolute;
+  width: 9px;
+  height: 3px;
+  background-color: #fff;
+  left: 15px;
+  top: 25px;
+`;
+export const Checkmark_bottom = styled.div`
+  position: absolute;
+  width: 20px;
+  height: 3px;
+  background-color: #fff;
+  left: 19px;
+  top: 27px;
+  transform: rotate(135deg);
+`;
+
+export const CheckedCover = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(96, 218, 191, 0.46);
+  border-radius: 8px;
 `;
