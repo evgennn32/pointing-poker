@@ -21,14 +21,17 @@ interface CardProps {
   shortType: string;
   selected: boolean;
   closed: boolean;
+  editable: boolean;
 }
 
 const PlayingCard = (props: CardProps): JSX.Element => {
   return (
     <Card>
-      <EditIcon isActive={true}>
-        <PenIcon />
-      </EditIcon>
+      {props.editable && (
+        <EditIcon>
+          <PenIcon />
+        </EditIcon>
+      )}
       <TopContent>
         <span>{props.value}</span>
       </TopContent>

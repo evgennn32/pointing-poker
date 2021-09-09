@@ -26,14 +26,10 @@ export const BottomContent = styled.div`
   height: 20%;
   transform: rotate(180deg);
 `;
-interface EditIconProps {
-  readonly isActive: boolean;
-}
-export const EditIcon = styled.div<EditIconProps>`
+export const EditIcon = styled.div`
   position: absolute;
   top: 10px;
   right: 15px;
-  display: ${(props) => (props.isActive ? "block" : "none")};
   cursor: pointer;
 `;
 export const CartAdd = styled(Card)`
