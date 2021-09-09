@@ -1,9 +1,11 @@
 import { FormikErrors, useFormik } from "formik";
 import React from "react";
 import styled from "styled-components";
+import "./ReactPopUpDefault.css";
 import { Button } from "../Button/Button";
 import { Input } from "../styledComponents/Input/Input";
 import Switcher from "../Switcher/Switcher";
+import { ClosePopUp } from "./ClosePopUp";
 import {
   FormWrapper,
   H2,
@@ -28,7 +30,7 @@ type Inputs = {
   connectAsObserver: boolean;
 };
 
-export function PopUpConnectToLobby(): JSX.Element {
+export function PopUpConnectToLobby(props: ClosePopUp): JSX.Element {
   const formik = useFormik<Inputs>({
     initialValues: {
       email: "",
@@ -47,6 +49,7 @@ export function PopUpConnectToLobby(): JSX.Element {
     },
     onSubmit: (values) => {
       console.log(JSON.stringify(values, null, 2));
+      props.close();
       formik.resetForm();
     },
   });
@@ -148,7 +151,10 @@ export function PopUpConnectToLobby(): JSX.Element {
             </Error>
             <Button
               textContent="Cancel"
-              onClick={formik.handleReset}
+              onClick={(e) => {
+                formik.handleReset(e);
+                props.close();
+              }}
               isLightTheme={true}
             ></Button>
           </ConnectAsObserverAndCancel>

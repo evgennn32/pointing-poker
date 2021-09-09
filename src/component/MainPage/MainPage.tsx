@@ -1,6 +1,9 @@
 import React from "react";
+import Popup from "reactjs-popup";
 import styled from "styled-components";
 import { Button } from "../Button/Button";
+import { PopUpConnectToLobby } from "../PopUps/PopUpConnectToLobby";
+import "reactjs-popup/dist/index.css";
 
 const Main = styled.main`
   width: 100%;
@@ -91,11 +94,20 @@ export const MainPage = (): JSX.Element => (
         Connect to lobby by URL:
         <InputWrapper>
           <Input />
-          <Button
-            textContent="Connect"
-            onClick={clickHandler}
-            isLightTheme={false}
-          />
+          <Popup
+            trigger={
+              <Button
+                textContent="Connect"
+                onClick={clickHandler}
+                isLightTheme={false}
+              />
+            }
+            position="right center"
+            nested
+            modal
+          >
+            {(close: () => void) => <PopUpConnectToLobby close={close} />}
+          </Popup>
         </InputWrapper>
       </Label>
     </Content>
