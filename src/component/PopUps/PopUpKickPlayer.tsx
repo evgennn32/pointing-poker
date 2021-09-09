@@ -1,14 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  H2,
-  Span,
-  Wrapper,
-  P,
-  ButtonsWrapper,
-  Button,
-  CancelButton,
-} from "./PopUps.styled";
+import { Button } from "../Button/Button";
+import { H2, Span, Wrapper, P, ButtonsWrapper } from "./PopUps.styled";
 
 type UserToKickOut = {
   firstName: string;
@@ -25,8 +18,8 @@ export const PopUpKIckPlayer = (props: UserToKickOut): JSX.Element => {
         from game session?
       </P>
       <ButtonsWrapper>
-        <Button type="submit">Confirm</Button>
-        <CancelButton type="button">Cancel</CancelButton>
+        <Button textContent="Yes" isLightTheme={false}></Button>
+        <Button textContent="No" isLightTheme={true}></Button>
       </ButtonsWrapper>
     </Wrapper>
   );

@@ -1,6 +1,7 @@
 import { FormikErrors, useFormik } from "formik";
 import React from "react";
 import styled from "styled-components";
+import { Button } from "../Button/Button";
 import { Input } from "../styledComponents/Input/Input";
 import {
   ButtonsWrapper,
@@ -10,8 +11,6 @@ import {
   Select,
   Label,
   Error,
-  Button,
-  CancelButton,
   Form,
   InputsWrapper,
 } from "./PopUps.styled";
@@ -101,8 +100,12 @@ export const PopUpCreateIssue = (): JSX.Element => {
           </OneInputWrapper>
         </InputsWrapper>
         <ButtonsWrapper>
-          <Button type="submit">Confirm</Button>
-          <CancelButton type="button">Cancel</CancelButton>
+          <Button textContent="Yes" isLightTheme={false}></Button>
+          <Button
+            textContent="No"
+            onClick={formik.handleReset}
+            isLightTheme={true}
+          ></Button>
         </ButtonsWrapper>
       </Form>
     </WrapperIssue>

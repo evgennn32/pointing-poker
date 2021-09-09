@@ -21,6 +21,7 @@ export const Wrapper = styled.div`
   text-align: center;
 `;
 export const H2 = styled.h2`
+  font-family: Roboto;
   font-style: normal;
   font-weight: bold;
   font-size: 60px;
@@ -79,29 +80,6 @@ export const Error = styled.span`
   font-size: 1.5rem;
   color: red;
   align-self: center;
-`;
-export const Button = styled.button`
-  background: #2b3a67;
-  color: white;
-  width: 189px;
-  height: 60.3px;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 24px;
-  line-height: 30px;
-  align-items: center;
-  text-align: center;
-  &:hover {
-    text-shadow: 3px 3px 4px rgb(0 0 0);
-    cursor: pointer;
-  }
-`;
-export const CancelButton = styled(Button)`
-  background: white;
-  color: #2b3a67;
-  &:hover {
-    text-shadow: 3px 3px 4px rgb(0 0 0 / 40%);
-  }
 `;
 export const Form = styled.form`
   display: flex;

@@ -1,6 +1,7 @@
 import { FormikErrors, useFormik } from "formik";
 import React from "react";
 import styled from "styled-components";
+import { Button } from "../Button/Button";
 import { Input } from "../styledComponents/Input/Input";
 import Switcher from "../Switcher/Switcher";
 import {
@@ -9,11 +10,9 @@ import {
   Label,
   ConnectAsObserver,
   Error,
-  CancelButton,
   ConnectAsObserverAndCancel,
   InputImage,
   Initials,
-  Button,
   WrapperConnectToLobby,
   InputsWrapperConnectToLobby,
   OneInputWrapperConnectToLobby,
@@ -130,7 +129,7 @@ export function PopUpConnectToLobby(): JSX.Element {
                   )}
               </Avatar>
             </OneInputWrapperConnectToLobby>
-            <Button type="submit">Confirm</Button>
+            <Button textContent="Confirm" isLightTheme={false}></Button>
           </InputsWrapperConnectToLobby>
           <ConnectAsObserverAndCancel>
             <ConnectAsObserver>
@@ -147,7 +146,11 @@ export function PopUpConnectToLobby(): JSX.Element {
                 formik.errors.firstName &&
                 formik.errors.firstName}
             </Error>
-            <CancelButton type="button">Cancel</CancelButton>
+            <Button
+              textContent="Cancel"
+              onClick={formik.handleReset}
+              isLightTheme={true}
+            ></Button>
           </ConnectAsObserverAndCancel>
         </FormWrapper>
       </form>
