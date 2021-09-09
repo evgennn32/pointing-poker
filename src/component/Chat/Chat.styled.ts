@@ -12,5 +12,4 @@ export const ChatWrapper = styled.aside<{ active: boolean }>`
   max-height: 60vh;
 `;
 
-export const ChatEnterWrapper = styled.div`
-`;
+export const ChatEnterWrapper = styled.div``;

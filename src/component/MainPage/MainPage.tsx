@@ -78,7 +78,7 @@ const clickHandler = () => {
 
 export const MainPage = (): JSX.Element => (
   <Main>
-    <Chat chatActive={true} />
+    <Chat />
     <MainLogo src="./images/MainLogo.png" />
     <Content>
       <MainPageTitle>Start your planning:</MainPageTitle>
