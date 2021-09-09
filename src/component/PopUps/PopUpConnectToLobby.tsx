@@ -1,13 +1,12 @@
 import { FormikErrors, useFormik } from "formik";
 import React from "react";
 import styled from "styled-components";
+import { Input } from "../styledComponents/Input/Input";
+import Switcher from "../Switcher/Switcher";
 import {
   FormWrapper,
   H2,
   Label,
-  Input,
-  SpanSlider,
-  LabelSwitch,
   ConnectAsObserver,
   Error,
   CancelButton,
@@ -15,7 +14,6 @@ import {
   InputImage,
   Initials,
   Button,
-  InputSwitch,
   WrapperConnectToLobby,
   InputsWrapperConnectToLobby,
   OneInputWrapperConnectToLobby,
@@ -137,14 +135,12 @@ export function PopUpConnectToLobby(): JSX.Element {
           <ConnectAsObserverAndCancel>
             <ConnectAsObserver>
               <Label id="my-radio-group">Connect as Observer</Label>
-              <LabelSwitch>
-                <InputSwitch
-                  type="checkbox"
-                  name="connectAsObserver"
-                  onChange={formik.handleChange}
-                />
-                <SpanSlider></SpanSlider>
-              </LabelSwitch>
+              <Switcher
+                name="connectAsObserver"
+                id="connect-as-observer"
+                isSwitched={formik.values.connectAsObserver}
+                onSwitch={formik.handleChange}
+              />
             </ConnectAsObserver>
             <Error>
               {formik.touched.firstName &&

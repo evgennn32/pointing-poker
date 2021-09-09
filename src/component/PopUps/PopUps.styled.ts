@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Input } from "../styledComponents/Input/Input";
 
 export const Wrapper = styled.div`
   width: calc(100% - 45%);
@@ -51,16 +52,7 @@ export const OneInputWrapper = styled.div`
   grid-template-columns: 150px 430px 150px;
   justify-items: baseline;
   align-items: center;
-`;
-export const Input = styled.input`
-  margin: 5px 0;
-  background: #ffffff;
-  border: 1px solid #2b3a67;
-  box-sizing: border-box;
-  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 0px 0px 0px 10px;
-  width: 420px;
-  height: 47px;
+  margin-bottom: 30px;
 `;
 export const Select = styled.select`
   margin: 5px 0;
@@ -153,54 +145,6 @@ export const Initials = styled.p`
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   position: relative;
   top: -3px;
-`;
-export const LabelSwitch = styled(Label)`
-  position: relative;
-  display: inline-block;
-  width: 65px;
-  height: 28px;
-  & input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-`;
-export const SpanSlider = styled.span`
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-  border-radius: 34px;
-  &:before {
-    position: absolute;
-    content: "";
-    height: 20px;
-    width: 20px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
-    border-radius: 50%;
-  }
-`;
-export const InputSwitch = styled(Input)`
-  &:checked + ${SpanSlider} {
-    background-color: #60dabf;
-  }
-  &:focus + ${SpanSlider} {
-    box-shadow: 0 0 1px #60dabf;
-  }
-  &:checked + ${SpanSlider}:before {
-    -webkit-transform: translateX(20px);
-    -ms-transform: translateX(20px);
-    transform: translateX(20px);
-  }
 `;
 export const InputsWrapperConnectToLobby = styled.div`
   display: flex;

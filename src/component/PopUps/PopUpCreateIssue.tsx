@@ -1,12 +1,12 @@
 import { FormikErrors, useFormik } from "formik";
 import React from "react";
 import styled from "styled-components";
+import { Input } from "../styledComponents/Input/Input";
 import {
   ButtonsWrapper,
   H2,
   WrapperIssue,
   OneInputWrapper,
-  Input,
   Select,
   Label,
   Error,
