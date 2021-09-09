@@ -19,7 +19,7 @@
   },
   "rules": {
     "react/prop-types": ["off"],
-    "max-lines-per-function": ["error", 40],
+    // "max-lines-per-function": ["error", 40],
     "prettier/prettier": [
       "error",
       {
