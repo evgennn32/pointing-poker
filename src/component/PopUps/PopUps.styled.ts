@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Input } from "../styledComponents/Input/Input";
 
 export const Wrapper = styled.div`
-  width: calc(100% - 45%);
+  width: 776px;
   background-color: white;
   height: 450px;
   border: 1px solid grey;
@@ -136,7 +136,7 @@ export const OneInputWrapperConnectToLobby = styled.div`
   flex-direction: column;
 `;
 export const WrapperConnectToLobby = styled.div`
-  width: calc(100% - 45%);
+  width: 776px;
   background-color: white;
   height: 730px;
   border: 1px solid grey;

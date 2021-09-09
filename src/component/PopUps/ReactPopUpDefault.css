@@ -1,0 +1,8 @@
+.popup-content {
+  position: absolute;
+  margin: auto;
+  background: #fff;
+  width: 776px;
+  padding: 5px;
+  border: none;
+}
