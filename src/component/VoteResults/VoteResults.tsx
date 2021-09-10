@@ -9,13 +9,14 @@ import {
 
 type Props = {
   issueNumber: number;
-  valueVoteArray: Array<VoteValue>;
+  valueVoteArray: Array<VoteStatistics>;
 };
 
-interface VoteValue {
+interface VoteStatistics {
   value: string;
   type: string;
   shortType: string;
+  percent: number;
 }
 
 /* eslint react/jsx-key: [0] */
@@ -24,66 +25,28 @@ interface VoteValue {
 export const VoteResults = ({
   valueVoteArray,
   issueNumber,
-}: Props): JSX.Element => {
-  const [statisticsResult, setStatisticsResult] = React.useState([
-    {
-      value: "",
-      type: "",
-      shortType: "",
-    },
-  ]);
-  const [statisticsMap, setStatisticsMap] = React.useState(new Map());
-
-  React.useEffect(() => {
-    const localStaticMap = new Map();
-    valueVoteArray.map((card) => {
-      localStaticMap.set(
-        card.value,
-        localStaticMap.get(card.value) ? localStaticMap.get(card.value) + 1 : 1,
-      );
-    });
-    setStatisticsMap(localStaticMap);
-    const uniqueVoteArray: Array<VoteValue> = [];
-    valueVoteArray.forEach((card) => {
-      if (
-        !uniqueVoteArray.some((uniqueCard) => uniqueCard.value === card.value)
-      ) {
-        uniqueVoteArray.push(card);
+}: Props): JSX.Element => (
+  <StatisticsWrapper>
+    <div>
+      {
+        issueNumber
+        // issue Component
       }
-    });
-    uniqueVoteArray.sort(
-      (a, b) => localStaticMap.get(b.value) - localStaticMap.get(a.value),
-    );
-    setStatisticsResult(uniqueVoteArray);
-  }, []);
-  return (
-    <StatisticsWrapper>
-      <div>
-        {
-          issueNumber
-          // issue Component
-        }
-      </div>
-      <ResultWrapper>
-        {statisticsResult.map((card) => {
-          const length = valueVoteArray.length;
-          const countCards = statisticsMap.get(card.value);
-          const percent = Math.round((countCards / length) * 10000) / 100;
-          return (
-            <CardWrapper>
-              <PlayingCard
-                value={card.value}
-                type={card.type}
-                shortType={card.shortType}
-                selected={false}
-                editable={false}
-                closed={false}
-              />
-              <PercentWrapper>{`${percent}%`}</PercentWrapper>
-            </CardWrapper>
-          );
-        })}
-      </ResultWrapper>
-    </StatisticsWrapper>
-  );
-};
+    </div>
+    <ResultWrapper>
+      {valueVoteArray.map((card) => (
+        <CardWrapper>
+          <PlayingCard
+            value={card.value}
+            type={card.type}
+            shortType={card.shortType}
+            selected={false}
+            editable={false}
+            closed={false}
+          />
+          <PercentWrapper>{`${card.percent}%`}</PercentWrapper>
+        </CardWrapper>
+      ))}
+    </ResultWrapper>
+  </StatisticsWrapper>
+);
