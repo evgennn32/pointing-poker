@@ -7,7 +7,6 @@ import Header from "./component/Header/Header";
 import LobbyPage from "./component/Pages/LobbyPage";
 import GamePage from "./component/Pages/GamePage";
 import GameResultPage from "./component/Pages/GameResultPage";
-import { GameSettings } from "./component/GameSettings/GameSettings";
 
 function App(): JSX.Element {
   const location = useLocation();
@@ -17,11 +16,6 @@ function App(): JSX.Element {
       <Switch location={location}>
         <Route exact path="/">
           <MainPage />
-          <GameSettings
-            setGameSetting={(gameSettings: GameSettings) => {
-              console.log(gameSettings);
-            }}
-          />
         </Route>
         <Route exact path="/lobby">
           <LobbyPage />

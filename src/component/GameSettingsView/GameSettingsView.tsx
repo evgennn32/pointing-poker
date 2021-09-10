@@ -1,6 +1,6 @@
-import { FormikErrors, useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import GameSettings from "../../models/GameSettings";
 import PlayingCard from "../Cards/PlayingCard";
 import PlayingCardAdd from "../Cards/PlayingCardAdd";
 import { Input } from "../styledComponents/Input/Input";
@@ -13,100 +13,59 @@ import {
   CardsWrapper,
   Label,
   InputsSwitchersWrapper,
-} from "./GameSettings.style";
+} from "./GameSettingsView.style";
 
-export type GameSettings = {
-  scrumMasterAsPlayer: boolean;
-  changingCardInRoundEnd: boolean;
-  isTimerNeeded: boolean;
-  scoreType: string;
-  scoreTypeShort: string;
-  roundTime: string;
-};
 type GameSettingsProps = {
   setGameSetting: (gameSettings: GameSettings) => void;
 };
-type Card = {
-  value: string;
-  type: string;
-  shortType: string;
-  selected: boolean;
-  closed: boolean;
-  editable: boolean;
-};
 
-export const GameSettings = (props: GameSettingsProps): JSX.Element => {
-  const formik = useFormik<GameSettings>({
-    initialValues: {
-      scrumMasterAsPlayer: true,
-      changingCardInRoundEnd: false,
-      isTimerNeeded: true,
-      scoreType: "story point",
-      scoreTypeShort: "SP",
-      roundTime: "",
-    },
-    validate: (values: GameSettings) => {
-      const errors: FormikErrors<GameSettings> = {};
-      if (!values.scoreType) {
-        errors.scoreType = "Enter score type";
-      }
-      return errors;
-    },
-    onSubmit: () => {
-      // console.log(JSON.stringify(values, null, 2));
-      // formik.resetForm();
-    },
-  });
-  useEffect(() => {
-    props.setGameSetting(formik.values);
-  }, [formik]);
-
+export const GameSettingsView = (props: GameSettingsProps): JSX.Element => {
   const InitialCards = [
     {
-      value: "12",
+      value: "unknown",
       type: "cup",
-      shortType: formik.values.scoreTypeShort,
+      shortType: "",
       selected: false,
       closed: false,
       editable: true,
     },
     {
       value: "12",
-      type: formik.values.scoreType,
-      shortType: formik.values.scoreTypeShort,
+      type: "story point",
+      shortType: "SP",
       selected: false,
       closed: false,
       editable: true,
     },
     {
       value: "12",
-      type: formik.values.scoreType,
-      shortType: formik.values.scoreTypeShort,
+      type: "story point",
+      shortType: "SP",
       selected: false,
       closed: false,
       editable: true,
     },
     {
       value: "12",
-      type: formik.values.scoreType,
-      shortType: formik.values.scoreTypeShort,
+      type: "story point",
+      shortType: "SP",
       selected: false,
       closed: false,
       editable: true,
     },
   ];
-  const [cardsArray, setCardsArray] = useState<Card[]>(InitialCards);
-  const ArrayCards = cardsArray.map((card, index) => {
-    <PlayingCard
-      value={card.value}
-      type={card.type}
-      shortType={card.shortType}
-      selected={card.selected}
-      closed={card.closed}
-      editable={card.editable}
-      key={index}
-    />;
+  const [settings, setSettings] = useState<GameSettings>({
+    scrumMasterAsPlayer: true,
+    changingCardInRoundEnd: false,
+    isTimerNeeded: true,
+    scoreType: "story point",
+    scoreTypeShort: "SP",
+    roundTime: "",
+    cardsArray: InitialCards,
   });
+  useEffect(() => {
+    props.setGameSetting(settings);
+  }, [settings]);
   return (
     <Wrapper>
       <Title title="Game settings:" />
@@ -116,9 +75,12 @@ export const GameSettings = (props: GameSettingsProps): JSX.Element => {
           <Switcher
             name="scrumMasterAsPlayer"
             id="scrum-master-as-player"
-            isSwitched={formik.values.scrumMasterAsPlayer}
+            isSwitched={settings.scrumMasterAsPlayer}
             onSwitch={(ev) => {
-              formik.handleChange(ev);
+              setSettings({
+                ...settings,
+                scrumMasterAsPlayer: ev.target.checked,
+              });
             }}
           />
         </OneSettingWrapper>
@@ -127,9 +89,12 @@ export const GameSettings = (props: GameSettingsProps): JSX.Element => {
           <Switcher
             name="changingCardInRoundEnd"
             id="changing-card-in-round-end"
-            isSwitched={formik.values.changingCardInRoundEnd}
+            isSwitched={settings.changingCardInRoundEnd}
             onSwitch={(ev) => {
-              formik.handleChange(ev);
+              setSettings({
+                ...settings,
+                changingCardInRoundEnd: ev.target.checked,
+              });
             }}
           />
         </OneSettingWrapper>
@@ -138,9 +103,12 @@ export const GameSettings = (props: GameSettingsProps): JSX.Element => {
           <Switcher
             name="isTimerNeeded"
             id="is-timer-needed"
-            isSwitched={formik.values.isTimerNeeded}
+            isSwitched={settings.isTimerNeeded}
             onSwitch={(ev) => {
-              formik.handleChange(ev);
+              setSettings({
+                ...settings,
+                isTimerNeeded: ev.target.checked,
+              });
             }}
           />
         </OneSettingWrapper>
@@ -151,9 +119,12 @@ export const GameSettings = (props: GameSettingsProps): JSX.Element => {
             name="scoreType"
             type="text"
             onChange={(ev) => {
-              formik.handleChange(ev);
+              setSettings({
+                ...settings,
+                scoreType: ev.target.value,
+              });
             }}
-            value={formik.values.scoreType}
+            value={settings.scoreType}
           />
         </OneSettingWrapper>
         <OneSettingWrapper>
@@ -163,20 +134,47 @@ export const GameSettings = (props: GameSettingsProps): JSX.Element => {
             name="scoreTypeShort"
             type="text"
             onChange={(ev) => {
-              formik.handleChange(ev);
+              setSettings({
+                ...settings,
+                scoreTypeShort: ev.target.value,
+              });
             }}
-            value={formik.values.scoreTypeShort}
+            value={settings.scoreTypeShort}
           />
         </OneSettingWrapper>
         <OneSettingWrapper>
           <Label>Round time:</Label>
-          <Timer readOnly={true}></Timer> {/* timer need to be finished */}
+          <Timer readOnly={true}></Timer> {/* TODO timer need to be finished */}
         </OneSettingWrapper>
       </InputsSwitchersWrapper>
       <Label>Add card values:</Label>
       <CardsWrapper>
-        {ArrayCards}
-        <PlayingCardAdd />
+        {settings.cardsArray.map((card, index) => (
+          <PlayingCard
+            value={card.value}
+            type={card.type}
+            shortType={card.shortType}
+            selected={card.selected}
+            closed={card.closed}
+            editable={card.editable}
+            key={index}
+          />
+        ))}
+        <PlayingCardAdd
+          onClick={() => {
+            setSettings({
+              ...settings,
+              cardsArray: settings.cardsArray.concat({
+                value: "12",
+                type: "",
+                shortType: settings.scoreTypeShort,
+                selected: false,
+                closed: false,
+                editable: true,
+              }),
+            });
+          }}
+        />
       </CardsWrapper>
     </Wrapper>
   );
