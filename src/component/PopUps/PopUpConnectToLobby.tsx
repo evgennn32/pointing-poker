@@ -47,8 +47,8 @@ export function PopUpConnectToLobby(props: ClosePopUp): JSX.Element {
       }
       return errors;
     },
-    onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2));
+    onSubmit: () => {
+      // TODO create new user
       props.close();
       formik.resetForm();
     },
