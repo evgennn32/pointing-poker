@@ -1,17 +1,12 @@
 import React from "react";
 import { Avatar, Initials } from "../PopUps/PopUps.styled";
-import {
-  Button,
-  Name,
-  NameAndPosition,
-  SmallTxt,
-  Wrapper,
-} from "./UserAvatar.styled";
+import { Button, Name, NameAndPosition, SmallTxt } from "./UserAvatar.styled";
 import User from "../../models/User";
+import { Tile } from "../styledComponents/Tile/Tile";
 
 export const UserAvatar = (props: User): JSX.Element => {
   return (
-    <>
+    <Tile>
       <Avatar avatar={props.image}>
         {props.firstName !== "" && props.image === null && (
           <Initials>{props.firstName[0]}</Initials>
@@ -47,6 +42,6 @@ export const UserAvatar = (props: User): JSX.Element => {
           </svg>
         </Button>
       )}
-    </>
+    </Tile>
   );
 };
