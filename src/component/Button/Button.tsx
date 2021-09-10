@@ -7,7 +7,7 @@ type Props = {
   textContent: string;
 };
 
-const ButtonStyled = styled.button<{ isLight: boolean }>`
+export const ButtonStyled = styled.button<{ isLight: boolean }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;

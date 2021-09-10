@@ -4,8 +4,10 @@ import styled from "styled-components";
 import { Button } from "../Button/Button";
 import { PopUpConnectToLobby } from "../PopUps/PopUpConnectToLobby";
 import "reactjs-popup/dist/index.css";
+import Chat from "../Chat/Chat";
 
 const Main = styled.main`
+  position: relative;
   width: 100%;
   background-color: white;
 `;
@@ -17,15 +19,16 @@ const Content = styled.div`
   justify-content: flex-start;
   width: calc(100% - 40px);
   max-width: 1000px;
-  margin: 20px auto 100px;
-  padding: 0 20px;
+  margin: 20px auto 0px;
+  padding: 0 20px 100px;
 `;
 
 const MainLogo = styled.img`
   display: block;
   width: 90%;
   max-width: 550px;
-  margin: 100px auto 0;
+  margin: 0 auto;
+  padding-top: 100px;
 `;
 
 const MainPageTitle = styled.h2`
@@ -78,6 +81,7 @@ const clickHandler = () => {
 
 export const MainPage = (): JSX.Element => (
   <Main>
+    <Chat />
     <MainLogo src="./images/MainLogo.png" />
     <Content>
       <MainPageTitle>Start your planning:</MainPageTitle>
