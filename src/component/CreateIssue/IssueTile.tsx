@@ -1,6 +1,4 @@
 import React from "react";
-import Popup from "reactjs-popup";
-import styled from "styled-components";
 import {
   Wrapper,
   IssueName,
@@ -15,7 +13,7 @@ type IssueNameProps = {
   priority: string;
 };
 
-export const Issue = (props: IssueNameProps): JSX.Element => {
+export const IssueTile = (props: IssueNameProps): JSX.Element => {
   return (
     <Wrapper>
       <IssueName>{props.issueName}</IssueName>
