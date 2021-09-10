@@ -9,7 +9,7 @@ import {
 } from "./UserAvatar.styled";
 
 type UserAvatarProps = {
-  avatar: string | null;
+  image: string | null;
   firstName: string;
   lastName: string;
   position: string;
@@ -19,11 +19,11 @@ type UserAvatarProps = {
 export const UserAvatar = (props: UserAvatarProps): JSX.Element => {
   return (
     <Wrapper>
-      <Avatar avatar={props.avatar}>
-        {props.firstName !== "" && props.avatar === null && (
+      <Avatar avatar={props.image}>
+        {props.firstName !== "" && props.image === null && (
           <Initials>{props.firstName[0]}</Initials>
         )}
-        {props.lastName !== "" && props.avatar === null && (
+        {props.lastName !== "" && props.image === null && (
           <Initials>{props.lastName[0]}</Initials>
         )}
       </Avatar>
