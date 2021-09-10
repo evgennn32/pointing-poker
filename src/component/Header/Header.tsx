@@ -1,5 +1,7 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { changeChatActive } from "../../app/slices/chatSlice";
 import Logo from "../Logo/Logo";
 import { ReactComponent as ChatIcon } from "./../../assets/icons/chat-icon.svg";
 
@@ -42,9 +44,7 @@ const LogoWrapper = styled.a`
 `;
 
 const Header = (): JSX.Element => {
-  // chatActive will be provided by redux store
-  const chatActive = true;
-
+  const dispatch = useDispatch();
   return (
     <HeaderWrapper>
       <TopBackground />
@@ -54,11 +54,9 @@ const Header = (): JSX.Element => {
           <LogoWrapper href="/">
             <Logo />
           </LogoWrapper>
-          {chatActive && (
-            <ChatIconWrapper>
-              <ChatIcon />
-            </ChatIconWrapper>
-          )}
+          <ChatIconWrapper onClick={() => dispatch(changeChatActive())}>
+            <ChatIcon />
+          </ChatIconWrapper>
         </Content>
       </ContentWrapper>
     </HeaderWrapper>
