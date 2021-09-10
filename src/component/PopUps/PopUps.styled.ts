@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Input } from "../styledComponents/Input/Input";
 
 export const Wrapper = styled.div`
   width: 776px;
