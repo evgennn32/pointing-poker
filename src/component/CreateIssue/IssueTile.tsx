@@ -7,21 +7,20 @@ import {
   SVGDelete,
   Priority,
 } from "./CreateIssueAndIssue.style";
+import Issue from "../../models/Issue";
+import { Tile } from "../styledComponents/Tile/Tile";
 
-type IssueNameProps = {
-  issueName: string;
-  priority: string;
-};
-
-export const IssueTile = (props: IssueNameProps): JSX.Element => {
+export const IssueTile = (props: Issue): JSX.Element => {
   return (
-    <Wrapper>
-      <IssueName>{props.issueName}</IssueName>
-      <Priority>{props.priority}</Priority>
-      <SVGWrapper>
-        <SVGPencil />
-        <SVGDelete />
-      </SVGWrapper>
-    </Wrapper>
+    <Tile>
+      <Wrapper>
+        <IssueName>{props.issueName}</IssueName>
+        <Priority>{props.priority}</Priority>
+        <SVGWrapper>
+          <SVGPencil />
+          <SVGDelete />
+        </SVGWrapper>
+      </Wrapper>
+    </Tile>
   );
 };

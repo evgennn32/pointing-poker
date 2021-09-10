@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ReactComponent as Plus } from "./../../assets/icons/plus-in-sircule.svg";
 import { ReactComponent as Pencil } from "./../../assets/icons/pen.svg";
-import { ReactComponent as Delete } from "./../../assets/icons/delete.svg";
+import { ReactComponent as Delete } from "./../../assets/icons/trash-bin.svg";
 
 export const Wrapper = styled.div`
   display: flex;
