@@ -12,6 +12,8 @@ export const Wrapper = styled.div`
 export const NameAndPosition = styled.div`
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+  margin-left: 10px;
 `;
 export const Name = styled.p`
   margin: 3px;
