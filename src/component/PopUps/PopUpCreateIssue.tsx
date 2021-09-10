@@ -1,8 +1,10 @@
 import { FormikErrors, useFormik } from "formik";
 import React from "react";
 import styled from "styled-components";
+import "./ReactPopUpDefault.css";
 import { Button } from "../Button/Button";
 import { Input } from "../styledComponents/Input/Input";
+import { ClosePopUp } from "./ClosePopUp";
 import {
   ButtonsWrapper,
   H2,
@@ -21,7 +23,7 @@ type Inputs = {
   priority: string;
 };
 
-export const PopUpCreateIssue = (): JSX.Element => {
+export const PopUpCreateIssue = (props: ClosePopUp): JSX.Element => {
   const formik = useFormik<Inputs>({
     initialValues: {
       title: "",
@@ -43,6 +45,7 @@ export const PopUpCreateIssue = (): JSX.Element => {
     },
     onSubmit: (values) => {
       console.log(JSON.stringify(values, null, 2));
+      props.close();
       formik.resetForm();
     },
   });
@@ -103,7 +106,10 @@ export const PopUpCreateIssue = (): JSX.Element => {
           <Button textContent="Yes" isLightTheme={false}></Button>
           <Button
             textContent="No"
-            onClick={formik.handleReset}
+            onClick={(e) => {
+              formik.handleReset(e);
+              props.close();
+            }}
             isLightTheme={true}
           ></Button>
         </ButtonsWrapper>
