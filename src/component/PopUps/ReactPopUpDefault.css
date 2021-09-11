@@ -1,8 +1,8 @@
-.popup-content {
+div.popup-content {
   position: absolute;
   margin: auto;
-  background: #fff;
-  width: 776px !important;
+  background: transparent;
   padding: 5px;
-  border: none !important;
+  border: none;
+  width: 100%;
 }
