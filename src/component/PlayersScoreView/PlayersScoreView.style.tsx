@@ -11,6 +11,4 @@ export const MembersWrapper = styled.div`
 export const Wrapper = styled.div`
   display: flex;
   width: 688px;
-  height: 100%;
-  border-left: 2px solid grey;
 `;
