@@ -12,7 +12,7 @@ import { Tile } from "../styledComponents/Tile/Tile";
 
 export const IssueTile = (props: Issue): JSX.Element => {
   return (
-    <Tile>
+    <Tile selected={props.selected}>
       <Wrapper>
         <IssueName>{props.issueName}</IssueName>
         <Priority>{props.priority}</Priority>
