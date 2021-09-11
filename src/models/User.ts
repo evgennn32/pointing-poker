@@ -6,4 +6,5 @@ export default interface User {
   position: string;
   currentUser: boolean;
   ableToDelete: boolean;
+  score: string;
 }
