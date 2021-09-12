@@ -87,11 +87,6 @@ export const MainPage = (): JSX.Element => (
       <MainPageTitle>Start your planning:</MainPageTitle>
       <Label>
         Create session:
-        <Button
-          textContent="Start new game"
-          onClick={clickHandler}
-          isLightTheme={false}
-        />
         <Popup
           trigger={
             <Button
