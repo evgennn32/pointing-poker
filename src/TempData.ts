@@ -105,6 +105,33 @@ export const cards = [
   },
 ];
 
+export const voteResultCards = [
+  {
+    value: "12",
+    type: "",
+    shortType: "SP",
+    percent: 5,
+  },
+  {
+    value: "12",
+    type: "",
+    shortType: "SP",
+    percent: 6,
+  },
+  {
+    value: "12",
+    type: "SP",
+    shortType: "SP",
+    percent: 5,
+  },
+  {
+    value: "12",
+    type: "SP",
+    shortType: "SP",
+    percent: 15,
+  },
+];
+
 export const gameSettings = {
   scrumMasterAsPlayer: false,
   changingCardInRoundEnd: false,
@@ -113,4 +140,16 @@ export const gameSettings = {
   scoreTypeShort: "SP",
   roundTime: "2000",
   cardsArray: cards,
+};
+
+export const currentUser = {
+  id: "1",
+  image: "test",
+  firstName: "test",
+  lastName: "test",
+  position: "test",
+  currentUser: true,
+  ableToDelete: true,
+  score: "test",
+  scramMaster: true,
 };

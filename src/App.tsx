@@ -7,7 +7,6 @@ import Header from "./component/Header/Header";
 import LobbyPage from "./component/Pages/LobbyPage";
 import GamePage from "./component/Pages/GamePage";
 import GameResultPage from "./component/Pages/GameResultPage";
-import { gameSettings, initialData, issues, users } from "./TempData";
 
 function App(): JSX.Element {
   const location = useLocation();
@@ -22,23 +21,7 @@ function App(): JSX.Element {
           <LobbyPage />
         </Route>
         <Route exact path="/game">
-          <GamePage
-            issues={issues}
-            users={users}
-            gameSettings={gameSettings}
-            title={initialData.tile}
-            currentUser={{
-              id: "1",
-              image: "test",
-              firstName: "test",
-              lastName: "test",
-              position: "test",
-              currentUser: true,
-              ableToDelete: true,
-              score: "test",
-              scramMaster: true,
-            }}
-          />
+          <GamePage />
         </Route>
         <Route exact path="/result">
           <GameResultPage />

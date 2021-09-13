@@ -1,13 +1,16 @@
-import { settings } from "cluster";
 import { title } from "process";
 import React from "react";
 import styled from "styled-components";
-import GameSettings from "../../models/GameSettings";
-import Issue from "../../models/Issue";
-import User from "../../models/User";
+import {
+  currentUser,
+  gameSettings,
+  initialData,
+  issues,
+  users,
+  voteResultCards,
+} from "../../TempData";
 import { Button } from "../Button/Button";
 import { CreateIssue } from "../CreateIssue/CreateIssue";
-import { IssueTile } from "../CreateIssue/IssueTile";
 import IssuesBlock from "../IssuesBlock/IssuesBlock";
 import { PlayersScoreView } from "../PlayersScoreView/PlayersScoreView";
 import { Main } from "../styledComponents/Main/Main";
@@ -24,7 +27,7 @@ export const DIV = styled.div`
   justify-content: space-between;
   align-items: flex-end;
 `;
-export const P = styled.p`
+export const Paragraph = styled.p`
   margin-left: 20px;
   font-family: Ruda;
   font-style: normal;
@@ -47,23 +50,17 @@ export const NextIssueBtn = styled.div`
   align-self: start;
 `;
 
-const GamePage = (props: {
-  issues: Issue[];
-  users: User[];
-  gameSettings: GameSettings;
-  title: string;
-  currentUser: User;
-}): JSX.Element => {
+const GamePage = (): JSX.Element => {
   return (
     <Page sidebarActive={true}>
       <Main>
         <TitleEditable
-          title={props.title}
+          title={initialData.tile}
           changeTitle={() => console.log(title)}
         />
         <DIV>
           <div>
-            <P>Scram master:</P>
+            <Paragraph>Scram master:</Paragraph>
             <UserAvatar
               id="cds"
               image={null}
@@ -77,7 +74,7 @@ const GamePage = (props: {
             />
           </div>
           <Button
-            textContent={props.currentUser.scramMaster ? "Stop Game" : "Exit"}
+            textContent={currentUser.scramMaster ? "Stop Game" : "Exit"}
             onClick={() => {
               console.log("");
             }}
@@ -87,7 +84,7 @@ const GamePage = (props: {
         <DIV>
           <div>
             <Title title="Issues:" />
-            <IssuesBlock issues={props.issues} />
+            <IssuesBlock issues={issues} />
             <CreateIssue />
             <Title title="Statistics:" />
           </div>
@@ -111,40 +108,12 @@ const GamePage = (props: {
             />
           </NextIssueBtn>
         </DIV>
-        <VoteResults
-          issueNumber={0}
-          valueVoteArray={[
-            {
-              value: "12",
-              type: "",
-              shortType: "SP",
-              percent: 5,
-            },
-            {
-              value: "12",
-              type: "",
-              shortType: "SP",
-              percent: 5,
-            },
-            {
-              value: "12",
-              type: "SP",
-              shortType: "SP",
-              percent: 5,
-            },
-            {
-              value: "12",
-              type: "SP",
-              shortType: "SP",
-              percent: 5,
-            },
-          ]}
-        />
+        <VoteResults issueNumber={0} valueVoteArray={voteResultCards} />
       </Main>
       <SideBar>
         <PlayersScoreView
-          users={props.users}
-          scoreType={props.gameSettings.scoreTypeShort}
+          users={users}
+          scoreType={gameSettings.scoreTypeShort}
         />
       </SideBar>
     </Page>
