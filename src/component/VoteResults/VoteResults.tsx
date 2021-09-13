@@ -30,7 +30,7 @@ export const VoteResults = ({
     <div>
       {
         issueNumber
-        // issue Component
+        // TODO issue Component
       }
     </div>
     <ResultWrapper>
