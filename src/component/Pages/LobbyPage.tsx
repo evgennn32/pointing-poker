@@ -4,11 +4,14 @@ import { SideBar } from "../styledComponents/Sidebar/SideBar";
 import { Page } from "../styledComponents/Page/Page";
 import styled from "styled-components";
 import { UserAvatar } from "../UserAvatar/UserAvatar";
-import { initialData, users } from "../../TempData";
+import { initialData, issues, users } from "../../TempData";
 import Title from "../Title/Title";
 import { Input } from "../styledComponents/Input/Input";
 import { Button } from "../Button/Button";
 import Members from "../Members/Members";
+import IssuesBlock from "../IssuesBlock/IssuesBlock";
+import { IssueTile } from "../CreateIssue/IssueTile";
+import { CreateIssue } from "../CreateIssue/CreateIssue";
 
 const Container = styled.div`
   display: flex;
@@ -55,6 +58,12 @@ const BtnsWrap = styled.div`
   width: 100%;
 `;
 
+const IssuesWrap = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+`;
+
 const LobbyPage = (): JSX.Element => {
   return (
     <Page sidebarActive={false}>
@@ -91,6 +100,13 @@ const LobbyPage = (): JSX.Element => {
             />
           </BtnsWrap>
           <Members users={users} />
+          <Title title="Issues:" />
+          <IssuesWrap>
+            {issues.map((issue) => (
+              <IssueTile {...issue} key={issue.issueName} />
+            ))}
+            <CreateIssue />
+          </IssuesWrap>
         </Container>
       </Main>
       <SideBar>
