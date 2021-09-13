@@ -7,6 +7,7 @@ import Header from "./component/Header/Header";
 import LobbyPage from "./component/Pages/LobbyPage";
 import GamePage from "./component/Pages/GamePage";
 import GameResultPage from "./component/Pages/GameResultPage";
+import { gameSettings, initialData, issues, users } from "./TempData";
 
 function App(): JSX.Element {
   const location = useLocation();
@@ -22,28 +23,21 @@ function App(): JSX.Element {
         </Route>
         <Route exact path="/game">
           <GamePage
-            issues={[
-              {
-                issueName: "test",
-                priority: "test",
-                selected: true,
-              },
-              {
-                issueName: "test",
-                priority: "test",
-                selected: false,
-              },
-              {
-                issueName: "test",
-                priority: "test",
-                selected: false,
-              },
-              {
-                issueName: "test",
-                priority: "test",
-                selected: false,
-              },
-            ]}
+            issues={issues}
+            users={users}
+            gameSettings={gameSettings}
+            title={initialData.tile}
+            currentUser={{
+              id: "1",
+              image: "test",
+              firstName: "test",
+              lastName: "test",
+              position: "test",
+              currentUser: true,
+              ableToDelete: true,
+              score: "test",
+              scramMaster: true,
+            }}
           />
         </Route>
         <Route exact path="/result">

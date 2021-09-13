@@ -35,6 +35,11 @@ export const SVGPlus = styled(Plus)`
   vertical-align: middle;
   fill: #565d64;
   overflow: hidden;
+    &:hover {
+      transform: scale(1.1);
+      transition: 0.3s;
+    }
+  }
 `;
 export const SVGPencil = styled(Pencil)`
   height: 3em;

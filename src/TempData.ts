@@ -30,6 +30,7 @@ export const users = [
     currentUser: false,
     ableToDelete: true,
     score: "test",
+    scramMaster: false,
   },
   {
     id: "2",
@@ -40,6 +41,7 @@ export const users = [
     currentUser: false,
     ableToDelete: true,
     score: "test",
+    scramMaster: false,
   },
   {
     id: "3",
@@ -50,6 +52,7 @@ export const users = [
     currentUser: false,
     ableToDelete: true,
     score: "test",
+    scramMaster: true,
   },
 ];
 
