@@ -4,8 +4,11 @@ import { SideBar } from "../styledComponents/Sidebar/SideBar";
 import { Page } from "../styledComponents/Page/Page";
 import styled from "styled-components";
 import { UserAvatar } from "../UserAvatar/UserAvatar";
-import { initialData } from "../../TempData";
+import { initialData, users } from "../../TempData";
 import Title from "../Title/Title";
+import { Input } from "../styledComponents/Input/Input";
+import { Button } from "../Button/Button";
+import Members from "../Members/Members";
 
 const Container = styled.div`
   display: flex;
@@ -22,18 +25,34 @@ const ScrumMasterLabel = styled.div`
   font-family: Ruda-Bold, sans-serif;
   font-size: 12px;
   color: rgba(0, 0, 0, 0.6);
-  margin-left: 20px;
-  position: relative;
-  top: 10px;
 `;
 
 const LinkToLobbyLabel = styled.div`
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   font-style: italic;
   font-weight: normal;
   font-size: 24px;
   line-height: 28px;
   color: #000;
+`;
+
+const UserAvatarStyled = styled(UserAvatar)`
+  margin: 10px 0 20px 0;
+`;
+
+const CopyLinkWrap = styled.div`
+  display: flex;
+`;
+
+const InputStyled = styled(Input)`
+  border-right: none;
+`;
+
+const BtnsWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 0;
+  width: 100%;
 `;
 
 const LobbyPage = (): JSX.Element => {
@@ -43,8 +62,35 @@ const LobbyPage = (): JSX.Element => {
         <Container>
           <Title title={initialData.title} />
           <ScrumMasterLabel>Scram master:</ScrumMasterLabel>
-          <UserAvatar {...initialData.scrumMuster} />
+          <UserAvatarStyled {...initialData.scrumMuster} />
           <LinkToLobbyLabel>Link to lobby:</LinkToLobbyLabel>
+          <CopyLinkWrap>
+            <InputStyled value="http://pockerplanning.c..." />
+            <Button
+              isLightTheme={false}
+              textContent="Copy"
+              onClick={() => {
+                /*TODO handle copy click*/
+              }}
+            />
+          </CopyLinkWrap>
+          <BtnsWrap>
+            <Button
+              isLightTheme={false}
+              textContent="Start Game"
+              onClick={() => {
+                /*TODO handle start game click*/
+              }}
+            />
+            <Button
+              isLightTheme={true}
+              textContent="Cancel Game"
+              onClick={() => {
+                /*TODO handle cancel game click*/
+              }}
+            />
+          </BtnsWrap>
+          <Members users={users} />
         </Container>
       </Main>
       <SideBar>
