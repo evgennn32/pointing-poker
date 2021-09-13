@@ -35,6 +35,7 @@ export const SVGPlus = styled(Plus)`
   vertical-align: middle;
   fill: #565d64;
   overflow: hidden;
+  cursor:pointer;
     &:hover {
       transform: scale(1.1);
       transition: 0.3s;
