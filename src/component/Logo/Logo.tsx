@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const LogoWrapper = styled.div`
+  z-index: 5;
   width: 70px;
   height: 70px;
   position: relative;
