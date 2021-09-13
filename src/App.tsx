@@ -21,7 +21,30 @@ function App(): JSX.Element {
           <LobbyPage />
         </Route>
         <Route exact path="/game">
-          <GamePage />
+          <GamePage
+            issues={[
+              {
+                issueName: "test",
+                priority: "test",
+                selected: true,
+              },
+              {
+                issueName: "test",
+                priority: "test",
+                selected: false,
+              },
+              {
+                issueName: "test",
+                priority: "test",
+                selected: false,
+              },
+              {
+                issueName: "test",
+                priority: "test",
+                selected: false,
+              },
+            ]}
+          />
         </Route>
         <Route exact path="/result">
           <GameResultPage />

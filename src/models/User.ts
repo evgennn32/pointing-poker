@@ -7,4 +7,5 @@ export default interface User {
   currentUser: boolean;
   ableToDelete: boolean;
   score: string;
+  scramMaster: boolean;
 }
