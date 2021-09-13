@@ -12,6 +12,9 @@ import Members from "../Members/Members";
 import IssuesBlock from "../IssuesBlock/IssuesBlock";
 import { IssueTile } from "../CreateIssue/IssueTile";
 import { CreateIssue } from "../CreateIssue/CreateIssue";
+import { GameSettingsView } from "../GameSettingsView/GameSettingsView";
+import GameSettings from "../../models/GameSettings";
+import Chat from "../Chat/Chat";
 
 const Container = styled.div`
   display: flex;
@@ -64,6 +67,10 @@ const IssuesWrap = styled.div`
   gap: 15px;
 `;
 
+const updateSettings = (gameSettings: GameSettings) => {
+  /*TODO UPDATE SETTINGS*/
+};
+
 const LobbyPage = (): JSX.Element => {
   return (
     <Page sidebarActive={false}>
@@ -106,11 +113,12 @@ const LobbyPage = (): JSX.Element => {
               <IssueTile {...issue} key={issue.issueName} />
             ))}
             <CreateIssue />
+            <GameSettingsView setGameSetting={updateSettings} />
           </IssuesWrap>
         </Container>
       </Main>
       <SideBar>
-        <div className="dd">dd</div>
+        <Chat />
       </SideBar>
     </Page>
   );
