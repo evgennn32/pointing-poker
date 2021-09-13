@@ -4,6 +4,7 @@ import { SideBar } from "../Sidebar/SideBar";
 
 export const Page = styled.div<{ sidebarActive?: boolean }>`
   display: flex;
+  width: 100%;
   max-width: 1920px;
   margin: 0 auto;
   ${Main} {
