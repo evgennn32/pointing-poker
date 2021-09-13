@@ -93,6 +93,9 @@ export const InputsWrapper = styled.div`
 export const FormWrapper = styled.div`
   display: grid;
   grid-template-columns: 66% auto;
+  @media (max-width: 850px) {
+    grid-template-columns: 50% auto;
+  }
 `;
 export const InputImage = styled.input`
   margin: 5px 0;
@@ -103,7 +106,6 @@ export const ConnectAsObserverAndCancel = styled.div`
   align-items: end;
   justify-items: end;
   height: 700px;
-  justify-content: space-between;
 `;
 export const ConnectAsObserver = styled.div`
   display: flex;
@@ -147,6 +149,13 @@ export const WrapperConnectToLobby = styled.div`
   margin: auto;
   z-index: 20;
   padding: 50px;
+  @media (max-width: 1000px) {
+    width: 700px;
+  }
+  @media (max-width: 850px) {
+    width: 90%;
+    padding: 5px;
+  }
 `;
 type AvatarImg = {
   avatar: string | null;
