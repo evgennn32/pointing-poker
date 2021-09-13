@@ -54,7 +54,7 @@ export const users = [
 ];
 
 export const initialData = {
-  tile: "Spring 23 planning (issues 13, 533, 5623, 3252, 6623, ...)",
+  title: "Spring 23 planning (issues 13, 533, 5623, 3252, 6623, ...)",
   scrumMuster: {
     id: "4",
     image: "test",
