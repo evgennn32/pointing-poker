@@ -12,5 +12,4 @@ export const Tile = styled.div<{ selected?: boolean }>`
   -moz-box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
   box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
   border-radius: 5px;
-  margin: 20px;
 `;
