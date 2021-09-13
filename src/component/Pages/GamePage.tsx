@@ -2,6 +2,7 @@ import { title } from "process";
 import React from "react";
 import styled from "styled-components";
 import {
+  cards,
   currentUser,
   gameSettings,
   initialData,
@@ -10,6 +11,7 @@ import {
   voteResultCards,
 } from "../../TempData";
 import { Button } from "../Button/Button";
+import PlayingCard from "../Cards/PlayingCard";
 import { CreateIssue } from "../CreateIssue/CreateIssue";
 import IssuesBlock from "../IssuesBlock/IssuesBlock";
 import { PlayersScoreView } from "../PlayersScoreView/PlayersScoreView";
@@ -26,6 +28,9 @@ export const DIV = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+`;
+export const ButtomPart = styled(DIV)`
+  justify-content: flex-start;
 `;
 export const Paragraph = styled.p`
   margin-left: 20px;
@@ -48,6 +53,12 @@ export const NextIssueBtn = styled.div`
   flex-grow: 1;
   text-align: end;
   align-self: start;
+`;
+export const StatistForPlayer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-self: center;
 `;
 
 const GamePage = (): JSX.Element => {
@@ -73,42 +84,68 @@ const GamePage = (): JSX.Element => {
               scramMaster={true}
             />
           </div>
+          {!currentUser.scramMaster && <Timer readOnly={true} />}
           <Button
             textContent={currentUser.scramMaster ? "Stop Game" : "Exit"}
             onClick={() => {
-              console.log("");
+              /* TODO Stop game or exit */
             }}
             isLightTheme={true}
-          />{" "}
+          />
         </DIV>
         <DIV>
           <div>
             <Title title="Issues:" />
-            <IssuesBlock issues={issues} />
-            <CreateIssue />
-            <Title title="Statistics:" />
+            <IssuesBlock issues={currentUser.scramMaster ? issues : issues} />
+            {/* TODO add issues with no ability to edit/del */}
+            {currentUser.scramMaster && (
+              <>
+                <CreateIssue />
+                <Title title="Statistics:" />{" "}
+                {/* TODO show statistic only when the game ended */}
+              </>
+            )}
           </div>
-          <TimerAndBtn>
-            <Timer readOnly={false} />
-            <Button
-              textContent="Run Round"
-              onClick={() => {
-                console.log("");
-              }}
-              isLightTheme={false}
-            />
-          </TimerAndBtn>
-          <NextIssueBtn>
-            <Button
-              textContent="Next Issue"
-              onClick={() => {
-                console.log("");
-              }}
-              isLightTheme={false}
-            />
-          </NextIssueBtn>
+          {currentUser.scramMaster && (
+            <>
+              <TimerAndBtn>
+                <Timer readOnly={false} />
+                <Button
+                  textContent="Run Round"
+                  onClick={() => {
+                    {
+                      /* TODO start game */
+                    }
+                  }}
+                  isLightTheme={false}
+                />
+              </TimerAndBtn>
+              <NextIssueBtn>
+                <Button
+                  textContent="Next Issue"
+                  onClick={() => {
+                    /* TODO select next issue */
+                  }}
+                  isLightTheme={false}
+                />
+              </NextIssueBtn>
+            </>
+          )}
+          {!currentUser.scramMaster && (
+            <StatistForPlayer>
+              <Title title="Statistics:" />
+              <VoteResults issueNumber={0} valueVoteArray={voteResultCards} />
+            </StatistForPlayer>
+          )}
         </DIV>
-        <VoteResults issueNumber={0} valueVoteArray={voteResultCards} />
+        <ButtomPart>
+          {currentUser.scramMaster ? (
+            <VoteResults issueNumber={1} valueVoteArray={voteResultCards} />
+          ) : (
+            cards.map((el, ind) => <PlayingCard {...el} key={ind} />)
+          )}
+          {/* TODO editable:false for non master add show statistic only when the game ended */}
+        </ButtomPart>
       </Main>
       <SideBar>
         <PlayersScoreView
