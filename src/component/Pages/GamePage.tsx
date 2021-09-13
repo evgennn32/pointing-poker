@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Issue from "../../models/Issue";
 import { Button } from "../Button/Button";
 import { CreateIssue } from "../CreateIssue/CreateIssue";
+import { IssueTile } from "../CreateIssue/IssueTile";
 import IssuesBlock from "../IssuesBlock/IssuesBlock";
 import Timer from "../Timer/Timer";
 import Title from "../Title/Title";
