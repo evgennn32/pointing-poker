@@ -3,21 +3,29 @@ export const issues = [
     issueName: "test",
     priority: "test",
     selected: true,
+    id: "1",
+    link: "test",
   },
   {
     issueName: "test",
     priority: "test",
     selected: true,
+    id: "2",
+    link: "test",
   },
   {
     issueName: "test",
     priority: "test",
     selected: true,
+    id: "3",
+    link: "test",
   },
   {
     issueName: "test",
     priority: "test",
     selected: false,
+    id: "4",
+    link: "test",
   },
 ];
 export const users = [
@@ -65,6 +73,17 @@ export const initialData = {
     ableToDelete: true,
     score: "test",
   },
+};
+
+export const currentUser = {
+  id: "4",
+  image: "test",
+  firstName: "Scram",
+  lastName: "Master",
+  position: "test",
+  currentUser: false,
+  ableToDelete: true,
+  score: "test",
 };
 
 export const cards = [
