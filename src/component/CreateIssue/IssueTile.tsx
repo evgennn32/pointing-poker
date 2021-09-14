@@ -16,10 +16,12 @@ export const IssueTile = (props: Issue): JSX.Element => {
       <Wrapper>
         <IssueName>{props.issueName}</IssueName>
         <Priority>{props.priority}</Priority>
-        <SVGWrapper>
-          <SVGPencil />
-          <SVGDelete />
-        </SVGWrapper>
+        {props.editable && (
+          <SVGWrapper>
+            <SVGPencil />
+            <SVGDelete />
+          </SVGWrapper>
+        )}
       </Wrapper>
     </Tile>
   );
