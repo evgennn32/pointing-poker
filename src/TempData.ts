@@ -38,6 +38,7 @@ export const users = [
     currentUser: false,
     ableToDelete: true,
     score: "test",
+    scramMaster: false,
   },
   {
     id: "2",
@@ -48,6 +49,7 @@ export const users = [
     currentUser: false,
     ableToDelete: true,
     score: "test",
+    scramMaster: false,
   },
   {
     id: "3",
@@ -58,6 +60,7 @@ export const users = [
     currentUser: false,
     ableToDelete: true,
     score: "test",
+    scramMaster: true,
   },
 ];
 
@@ -72,6 +75,7 @@ export const initialData = {
     currentUser: false,
     ableToDelete: true,
     score: "test",
+    scramMaster: true,
   },
 };
 
@@ -118,6 +122,33 @@ export const cards = [
     selected: false,
     closed: false,
     editable: true,
+  },
+];
+
+export const voteResultCards = [
+  {
+    value: "12",
+    type: "",
+    shortType: "SP",
+    percent: 5,
+  },
+  {
+    value: "12",
+    type: "",
+    shortType: "SP",
+    percent: 6,
+  },
+  {
+    value: "12",
+    type: "SP",
+    shortType: "SP",
+    percent: 5,
+  },
+  {
+    value: "12",
+    type: "SP",
+    shortType: "SP",
+    percent: 15,
   },
 ];
 
