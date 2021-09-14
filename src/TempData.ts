@@ -75,6 +75,7 @@ export const initialData = {
     currentUser: false,
     ableToDelete: true,
     score: "test",
+    scramMaster: true,
   },
 };
 
@@ -159,16 +160,4 @@ export const gameSettings = {
   scoreTypeShort: "SP",
   roundTime: "2000",
   cardsArray: cards,
-};
-
-export const currentUser = {
-  id: "1",
-  image: "test",
-  firstName: "test",
-  lastName: "test",
-  position: "test",
-  currentUser: true,
-  ableToDelete: true,
-  score: "test",
-  scramMaster: true,
 };
