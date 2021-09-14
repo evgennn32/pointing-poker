@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
-export const StatisticsWrapper = styled.aside``;
+export const StatisticsWrapper = styled.aside`
+  width: calc(100% - 40px);
+  padding: 20px;
+`;
 
 export const ResultWrapper = styled.div`
   display: flex;
