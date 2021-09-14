@@ -30,7 +30,16 @@ export const VoteResults = ({
   priority,
 }: Props): JSX.Element => (
   <StatisticsWrapper>
-    <IssueTile issueName={issueName} selected={false} priority={priority} />
+    {location.pathname !== "/game" && (
+      <IssueTile
+        issueName={issueName}
+        selected={false}
+        priority={priority}
+        editable={false}
+        id=""
+        link=""
+      />
+    )}
     <ResultWrapper>
       {valueVoteArray.map((card) => (
         <CardWrapper>
