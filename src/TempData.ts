@@ -1,23 +1,31 @@
 export const issues = [
   {
-    issueName: "test",
+    issueName: "test1",
     priority: "test",
     selected: true,
+    id: "1",
+    link: "test",
   },
   {
-    issueName: "test",
+    issueName: "test2",
     priority: "test",
     selected: true,
+    id: "2",
+    link: "test",
   },
   {
-    issueName: "test",
+    issueName: "test3",
     priority: "test",
     selected: true,
+    id: "3",
+    link: "test",
   },
   {
-    issueName: "test",
+    issueName: "test4",
     priority: "test",
     selected: false,
+    id: "4",
+    link: "test",
   },
 ];
 export const users = [
@@ -45,7 +53,7 @@ export const users = [
   },
   {
     id: "3",
-    image: "test",
+    image: "",
     firstName: "test",
     lastName: "test",
     position: "test",
@@ -57,7 +65,7 @@ export const users = [
 ];
 
 export const initialData = {
-  tile: "Spring 23 planning (issues 13, 533, 5623, 3252, 6623, ...)",
+  title: "Spring 23 planning (issues 13, 533, 5623, 3252, 6623, ...)",
   scrumMuster: {
     id: "4",
     image: "test",
@@ -68,6 +76,17 @@ export const initialData = {
     ableToDelete: true,
     score: "test",
   },
+};
+
+export const currentUser = {
+  id: "54",
+  image: "test",
+  firstName: "Scram",
+  lastName: "Master",
+  position: "test",
+  currentUser: false,
+  ableToDelete: true,
+  score: "test",
 };
 
 export const cards = [

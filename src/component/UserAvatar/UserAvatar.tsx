@@ -5,9 +5,13 @@ import User from "../../models/User";
 import { Tile } from "../styledComponents/Tile/Tile";
 import { ReactComponent as CircleWithDiagonal } from "./../../assets/icons/circle-diagonal-line.svg";
 
-export const UserAvatar = (props: User): JSX.Element => {
+interface UserWithClassName extends User {
+  className?: string;
+}
+
+export const UserAvatar = (props: UserWithClassName): JSX.Element => {
   return (
-    <Tile>
+    <Tile className={props.className}>
       <Avatar avatar={props.image}>
         {props.firstName !== "" && props.image === null && (
           <Initials>{props.firstName[0]}</Initials>
