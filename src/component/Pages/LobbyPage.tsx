@@ -4,17 +4,18 @@ import { SideBar } from "../styledComponents/Sidebar/SideBar";
 import { Page } from "../styledComponents/Page/Page";
 import styled from "styled-components";
 import { UserAvatar } from "../UserAvatar/UserAvatar";
-import { initialData, issues, users } from "../../TempData";
+import { currentUser, initialData, issues, users } from "../../TempData";
 import Title from "../Title/Title";
 import { Input } from "../styledComponents/Input/Input";
 import { Button } from "../Button/Button";
 import Members from "../Members/Members";
-import IssuesBlock from "../IssuesBlock/IssuesBlock";
 import { IssueTile } from "../CreateIssue/IssueTile";
 import { CreateIssue } from "../CreateIssue/CreateIssue";
 import { GameSettingsView } from "../GameSettingsView/GameSettingsView";
 import GameSettings from "../../models/GameSettings";
 import Chat from "../Chat/Chat";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 
 const Container = styled.div`
   display: flex;
@@ -54,9 +55,10 @@ const InputStyled = styled(Input)`
   border-right: none;
 `;
 
-const BtnsWrap = styled.div`
+const BtnsWrap = styled.div<{ alignRight?: boolean }>`
   display: flex;
-  justify-content: space-between;
+  justify-content: ${(props) =>
+    props.alignRight ? "flex-end" : "space-between"};
   margin: 30px 0;
   width: 100%;
 `;
@@ -72,49 +74,69 @@ const updateSettings = (gameSettings: GameSettings) => {
 };
 
 const LobbyPage = (): JSX.Element => {
+  const chatActive = useSelector((state: RootState) => state.chat.isActive);
   return (
-    <Page sidebarActive={false}>
+    <Page sidebarActive={chatActive}>
       <Main>
         <Container>
           <Title title={initialData.title} />
           <ScrumMasterLabel>Scram master:</ScrumMasterLabel>
           <UserAvatarStyled {...initialData.scrumMuster} />
-          <LinkToLobbyLabel>Link to lobby:</LinkToLobbyLabel>
-          <CopyLinkWrap>
-            <InputStyled value="http://pockerplanning.c..." />
-            <Button
-              isLightTheme={false}
-              textContent="Copy"
-              onClick={() => {
-                /*TODO handle copy click*/
-              }}
-            />
-          </CopyLinkWrap>
-          <BtnsWrap>
-            <Button
-              isLightTheme={false}
-              textContent="Start Game"
-              onClick={() => {
-                /*TODO handle start game click*/
-              }}
-            />
-            <Button
-              isLightTheme={true}
-              textContent="Cancel Game"
-              onClick={() => {
-                /*TODO handle cancel game click*/
-              }}
-            />
-          </BtnsWrap>
+          {currentUser.id === initialData.scrumMuster.id && (
+            <>
+              <LinkToLobbyLabel>Link to lobby:</LinkToLobbyLabel>
+              <CopyLinkWrap>
+                <InputStyled value="http://pockerplanning.c..." />
+                <Button
+                  isLightTheme={false}
+                  textContent="Copy"
+                  onClick={() => {
+                    // TODO handle copy click
+                  }}
+                />
+              </CopyLinkWrap>
+              <BtnsWrap>
+                <Button
+                  isLightTheme={false}
+                  textContent="Start Game"
+                  onClick={() => {
+                    // TODO handle start game click
+                  }}
+                />
+                <Button
+                  isLightTheme={true}
+                  textContent="Cancel Game"
+                  onClick={() => {
+                    // TODO handle cancel game click
+                  }}
+                />
+              </BtnsWrap>
+            </>
+          )}
+          {currentUser.id !== initialData.scrumMuster.id && (
+            <BtnsWrap alignRight={true}>
+              <Button
+                isLightTheme={true}
+                textContent="Exit"
+                onClick={() => {
+                  // TODO handle exit game click
+                }}
+              />
+            </BtnsWrap>
+          )}
           <Members users={users} />
-          <Title title="Issues:" />
-          <IssuesWrap>
-            {issues.map((issue) => (
-              <IssueTile {...issue} key={issue.issueName} />
-            ))}
-            <CreateIssue />
-            <GameSettingsView setGameSetting={updateSettings} />
-          </IssuesWrap>
+          {currentUser.id === initialData.scrumMuster.id && (
+            <>
+              <Title title="Issues:" />
+              <IssuesWrap>
+                {issues.map((issue) => (
+                  <IssueTile editable={true} {...issue} key={issue.id} />
+                ))}
+                <CreateIssue />
+              </IssuesWrap>
+              <GameSettingsView setGameSetting={updateSettings} />
+            </>
+          )}
         </Container>
       </Main>
       <SideBar>
