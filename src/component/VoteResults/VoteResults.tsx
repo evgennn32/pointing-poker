@@ -1,5 +1,6 @@
 import React from "react";
 import PlayingCard from "../Cards/PlayingCard";
+import { IssueTile } from "../CreateIssue/IssueTile";
 import {
   CardWrapper,
   PercentWrapper,
@@ -8,7 +9,8 @@ import {
 } from "./VoteResults.styled";
 
 type Props = {
-  issueNumber: number;
+  issueName: string;
+  priority: string;
   valueVoteArray: Array<VoteStatistics>;
 };
 
@@ -24,15 +26,11 @@ interface VoteStatistics {
 
 export const VoteResults = ({
   valueVoteArray,
-  issueNumber,
+  issueName,
+  priority,
 }: Props): JSX.Element => (
   <StatisticsWrapper>
-    <div>
-      {
-        issueNumber
-        // issue Component
-      }
-    </div>
+    <IssueTile issueName={issueName} selected={false} priority={priority} />
     <ResultWrapper>
       {valueVoteArray.map((card) => (
         <CardWrapper>
