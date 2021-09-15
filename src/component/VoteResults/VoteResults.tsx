@@ -12,6 +12,7 @@ type Props = {
   issueName: string;
   priority: string;
   valueVoteArray: Array<VoteStatistics>;
+  currentPage?: string;
 };
 
 interface VoteStatistics {
@@ -28,9 +29,10 @@ export const VoteResults = ({
   valueVoteArray,
   issueName,
   priority,
+  currentPage,
 }: Props): JSX.Element => (
   <StatisticsWrapper>
-    {location.pathname !== "/game" && (
+    {currentPage !== "game" && (
       <IssueTile
         issueName={issueName}
         selected={false}

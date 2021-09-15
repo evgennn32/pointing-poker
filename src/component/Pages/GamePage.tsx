@@ -85,10 +85,14 @@ const GamePage = (): JSX.Element => {
               scramMaster={true}
             />
           </div>
-          {!initialData.scrumMuster.currentUser && <Timer readOnly={true} />}
+          {initialData.scrumMuster.id !== currentUser.id && (
+            <Timer readOnly={true} />
+          )}
           <Button
             textContent={
-              initialData.scrumMuster.currentUser ? "Stop Game" : "Exit"
+              initialData.scrumMuster.id === currentUser.id
+                ? "Stop Game"
+                : "Exit"
             }
             onClick={() => {
               /* TODO Stop game or exit */
@@ -101,7 +105,7 @@ const GamePage = (): JSX.Element => {
             <Title title="Issues:" />
             <IssuesBlock
               issues={
-                !initialData.scrumMuster.currentUser
+                initialData.scrumMuster.id !== currentUser.id
                   ? issues.map<Issue>((iss) => {
                       return { ...iss, editable: false };
                     })
@@ -109,7 +113,7 @@ const GamePage = (): JSX.Element => {
               }
             />
             {/* TODO add issues with no ability to edit/del */}
-            {initialData.scrumMuster.currentUser && (
+            {initialData.scrumMuster.id === currentUser.id && (
               <>
                 <CreateIssue />
                 <Title title="Statistics:" />
@@ -117,7 +121,7 @@ const GamePage = (): JSX.Element => {
               </>
             )}
           </div>
-          {initialData.scrumMuster.currentUser && (
+          {initialData.scrumMuster.id === currentUser.id && (
             <>
               <TimerAndBtn>
                 <Timer readOnly={false} />
@@ -146,6 +150,7 @@ const GamePage = (): JSX.Element => {
             <StatistForPlayer>
               <Title title="Statistics:" />
               <VoteResults
+                currentPage="game"
                 issueName=""
                 valueVoteArray={voteResultCards}
                 priority=""
@@ -154,8 +159,9 @@ const GamePage = (): JSX.Element => {
           )}
         </DIV>
         <ButtomPart>
-          {initialData.scrumMuster.currentUser ? (
+          {initialData.scrumMuster.id === currentUser.id ? (
             <VoteResults
+              currentPage="game"
               issueName=""
               valueVoteArray={voteResultCards}
               priority=""
