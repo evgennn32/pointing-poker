@@ -12,6 +12,7 @@ type Props = {
   issueName: string;
   priority: string;
   valueVoteArray: Array<VoteStatistics>;
+  currentPage?: string;
 };
 
 interface VoteStatistics {
@@ -28,9 +29,19 @@ export const VoteResults = ({
   valueVoteArray,
   issueName,
   priority,
+  currentPage,
 }: Props): JSX.Element => (
   <StatisticsWrapper>
-    <IssueTile issueName={issueName} selected={false} priority={priority} />
+    {currentPage !== "game" && (
+      <IssueTile
+        issueName={issueName}
+        selected={false}
+        priority={priority}
+        editable={false}
+        id=""
+        link=""
+      />
+    )}
     <ResultWrapper>
       {valueVoteArray.map((card) => (
         <CardWrapper>

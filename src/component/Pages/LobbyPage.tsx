@@ -130,7 +130,15 @@ const LobbyPage = (): JSX.Element => {
               <Title title="Issues:" />
               <IssuesWrap>
                 {issues.map((issue) => (
-                  <IssueTile editable={true} {...issue} key={issue.id} />
+                  <IssueTile
+                    id={issue.id}
+                    issueName={issue.issueName}
+                    priority={issue.priority}
+                    selected={issue.selected}
+                    key={issue.id}
+                    link={issue.link}
+                    editable={true}
+                  />
                 ))}
                 <CreateIssue />
               </IssuesWrap>

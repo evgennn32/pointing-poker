@@ -5,6 +5,7 @@ export const issues = [
     selected: true,
     id: "1",
     link: "test",
+    editable: true,
   },
   {
     issueName: "test2",
@@ -12,6 +13,7 @@ export const issues = [
     selected: true,
     id: "2",
     link: "test",
+    editable: true,
   },
   {
     issueName: "test3",
@@ -19,6 +21,7 @@ export const issues = [
     selected: true,
     id: "3",
     link: "test",
+    editable: true,
   },
   {
     issueName: "test4",
@@ -26,6 +29,7 @@ export const issues = [
     selected: false,
     id: "4",
     link: "test",
+    editable: true,
   },
 ];
 export const users = [
@@ -72,7 +76,7 @@ export const initialData = {
     firstName: "Scram",
     lastName: "Master",
     position: "test",
-    currentUser: false,
+    currentUser: true,
     ableToDelete: true,
     score: "test",
     scramMaster: true,

@@ -1,6 +1,7 @@
 import { title } from "process";
 import React from "react";
 import styled from "styled-components";
+import Issue from "../../models/Issue";
 import {
   cards,
   currentUser,
@@ -84,10 +85,14 @@ const GamePage = (): JSX.Element => {
               scramMaster={true}
             />
           </div>
-          {!initialData.scrumMuster.currentUser && <Timer readOnly={true} />}
+          {initialData.scrumMuster.id !== currentUser.id && (
+            <Timer readOnly={true} />
+          )}
           <Button
             textContent={
-              initialData.scrumMuster.currentUser ? "Stop Game" : "Exit"
+              initialData.scrumMuster.id === currentUser.id
+                ? "Stop Game"
+                : "Exit"
             }
             onClick={() => {
               /* TODO Stop game or exit */
@@ -99,18 +104,24 @@ const GamePage = (): JSX.Element => {
           <div>
             <Title title="Issues:" />
             <IssuesBlock
-              issues={initialData.scrumMuster.currentUser ? issues : issues}
+              issues={
+                initialData.scrumMuster.id !== currentUser.id
+                  ? issues.map<Issue>((iss) => {
+                      return { ...iss, editable: false };
+                    })
+                  : issues
+              }
             />
             {/* TODO add issues with no ability to edit/del */}
-            {initialData.scrumMuster.currentUser && (
+            {initialData.scrumMuster.id === currentUser.id && (
               <>
                 <CreateIssue />
-                <Title title="Statistics:" />{" "}
+                <Title title="Statistics:" />
                 {/* TODO show statistic only when the game ended */}
               </>
             )}
           </div>
-          {initialData.scrumMuster.currentUser && (
+          {initialData.scrumMuster.id === currentUser.id && (
             <>
               <TimerAndBtn>
                 <Timer readOnly={false} />
@@ -138,13 +149,23 @@ const GamePage = (): JSX.Element => {
           {!initialData.scrumMuster.currentUser && (
             <StatistForPlayer>
               <Title title="Statistics:" />
-              <VoteResults issueNumber={0} valueVoteArray={voteResultCards} />
+              <VoteResults
+                currentPage="game"
+                issueName=""
+                valueVoteArray={voteResultCards}
+                priority=""
+              />
             </StatistForPlayer>
           )}
         </DIV>
         <ButtomPart>
-          {initialData.scrumMuster.currentUser ? (
-            <VoteResults issueNumber={1} valueVoteArray={voteResultCards} />
+          {initialData.scrumMuster.id === currentUser.id ? (
+            <VoteResults
+              currentPage="game"
+              issueName=""
+              valueVoteArray={voteResultCards}
+              priority=""
+            />
           ) : (
             cards.map((el, ind) => <PlayingCard {...el} key={ind} />)
           )}
