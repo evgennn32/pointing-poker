@@ -59,6 +59,10 @@ const InputWrapper = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 10px;
+  @media (max-width: 650px) {
+    flex-direction: column;
+    gap: 20px;
+  }
 `;
 
 const Input = styled.input`

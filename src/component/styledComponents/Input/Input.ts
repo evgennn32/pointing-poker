@@ -15,4 +15,14 @@ export const Input = styled.input`
   &:focus {
     outline: none;
   }
+  @media (max-width: 850px) {
+    width: 200px;
+    height: 25px;
+    font-size: 18px;
+  }
+  @media (max-height: 800px) {
+    width: 200px;
+    height: 25px;
+    font-size: 18px;
+  }
 `;

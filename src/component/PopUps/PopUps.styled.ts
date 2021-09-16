@@ -26,6 +26,14 @@ export const H2 = styled.h2`
   font-size: 60px;
   line-height: 75px;
   margin: 0;
+  @media (max-width: 850px) {
+    font-size: 40px;
+    line-height: 35px;
+  }
+  @media (max-height: 800px) {
+    font-size: 40px;
+    line-height: 35px;
+  }
 `;
 export const P = styled.p`
   font-style: normal;
@@ -73,6 +81,16 @@ export const Label = styled.label`
   font-weight: bold;
   font-size: 24px;
   line-height: 28px;
+  @media (max-width: 850px) {
+    font-size: 20px;
+    line-height: 12px;
+    margin-bottom: 5px;
+  }
+  @media (max-height: 800px) {
+    font-size: 20px;
+    line-height: 12px;
+    margin-bottom: 5px;
+  }
 `;
 export const Error = styled.span`
   justify-self: baseline;
@@ -105,7 +123,7 @@ export const ConnectAsObserverAndCancel = styled.div`
   grid-template-rows: 75px 133px auto;
   align-items: end;
   justify-items: end;
-  height: 700px;
+  max-height: 100%;
 `;
 export const ConnectAsObserver = styled.div`
   display: flex;
@@ -131,6 +149,13 @@ export const InputsWrapperConnectToLobby = styled.div`
   text-align: start;
   justify-content: space-between;
   height: 700px;
+  max-height: 100%;
+  @media (max-width: 850px) {
+    height: 500px;
+  }
+  @media (max-height: 800px) {
+    height: 500px;
+  }
 `;
 export const OneInputWrapperConnectToLobby = styled.div`
   display: flex;
@@ -140,6 +165,7 @@ export const WrapperConnectToLobby = styled.div`
   width: 776px;
   background-color: white;
   height: 730px;
+  max-height: 90vh;
   border: 1px solid grey;
   position: absolute;
   top: 0;
@@ -154,7 +180,11 @@ export const WrapperConnectToLobby = styled.div`
   }
   @media (max-width: 850px) {
     width: 90%;
-    padding: 5px;
+    height: max-content;
+    padding: 10px;
+  }
+  @media (max-height: 800px) {
+    padding: 10px;
   }
 `;
 type AvatarImg = {
