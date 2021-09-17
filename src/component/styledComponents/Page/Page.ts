@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Main } from "../Main/Main";
+import { MediaQuery } from "../MediaQuery/MediaQuery";
 import { SideBar } from "../Sidebar/SideBar";
 
 export const Page = styled.div<{ sidebarActive?: boolean }>`
@@ -12,5 +13,8 @@ export const Page = styled.div<{ sidebarActive?: boolean }>`
   }
   ${SideBar} {
     display: ${(props) => (props.sidebarActive ? "block" : "none")};
+  }
+  @media (${MediaQuery.laptopWidth}) {
+    flex-direction: column;
   }
 `;

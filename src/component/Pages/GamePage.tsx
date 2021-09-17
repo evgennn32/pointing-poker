@@ -24,14 +24,29 @@ import Title from "../Title/Title";
 import TitleEditable from "../Title/TitleEditable";
 import { UserAvatar } from "../UserAvatar/UserAvatar";
 import { VoteResults } from "../VoteResults/VoteResults";
+import { MediaQuery } from "../styledComponents/MediaQuery/MediaQuery";
 
 export const DIV = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  padding-left: 20px;
+`;
+export const MasterWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-left: 20px;
+  @media (${MediaQuery.laptopWidth}) {
+    width: max-content;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
 `;
 export const ButtomPart = styled(DIV)`
   justify-content: flex-start;
+  flex-wrap: wrap;
 `;
 export const Paragraph = styled.p`
   margin-left: 20px;
@@ -70,7 +85,7 @@ const GamePage = (): JSX.Element => {
           title={initialData.title}
           changeTitle={() => console.log(title)}
         />
-        <DIV>
+        <MasterWrapper>
           <div>
             <Paragraph>Scram master:</Paragraph>
             <UserAvatar
@@ -99,7 +114,7 @@ const GamePage = (): JSX.Element => {
             }}
             isLightTheme={true}
           />
-        </DIV>
+        </MasterWrapper>
         <DIV>
           <div>
             <Title title="Issues:" />
