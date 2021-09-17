@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { ReactComponent as Plus } from "./../../assets/icons/plus-in-sircule.svg";
 import { ReactComponent as Pencil } from "./../../assets/icons/pen.svg";
 import { ReactComponent as Delete } from "./../../assets/icons/trash-bin.svg";
+import { MediaQuery } from "../styledComponents/MediaQuery/MediaQuery";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -12,11 +13,21 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 3px;
+  @media (${MediaQuery.tablet}) {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+  }
 `;
 export const SVGWrapper = styled.div``;
 export const Priority = styled.p`
   position: absolute;
   margin-top: 65px;
+  @media (${MediaQuery.tablet}) {
+    display: block;
+    position: initial;
+    margin: 0;
+  }
 `;
 export const IssueName = styled.p`
   font-family: Ruda;
@@ -28,6 +39,10 @@ export const IssueName = styled.p`
   align-items: center;
   text-align: center;
   color: #000000;
+  @media (${MediaQuery.tablet}) {
+    margin: 0;
+    line-height: 12px;
+  }
 `;
 export const SVGPlus = styled(Plus)`
   width: 3em;

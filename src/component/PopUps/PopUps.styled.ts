@@ -143,6 +143,10 @@ export const Initials = styled.p`
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   position: relative;
   top: -3px;
+  @media (${MediaQuery.tablet}) {
+    font-size: 23px;
+    line-height: 26px;
+  }
 `;
 export const InputsWrapperConnectToLobby = styled.div`
   display: flex;
@@ -205,4 +209,8 @@ export const Avatar = styled.div<AvatarImg>`
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
+  @media (${MediaQuery.tablet}) {
+    width: 50px;
+    height: 50px;
+  }
 `;
