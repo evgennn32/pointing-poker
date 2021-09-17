@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { ButtonStyled } from "../Button/Button";
 import { Input } from "../styledComponents/Input/Input";
+import { MediaQuery } from "../styledComponents/MediaQuery/MediaQuery";
 
 export const ChatWrapper = styled.aside<{ active: boolean }>`
   position: sticky;
@@ -48,12 +49,12 @@ export const EnterButton = styled(ButtonStyled)`
   height: 48px;
 `;
 export const EnterInput = styled(Input)`
-  @media (max-width: 850px) {
+  @media (${MediaQuery.tablet}) {
     width: 270px;
     height: 41px;
     font-size: 24px;
   }
-  @media (max-height: 800px) {
+  @media (${MediaQuery.laptopHeight}) {
     width: 270px;
     height: 41px;
     font-size: 24px;

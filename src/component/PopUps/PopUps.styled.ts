@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { MediaQuery } from "../styledComponents/MediaQuery/MediaQuery";
 
 export const Wrapper = styled.div`
   width: 776px;
@@ -26,11 +27,11 @@ export const H2 = styled.h2`
   font-size: 60px;
   line-height: 75px;
   margin: 0;
-  @media (max-width: 850px) {
+  @media (${MediaQuery.tablet}) {
     font-size: 40px;
     line-height: 35px;
   }
-  @media (max-height: 800px) {
+  @media (${MediaQuery.laptopHeight}) {
     font-size: 40px;
     line-height: 35px;
   }
@@ -81,12 +82,12 @@ export const Label = styled.label`
   font-weight: bold;
   font-size: 24px;
   line-height: 28px;
-  @media (max-width: 850px) {
+  @media (${MediaQuery.tablet}) {
     font-size: 20px;
     line-height: 12px;
     margin-bottom: 5px;
   }
-  @media (max-height: 800px) {
+  @media (${MediaQuery.laptopHeight}) {
     font-size: 20px;
     line-height: 12px;
     margin-bottom: 5px;
@@ -111,7 +112,7 @@ export const InputsWrapper = styled.div`
 export const FormWrapper = styled.div`
   display: grid;
   grid-template-columns: 66% auto;
-  @media (max-width: 850px) {
+  @media (${MediaQuery.tablet}) {
     grid-template-columns: 50% auto;
   }
 `;
@@ -150,10 +151,10 @@ export const InputsWrapperConnectToLobby = styled.div`
   justify-content: space-between;
   height: 700px;
   max-height: 100%;
-  @media (max-width: 850px) {
+  @media (${MediaQuery.tablet}) {
     height: 500px;
   }
-  @media (max-height: 800px) {
+  @media (${MediaQuery.laptopHeight}) {
     height: 500px;
   }
 `;
@@ -178,12 +179,12 @@ export const WrapperConnectToLobby = styled.div`
   @media (max-width: 1000px) {
     width: 700px;
   }
-  @media (max-width: 850px) {
+  @media (${MediaQuery.tablet}) {
     width: 90%;
     height: max-content;
     padding: 10px;
   }
-  @media (max-height: 800px) {
+  @media (${MediaQuery.laptopHeight}) {
     padding: 10px;
   }
 `;
