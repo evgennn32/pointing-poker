@@ -7,6 +7,7 @@ import Header from "./component/Header/Header";
 import LobbyPage from "./component/Pages/LobbyPage";
 import GamePage from "./component/Pages/GamePage";
 import GameResultPage from "./component/Pages/GameResultPage";
+import Page404 from "./component/Pages/Page404";
 
 function App(): JSX.Element {
   const location = useLocation();
@@ -27,7 +28,7 @@ function App(): JSX.Element {
           <GameResultPage />
         </Route>
         <Route exact path="/404">
-          404
+          <Page404 />
         </Route>
         <Redirect to="/404" />
       </Switch>
