@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { MediaQuery } from "../styledComponents/MediaQuery/MediaQuery";
 
 export const Wrapper = styled.div`
   width: 776px;
@@ -26,6 +27,14 @@ export const H2 = styled.h2`
   font-size: 60px;
   line-height: 75px;
   margin: 0;
+  @media (${MediaQuery.tablet}) {
+    font-size: 40px;
+    line-height: 35px;
+  }
+  @media (${MediaQuery.laptopHeight}) {
+    font-size: 40px;
+    line-height: 35px;
+  }
 `;
 export const P = styled.p`
   font-style: normal;
@@ -73,6 +82,16 @@ export const Label = styled.label`
   font-weight: bold;
   font-size: 24px;
   line-height: 28px;
+  @media (${MediaQuery.tablet}) {
+    font-size: 20px;
+    line-height: 12px;
+    margin-bottom: 5px;
+  }
+  @media (${MediaQuery.laptopHeight}) {
+    font-size: 20px;
+    line-height: 12px;
+    margin-bottom: 5px;
+  }
 `;
 export const Error = styled.span`
   justify-self: baseline;
@@ -93,7 +112,7 @@ export const InputsWrapper = styled.div`
 export const FormWrapper = styled.div`
   display: grid;
   grid-template-columns: 66% auto;
-  @media (max-width: 850px) {
+  @media (${MediaQuery.tablet}) {
     grid-template-columns: 50% auto;
   }
 `;
@@ -105,7 +124,7 @@ export const ConnectAsObserverAndCancel = styled.div`
   grid-template-rows: 75px 133px auto;
   align-items: end;
   justify-items: end;
-  height: 700px;
+  max-height: 100%;
 `;
 export const ConnectAsObserver = styled.div`
   display: flex;
@@ -124,6 +143,10 @@ export const Initials = styled.p`
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   position: relative;
   top: -3px;
+  @media (${MediaQuery.tablet}) {
+    font-size: 23px;
+    line-height: 26px;
+  }
 `;
 export const InputsWrapperConnectToLobby = styled.div`
   display: flex;
@@ -131,6 +154,13 @@ export const InputsWrapperConnectToLobby = styled.div`
   text-align: start;
   justify-content: space-between;
   height: 700px;
+  max-height: 100%;
+  @media (${MediaQuery.tablet}) {
+    height: 500px;
+  }
+  @media (${MediaQuery.laptopHeight}) {
+    height: 500px;
+  }
 `;
 export const OneInputWrapperConnectToLobby = styled.div`
   display: flex;
@@ -140,6 +170,7 @@ export const WrapperConnectToLobby = styled.div`
   width: 776px;
   background-color: white;
   height: 730px;
+  max-height: 90vh;
   border: 1px solid grey;
   position: absolute;
   top: 0;
@@ -152,9 +183,13 @@ export const WrapperConnectToLobby = styled.div`
   @media (max-width: 1000px) {
     width: 700px;
   }
-  @media (max-width: 850px) {
+  @media (${MediaQuery.tablet}) {
     width: 90%;
-    padding: 5px;
+    height: max-content;
+    padding: 10px;
+  }
+  @media (${MediaQuery.laptopHeight}) {
+    padding: 10px;
   }
 `;
 type AvatarImg = {
@@ -174,4 +209,8 @@ export const Avatar = styled.div<AvatarImg>`
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
+  @media (${MediaQuery.tablet}) {
+    width: 50px;
+    height: 50px;
+  }
 `;
