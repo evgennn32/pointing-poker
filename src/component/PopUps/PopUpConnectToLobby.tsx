@@ -29,7 +29,11 @@ type Inputs = {
   connectAsObserver: boolean;
 };
 
-export function PopUpConnectToLobby(props: ClosePopUp): JSX.Element {
+type Props = ClosePopUp & {
+  createNewSession: boolean;
+};
+
+export function PopUpConnectToLobby(props: Props): JSX.Element {
   const formik = useFormik<Inputs>({
     initialValues: {
       email: "",
@@ -57,7 +61,11 @@ export function PopUpConnectToLobby(props: ClosePopUp): JSX.Element {
       <form onSubmit={formik.handleSubmit}>
         <FormWrapper>
           <InputsWrapperConnectToLobby>
-            <H2>Connect to lobby</H2>
+            <H2>
+              {props.createNewSession
+                ? "Create new session"
+                : "Connect to lobby"}
+            </H2>
             <OneInputWrapperConnectToLobby>
               <Label htmlFor="firstName">Your first name:</Label>
               <Input
@@ -135,13 +143,17 @@ export function PopUpConnectToLobby(props: ClosePopUp): JSX.Element {
           </InputsWrapperConnectToLobby>
           <ConnectAsObserverAndCancel>
             <ConnectAsObserver>
-              <Label id="my-radio-group">Connect as Observer</Label>
-              <Switcher
-                name="connectAsObserver"
-                id="connect-as-observer"
-                isSwitched={formik.values.connectAsObserver}
-                onSwitch={formik.handleChange}
-              />
+              {!props.createNewSession && (
+                <>
+                  <Label id="my-radio-group">Connect as Observer</Label>
+                  <Switcher
+                    name="connectAsObserver"
+                    id="connect-as-observer"
+                    isSwitched={formik.values.connectAsObserver}
+                    onSwitch={formik.handleChange}
+                  />
+                </>
+              )}
             </ConnectAsObserver>
             <Error>
               {formik.touched.firstName &&
