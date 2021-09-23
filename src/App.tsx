@@ -8,10 +8,8 @@ import LobbyPage from "./component/Pages/LobbyPage";
 import GamePage from "./component/Pages/GamePage";
 import GameResultPage from "./component/Pages/GameResultPage";
 import Page404 from "./component/Pages/Page404";
-import { io } from "socket.io-client";
 
 function App(): JSX.Element {
-  const socket = io("http://localhost:4000/");
   const location = useLocation();
   return (
     <div className="App">
