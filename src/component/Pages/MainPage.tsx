@@ -106,7 +106,9 @@ export const MainPage = (): JSX.Element => (
           nested
           modal
         >
-          {(close: () => void) => <PopUpConnectToLobby close={close} />}
+          {(close: () => void) => (
+            <PopUpConnectToLobby close={close} createNewSession={true} />
+          )}
         </Popup>
       </Label>
       <MainPageTitle>OR</MainPageTitle>
@@ -126,7 +128,9 @@ export const MainPage = (): JSX.Element => (
             nested
             modal
           >
-            {(close: () => void) => <PopUpConnectToLobby close={close} />}
+            {(close: () => void) => (
+              <PopUpConnectToLobby close={close} createNewSession={false} />
+            )}
           </Popup>
         </InputWrapper>
       </Label>
