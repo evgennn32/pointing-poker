@@ -1,7 +1,7 @@
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 
 export const APIservice = {
-  connect: () => {
+  connect: (): Socket => {
     return io("http://localhost:4000/", {
       reconnection: true,
       reconnectionDelay: 500,

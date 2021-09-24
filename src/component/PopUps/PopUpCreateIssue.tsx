@@ -1,6 +1,5 @@
 import { FormikErrors, useFormik } from "formik";
 import React from "react";
-import styled from "styled-components";
 import "./ReactPopUpDefault.css";
 import { Button } from "../Button/Button";
 import { Input } from "../styledComponents/Input/Input";
