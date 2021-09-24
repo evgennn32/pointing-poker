@@ -7,6 +7,6 @@ const NotFound = styled.h2`
   text-align: center;
 `;
 
-const Page404 = () => <NotFound>404 PAGE NOT FOUND</NotFound>;
+const Page404 = (): JSX.Element => <NotFound>404 PAGE NOT FOUND</NotFound>;
 
 export default Page404;
