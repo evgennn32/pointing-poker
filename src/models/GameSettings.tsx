@@ -6,6 +6,7 @@ export default interface GameSettings {
   isTimerNeeded: boolean;
   scoreType: string;
   scoreTypeShort: string;
-  roundTime: string;
+  roundTime: number;
   cardsArray: Card[];
+  gameInProgress: false,
 }
