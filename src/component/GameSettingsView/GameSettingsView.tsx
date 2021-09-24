@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import GameSettings from "../../models/GameSettings";
 import PlayingCard from "../Cards/PlayingCard";
 import PlayingCardAdd from "../Cards/PlayingCardAdd";
