@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-export const APIservice = {
+export const APIService = {
   connect: () => {
     return io("http://localhost:4000/", {
       reconnection: true,

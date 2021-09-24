@@ -55,12 +55,13 @@ export const GameSettingsView = (props: GameSettingsProps): JSX.Element => {
     },
   ];
   const [settings, setSettings] = useState<GameSettings>({
+    gameInProgress: false,
     scrumMasterAsPlayer: true,
     changingCardInRoundEnd: false,
     isTimerNeeded: true,
     scoreType: "story point",
     scoreTypeShort: "SP",
-    roundTime: "",
+    roundTime: 0,
     cardsArray: InitialCards,
   });
   useEffect(() => {

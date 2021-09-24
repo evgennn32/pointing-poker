@@ -6,9 +6,9 @@ import store from "./app/store";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { APIservice } from "./app/services/APIservice";
+import { APIService } from "./app/services/APIservice";
 
-APIservice.connect();
+APIService.connect();
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
