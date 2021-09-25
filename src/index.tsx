@@ -6,7 +6,7 @@ import store from "./app/store";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { APIService } from "./app/services/APIservice";
+import APIService from "./app/services/APIservice";
 
 APIService.connect();
 ReactDOM.render(

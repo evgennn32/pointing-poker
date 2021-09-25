@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
 import User from "../../models/User";
-import GameSettings from "../../models/GameSettings";
+import APIService from "../services/APIservice";
 
 const initialGame: GameRoomEntity = {
   roomName: "",
@@ -38,16 +38,15 @@ const createGameReducer = (
   state: GameRoomEntity,
   action: PayloadAction<User>,
 ) => {
-  //TODO createGame in APIService
+  APIService.gameCreate(action.payload);
   console.log(action.payload);
 };
 
-const updateGameSettings = (
+const updateGame = (
   state: GameRoomEntity,
-  action: PayloadAction<GameSettings>,
+  action: PayloadAction<GameRoomEntity>,
 ) => {
-  //TODO updateGameSettings in APIService
-  console.log(action.payload);
+  return action.payload;
 };
 
 export const gameSlice = createSlice({
@@ -55,9 +54,9 @@ export const gameSlice = createSlice({
   initialState: initialGame,
   reducers: {
     gameCreate: createGameReducer,
-    gameUpdateSettings: updateGameSettings,
+    gameUpdate: updateGame,
   },
 });
 
-export const { gameCreate } = gameSlice.actions;
+export const { gameCreate, gameUpdate } = gameSlice.actions;
 export default gameSlice.reducer;

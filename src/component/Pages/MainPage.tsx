@@ -1,17 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import Popup from "reactjs-popup";
 import styled from "styled-components";
 import { Button } from "../Button/Button";
 import { PopUpConnectToLobby } from "../PopUps/PopUpConnectToLobby";
 import "reactjs-popup/dist/index.css";
 import Chat from "../Chat/Chat";
+import { useDispatch, useSelector } from "react-redux";
+import APIService from "../../app/services/APIservice";
+import { GameRoomEntity } from "../../models/GameRoomEntity";
 
 const Main = styled.main`
   position: relative;
   width: 100%;
   background-color: white;
 `;
-
 const Content = styled.div`
   display: flex;
   flex-direction: column;
@@ -22,7 +24,6 @@ const Content = styled.div`
   margin: 20px auto 0px;
   padding: 0 20px 100px;
 `;
-
 const MainLogo = styled.img`
   display: block;
   width: 90%;
@@ -30,7 +31,6 @@ const MainLogo = styled.img`
   margin: 0 auto;
   padding-top: 100px;
 `;
-
 const MainPageTitle = styled.h2`
   margin: 30px 0 0 0;
   font-family: Roboto;
@@ -40,7 +40,6 @@ const MainPageTitle = styled.h2`
   line-height: 56px;
   color: #66999b;
 `;
-
 const Label = styled.label`
   display: flex;
   justify-content: space-between;
@@ -82,44 +81,31 @@ const Input = styled.input`
   }
 `;
 
-const clickHandler = () => {
-  console.log("click");
-};
+export const MainPage = (): JSX.Element => {
+  const dispatch = useDispatch();
+  const [gameLoaded, setGameLoaded] = useState(false);
+  const game = useSelector((state: { game: GameRoomEntity }) => state.game);
+  console.log("game name: ", game.roomName);
+  if (!gameLoaded) {
+    dispatch(APIService.loadCreatedGame());
+    setGameLoaded(true);
+  }
+  const clickHandler = () => {
+    console.log("action");
+  };
 
-export const MainPage = (): JSX.Element => (
-  <Main>
-    <Chat />
-    <MainLogo src="./images/MainLogo.png" />
-    <Content>
-      <MainPageTitle>Start your planning:</MainPageTitle>
-      <Label>
-        Create session:
-        <Popup
-          trigger={
-            <Button
-              textContent="Start new game"
-              onClick={clickHandler}
-              isLightTheme={false}
-            />
-          }
-          position="right center"
-          nested
-          modal
-        >
-          {(close: () => void) => (
-            <PopUpConnectToLobby close={close} createNewSession={true} />
-          )}
-        </Popup>
-      </Label>
-      <MainPageTitle>OR</MainPageTitle>
-      <Label>
-        Connect to lobby by URL:
-        <InputWrapper>
-          <Input />
+  return (
+    <Main>
+      <Chat />
+      <MainLogo src="./images/MainLogo.png" />
+      <Content>
+        <MainPageTitle>Start your planning:</MainPageTitle>
+        <Label>
+          Create session:
           <Popup
             trigger={
               <Button
-                textContent="Connect"
+                textContent="Start new game"
                 onClick={clickHandler}
                 isLightTheme={false}
               />
@@ -129,11 +115,42 @@ export const MainPage = (): JSX.Element => (
             modal
           >
             {(close: () => void) => (
-              <PopUpConnectToLobby close={close} createNewSession={false} />
+              <PopUpConnectToLobby
+                close={close}
+                createNewSession={true}
+                dispatch={dispatch}
+              />
             )}
           </Popup>
-        </InputWrapper>
-      </Label>
-    </Content>
-  </Main>
-);
+        </Label>
+        <MainPageTitle>OR</MainPageTitle>
+        <Label>
+          Connect to lobby by URL:
+          <InputWrapper>
+            <Input />
+            <Popup
+              trigger={
+                <Button
+                  textContent="Connect"
+                  onClick={clickHandler}
+                  isLightTheme={false}
+                />
+              }
+              position="right center"
+              nested
+              modal
+            >
+              {(close: () => void) => (
+                <PopUpConnectToLobby
+                  close={close}
+                  createNewSession={false}
+                  dispatch={dispatch}
+                />
+              )}
+            </Popup>
+          </InputWrapper>
+        </Label>
+      </Content>
+    </Main>
+  );
+};
