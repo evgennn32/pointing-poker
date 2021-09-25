@@ -8,6 +8,7 @@ import Chat from "../Chat/Chat";
 import { useDispatch, useSelector } from "react-redux";
 import APIService from "../../app/services/APIservice";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
+import { Redirect } from "react-router";
 
 const Main = styled.main`
   position: relative;
@@ -89,6 +90,9 @@ export const MainPage = (): JSX.Element => {
   if (!gameLoaded) {
     dispatch(APIService.loadCreatedGame());
     setGameLoaded(true);
+  }
+  if (game.roomID) {
+    return <Redirect to="/lobby" />;
   }
   const clickHandler = () => {
     console.log("action");
