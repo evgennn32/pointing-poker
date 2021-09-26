@@ -19,6 +19,8 @@ import {
   OneInputWrapperConnectToLobby,
   Avatar,
 } from "./PopUps.styled";
+import { createGame } from "../../app/slices/gameSlice";
+import { AppDispatch } from "../../app/store";
 
 type Inputs = {
   email: string;
@@ -31,6 +33,7 @@ type Inputs = {
 
 type Props = ClosePopUp & {
   createNewSession: boolean;
+  dispatch: AppDispatch;
 };
 
 export function PopUpConnectToLobby(props: Props): JSX.Element {
@@ -50,9 +53,22 @@ export function PopUpConnectToLobby(props: Props): JSX.Element {
       }
       return errors;
     },
-    onSubmit: () => {
-      // TODO create new user
-      props.close();
+    onSubmit: (values: Inputs) => {
+      // TODO handle image to blob
+      const user = {
+        id: "",
+        image: "",
+        firstName: values.firstName,
+        lastName: values.lastName,
+        position: values.jobPosition,
+        currentUser: false,
+        ableToDelete: true,
+        score: "",
+        scramMaster: true,
+      };
+      props.dispatch(createGame(user));
+      // props.dispatch(gameCreate(user));
+      //props.close();
       formik.resetForm();
     },
   });

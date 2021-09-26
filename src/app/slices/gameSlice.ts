@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
 import User from "../../models/User";
-import GameSettings from "../../models/GameSettings";
+import APIService from "../services/APIservice";
 
 const initialGame: GameRoomEntity = {
   roomName: "",
@@ -34,20 +34,20 @@ const initialGame: GameRoomEntity = {
   rounds: [],
 };
 
+export const createGame = createAsyncThunk(
+  "game/createStatus",
+  async (user: User) => {
+    const response = await APIService.gameCreate(user);
+    if (response) return response;
+  },
+);
+
 const createGameReducer = (
   state: GameRoomEntity,
   action: PayloadAction<User>,
 ) => {
-  //TODO createGame in APIService
-  console.log(action.payload);
-};
-
-const updateGameSettings = (
-  state: GameRoomEntity,
-  action: PayloadAction<GameSettings>,
-) => {
-  //TODO updateGameSettings in APIService
-  console.log(action.payload);
+  // APIService.gameCreate(action.payload);
+  // console.log(action.payload);
 };
 
 export const gameSlice = createSlice({
@@ -55,7 +55,11 @@ export const gameSlice = createSlice({
   initialState: initialGame,
   reducers: {
     gameCreate: createGameReducer,
-    gameUpdateSettings: updateGameSettings,
+  },
+  extraReducers: (builder) => {
+    builder.addCase(createGame.fulfilled, (state, action) => {
+      if (action.payload && action.payload.roomID) return action.payload;
+    });
   },
 });
 
