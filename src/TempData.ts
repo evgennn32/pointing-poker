@@ -84,7 +84,7 @@ export const initialData = {
 };
 
 export const currentUser = {
-  id: "54",
+  id: "4",
   image: "test",
   firstName: "Scram",
   lastName: "Master",

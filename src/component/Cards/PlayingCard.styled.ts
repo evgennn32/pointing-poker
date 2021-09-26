@@ -9,6 +9,26 @@ export const Card = styled.div`
   border: 2px solid #d2d2d2;
   box-shadow: 0px -5px 5px -5px rgba(34, 60, 80, 0.6) inset;
   margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  & div {
+    justify-content: space-between;
+    height: auto;
+    margin: 0;
+  }
+  & div > h2 {
+    margin: 0px;
+    font-size: 1rem;
+  }
+  & input {
+    min-width: 70px;
+    text-align: left;
+    font-size: 1rem;
+    font-family: Ruda-Bold, sans-serif;
+    outline: none;
+    border: none;
+  }
 `;
 export const TopContent = styled.div`
   height: 20%;
@@ -21,6 +41,7 @@ export const CenterContent = styled.div`
   font-size: 60px;
   font-weight: 600;
   font-family: Roboto-Bold, sans-serif;
+  align-self: center;
 `;
 export const BottomContent = styled.div`
   height: 20%;
