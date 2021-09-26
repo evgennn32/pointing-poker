@@ -13,12 +13,19 @@ import {
   Label,
   InputsSwitchersWrapper,
 } from "./GameSettingsView.style";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
+import { GameRoomEntity } from "../../models/GameRoomEntity";
 
 type GameSettingsProps = {
   setGameSetting: (gameSettings: GameSettings) => void;
 };
+console.log("game = ");
 
 export const GameSettingsView = (props: GameSettingsProps): JSX.Element => {
+  const game = useSelector<RootState, GameRoomEntity>(
+    (state: { game: GameRoomEntity }) => state.game,
+  );
   const InitialCards = [
     {
       value: "unknown",
@@ -149,7 +156,7 @@ export const GameSettingsView = (props: GameSettingsProps): JSX.Element => {
       </InputsSwitchersWrapper>
       <Label>Add card values:</Label>
       <CardsWrapper>
-        {settings.cardsArray.map((card, index) => (
+        {game.cards.map((card, index) => (
           <PlayingCard
             value={card.value}
             type={card.type}

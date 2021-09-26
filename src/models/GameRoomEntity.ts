@@ -9,7 +9,7 @@ import GameResult from "./GameResult";
 export interface GameRoomEntity {
   roomName: string;
   roomID: string;
-  scramMuster: User,
+  scrumMaster: User,
   gameSettings: GameSettings;
   users: User[];
   issues: Issue[];

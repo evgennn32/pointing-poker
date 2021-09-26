@@ -4,7 +4,6 @@ import { SideBar } from "../styledComponents/Sidebar/SideBar";
 import { Page } from "../styledComponents/Page/Page";
 import styled from "styled-components";
 import { UserAvatar } from "../UserAvatar/UserAvatar";
-import { currentUser, initialData, issues, users } from "../../TempData";
 import Title from "../Title/Title";
 import { Input } from "../styledComponents/Input/Input";
 import { Button } from "../Button/Button";
@@ -15,6 +14,9 @@ import { GameSettingsView } from "../GameSettingsView/GameSettingsView";
 import Chat from "../Chat/Chat";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
+import { GameRoomEntity } from "../../models/GameRoomEntity";
+import User from "../../models/User";
+import { Redirect } from "react-router";
 
 const Container = styled.div`
   display: flex;
@@ -76,24 +78,37 @@ const updateSettings = () => {
 };
 
 const LobbyPage = (): JSX.Element => {
+  const game = useSelector<RootState, GameRoomEntity>(
+    (state: { game: GameRoomEntity }) => state.game,
+  );
+  if (!game.roomID) {
+    return <Redirect to="/" />;
+  }
+  const user = useSelector<RootState, User>(
+    (state: { user: User }) => state.user,
+  );
+
   const chatActive = useSelector((state: RootState) => state.chat.isActive);
+  const gameLink = game.roomID
+    ? `${window.location.host}?gameId=${game.roomID}`
+    : "No game";
   return (
     <Page sidebarActive={chatActive}>
       <Main>
         <Container>
-          <Title title={initialData.title} />
+          <Title title={game.roomName} />
           <ScrumMasterLabel>Scram master:</ScrumMasterLabel>
-          <UserAvatarStyled {...initialData.scrumMuster} />
-          {currentUser.id === initialData.scrumMuster.id && (
+          <UserAvatarStyled {...game.scrumMaster} />
+          {user.id === game.scrumMaster.id && (
             <>
               <LinkToLobbyLabel>Link to lobby:</LinkToLobbyLabel>
               <CopyLinkWrap>
-                <InputStyled value="http://pockerplanning.c..." />
+                <InputStyled value={gameLink} />
                 <Button
                   isLightTheme={false}
                   textContent="Copy"
                   onClick={() => {
-                    // TODO handle copy click
+                    navigator.clipboard.writeText(gameLink);
                   }}
                 />
               </CopyLinkWrap>
@@ -115,7 +130,7 @@ const LobbyPage = (): JSX.Element => {
               </BtnsWrap>
             </>
           )}
-          {currentUser.id !== initialData.scrumMuster.id && (
+          {user.id !== game.scrumMaster.id && (
             <BtnsWrap alignRight={true}>
               <Button
                 isLightTheme={true}
@@ -126,12 +141,12 @@ const LobbyPage = (): JSX.Element => {
               />
             </BtnsWrap>
           )}
-          <Members users={users} />
-          {currentUser.id === initialData.scrumMuster.id && (
+          <Members users={game.users} />
+          {user.id === game.scrumMaster.id && (
             <>
               <Title title="Issues:" />
               <IssuesWrap>
-                {issues.map((issue) => (
+                {game.issues.map((issue) => (
                   <IssueTile
                     id={issue.id}
                     issueName={issue.issueName}
