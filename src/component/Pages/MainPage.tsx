@@ -8,6 +8,7 @@ import Chat from "../Chat/Chat";
 import { useDispatch, useSelector } from "react-redux";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
 import { RootState } from "../../app/store";
+import { Redirect } from "react-router";
 
 const Main = styled.main`
   position: relative;
@@ -87,6 +88,9 @@ export const MainPage = (): JSX.Element => {
     (state: { game: GameRoomEntity }) => state.game,
   );
   console.log("game name: ", game.roomName);
+  if (game.roomID) {
+    return <Redirect to="/lobby" />;
+  }
   const clickHandler = () => {
     console.log("action");
   };
