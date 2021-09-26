@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { ReactComponent as Plus } from "./../../assets/icons/plus-in-sircule.svg";
-import { ReactComponent as Pencil } from "./../../assets/icons/pen.svg";
 import { ReactComponent as Delete } from "./../../assets/icons/trash-bin.svg";
 import { MediaQuery } from "../styledComponents/MediaQuery/MediaQuery";
 
@@ -17,6 +16,25 @@ export const Wrapper = styled.div`
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-around;
+  }
+  & > div {
+    width: 80%;
+    margin: 0;
+    justify-content: space-between;
+    & > span > svg {
+      height: 3em;
+      width: 3em;
+      vertical-align: middle;
+      cursor: pointer;
+      &:hover {
+        transform: scale(1.1);
+        transition: 0.3s;
+      }
+    }
+    & > input {
+      background-color: transparent;
+      text-align: left;
+    }
   }
 `;
 export const SVGWrapper = styled.div``;
@@ -55,16 +73,6 @@ export const SVGPlus = styled(Plus)`
       transform: scale(1.1);
       transition: 0.3s;
     }
-  }
-`;
-export const SVGPencil = styled(Pencil)`
-  height: 3em;
-  width: 3em;
-  vertical-align: middle;
-  cursor: pointer;
-  &:hover {
-    transform: scale(1.1);
-    transition: 0.3s;
   }
 `;
 export const SVGDelete = styled(Delete)`
