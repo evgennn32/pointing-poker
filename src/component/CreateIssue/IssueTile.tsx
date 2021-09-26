@@ -2,26 +2,29 @@ import React from "react";
 import {
   Wrapper,
   IssueName,
-  SVGPencil,
-  SVGWrapper,
   SVGDelete,
   Priority,
 } from "./CreateIssueAndIssue.style";
 import Issue from "../../models/Issue";
 import { Tile } from "../styledComponents/Tile/Tile";
+import TitleEditable from "../Title/TitleEditable";
 
 export const IssueTile = (props: Issue): JSX.Element => {
   return (
     <Tile selected={props.selected}>
       <Wrapper>
-        <IssueName>{props.issueName}</IssueName>
-        <Priority>{props.priority}</Priority>
-        {props.editable && (
-          <SVGWrapper>
-            <SVGPencil />
+        {props.editable ? (
+          <>
+            <TitleEditable
+              title={props.issueName}
+              changeTitle={() => console.log(props.issueName)}
+            />
             <SVGDelete />
-          </SVGWrapper>
+          </>
+        ) : (
+          <IssueName>{props.issueName}</IssueName>
         )}
+        <Priority>{props.priority}</Priority>
       </Wrapper>
     </Tile>
   );

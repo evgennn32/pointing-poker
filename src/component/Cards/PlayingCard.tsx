@@ -1,6 +1,7 @@
 import React from "react";
+import Title from "../Title/Title";
+import TitleEditable from "../Title/TitleEditable";
 import { ReactComponent as CupIcon } from "./../../assets/icons/cup.svg";
-import { ReactComponent as PenIcon } from "./../../assets/icons/pen.svg";
 import {
   BottomContent,
   Card,
@@ -11,7 +12,6 @@ import {
   Checkmark_circle,
   Checkmark_kick,
   Checkmark_stem,
-  EditIcon,
   TopContent,
 } from "./PlayingCard.styled";
 
@@ -27,19 +27,25 @@ interface CardProps {
 const PlayingCard = (props: CardProps): JSX.Element => {
   return (
     <Card>
-      {props.editable && (
-        <EditIcon>
-          <PenIcon />
-        </EditIcon>
+      {props.editable ? (
+        <TitleEditable
+          title={props.value}
+          changeTitle={() => console.log(props.value)}
+        ></TitleEditable>
+      ) : (
+        <TopContent>
+          <span>
+            <Title title={props.value}></Title>
+          </span>
+        </TopContent>
       )}
-      <TopContent>
-        <span>{props.value}</span>
-      </TopContent>
       <CenterContent>
         {props.type === "cup" ? <CupIcon /> : <span>{props.shortType}</span>}
       </CenterContent>
       <BottomContent>
-        <span>{props.value}</span>
+        <span>
+          <Title title={props.value}></Title>
+        </span>
       </BottomContent>
       {props.selected && (
         <CheckedCover>

@@ -60,6 +60,9 @@ const BtnsWrap = styled.div<{ alignRight?: boolean }>`
     props.alignRight ? "flex-end" : "space-between"};
   margin: 30px 0;
   width: 100%;
+  & :last-child {
+    margin-right: 40px;
+  }
 `;
 
 const IssuesWrap = styled.div`
