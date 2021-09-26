@@ -1,7 +1,6 @@
 import { io, Socket } from "socket.io-client";
 import User from "../../models/User";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
-import { gameUpdate } from "../slices/gameSlice";
 
 const APIService = {
   connected: false,
@@ -19,24 +18,22 @@ const APIService = {
       APIService.connected = false;
     });
   },
-  gameCreate: (user: User): void => {
+  gameCreate: async (user: User): Promise<GameRoomEntity | undefined> => {
     if (APIService.connected) {
       try {
-        const cb = (res: { error: string; game: GameRoomEntity }): void => {
-          if (res.error) {
-            throw Error(res.error);
-          }
-        };
-        APIService.socket.emit("create:game", user, cb);
+        return new Promise((resolve) => {
+          const cb = (res: { error: string; game: GameRoomEntity }): void => {
+            if (res.error) {
+              throw Error(res.error);
+            }
+            resolve(res.game);
+          };
+          APIService.socket.emit("create:game", user, cb);
+        });
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
     }
-  },
-  loadCreatedGame: (): ((dispatch: any) => void) => (dispatch: any) => {
-    APIService.socket.on("game:created", (res) => {
-      dispatch(gameUpdate(res));
-    });
   },
 };
 
