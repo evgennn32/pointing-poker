@@ -19,7 +19,8 @@ import {
   OneInputWrapperConnectToLobby,
   Avatar,
 } from "./PopUps.styled";
-import { gameCreate } from "../../app/slices/gameSlice";
+import { createGame } from "../../app/slices/gameSlice";
+import { AppDispatch } from "../../app/store";
 
 type Inputs = {
   email: string;
@@ -32,7 +33,7 @@ type Inputs = {
 
 type Props = ClosePopUp & {
   createNewSession: boolean;
-  dispatch: any;
+  dispatch: AppDispatch;
 };
 
 export function PopUpConnectToLobby(props: Props): JSX.Element {
@@ -65,8 +66,8 @@ export function PopUpConnectToLobby(props: Props): JSX.Element {
         score: "",
         scramMaster: true,
       };
-
-      props.dispatch(gameCreate(user));
+      props.dispatch(createGame(user));
+      // props.dispatch(gameCreate(user));
       //props.close();
       formik.resetForm();
     },

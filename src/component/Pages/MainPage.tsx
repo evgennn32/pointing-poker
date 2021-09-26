@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Popup from "reactjs-popup";
 import styled from "styled-components";
 import { Button } from "../Button/Button";
@@ -6,8 +6,8 @@ import { PopUpConnectToLobby } from "../PopUps/PopUpConnectToLobby";
 import "reactjs-popup/dist/index.css";
 import Chat from "../Chat/Chat";
 import { useDispatch, useSelector } from "react-redux";
-import APIService from "../../app/services/APIservice";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
+import { RootState } from "../../app/store";
 
 const Main = styled.main`
   position: relative;
@@ -83,13 +83,10 @@ const Input = styled.input`
 
 export const MainPage = (): JSX.Element => {
   const dispatch = useDispatch();
-  const [gameLoaded, setGameLoaded] = useState(false);
-  const game = useSelector((state: { game: GameRoomEntity }) => state.game);
+  const game = useSelector<RootState, GameRoomEntity>(
+    (state: { game: GameRoomEntity }) => state.game,
+  );
   console.log("game name: ", game.roomName);
-  if (!gameLoaded) {
-    dispatch(APIService.loadCreatedGame());
-    setGameLoaded(true);
-  }
   const clickHandler = () => {
     console.log("action");
   };
