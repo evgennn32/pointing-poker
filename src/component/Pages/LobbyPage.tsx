@@ -12,11 +12,13 @@ import { IssueTile } from "../CreateIssue/IssueTile";
 import { CreateIssue } from "../CreateIssue/CreateIssue";
 import { GameSettingsView } from "../GameSettingsView/GameSettingsView";
 import Chat from "../Chat/Chat";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
 import User from "../../models/User";
 import { Redirect } from "react-router";
+import GameSettings from "../../models/GameSettings";
+import { updateGameSettings } from "../../app/slices/gameSlice";
 
 const Container = styled.div`
   display: flex;
@@ -73,17 +75,19 @@ const IssuesWrap = styled.div`
   gap: 15px;
 `;
 
-const updateSettings = () => {
-  /*TODO UPDATE SETTINGS*/
-};
-
 const LobbyPage = (): JSX.Element => {
+  const dispatch = useDispatch();
+
   const game = useSelector<RootState, GameRoomEntity>(
     (state: { game: GameRoomEntity }) => state.game,
   );
   if (!game.roomID) {
     return <Redirect to="/" />;
   }
+  const updateSettings = (settings: GameSettings) => {
+    dispatch(updateGameSettings({ settings, roomId: game.roomID }));
+  };
+  console.log(game);
   const user = useSelector<RootState, User>(
     (state: { user: User }) => state.user,
   );
