@@ -6,7 +6,7 @@ import APIService from "../services/APIservice";
 const initialGame: GameRoomEntity = {
   roomName: "",
   roomID: "",
-  scramMuster: {
+  scrumMaster: {
     id: "",
     image: null,
     firstName: "",

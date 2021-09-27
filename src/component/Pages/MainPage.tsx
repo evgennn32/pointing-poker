@@ -90,7 +90,7 @@ export const MainPage = (): JSX.Element => {
   );
   console.log("game name: ", game.roomName);
   if (game.roomID) {
-    dispatch(userUpdateState(game.scramMuster));
+    dispatch(userUpdateState(game.scrumMaster));
     return <Redirect to="/lobby" />;
   }
   const clickHandler = () => {

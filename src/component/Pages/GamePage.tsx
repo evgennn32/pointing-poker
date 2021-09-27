@@ -100,12 +100,12 @@ const GamePage = (): JSX.Element => {
               scramMaster={true}
             />
           </div>
-          {initialData.scrumMuster.id !== currentUser.id && (
+          {initialData.scrumMaster.id !== currentUser.id && (
             <Timer readOnly={true} />
           )}
           <Button
             textContent={
-              initialData.scrumMuster.id === currentUser.id
+              initialData.scrumMaster.id === currentUser.id
                 ? "Stop Game"
                 : "Exit"
             }
@@ -120,7 +120,7 @@ const GamePage = (): JSX.Element => {
             <Title title="Issues:" />
             <IssuesBlock
               issues={
-                initialData.scrumMuster.id !== currentUser.id
+                initialData.scrumMaster.id !== currentUser.id
                   ? issues.map<Issue>((iss) => {
                       return { ...iss, editable: false };
                     })
@@ -128,7 +128,7 @@ const GamePage = (): JSX.Element => {
               }
             />
             {/* TODO add issues with no ability to edit/del */}
-            {initialData.scrumMuster.id === currentUser.id && (
+            {initialData.scrumMaster.id === currentUser.id && (
               <>
                 <CreateIssue />
                 <Title title="Statistics:" />
@@ -136,7 +136,7 @@ const GamePage = (): JSX.Element => {
               </>
             )}
           </div>
-          {initialData.scrumMuster.id === currentUser.id && (
+          {initialData.scrumMaster.id === currentUser.id && (
             <>
               <TimerAndBtn>
                 <Timer readOnly={false} />
@@ -161,7 +161,7 @@ const GamePage = (): JSX.Element => {
               </NextIssueBtn>
             </>
           )}
-          {!initialData.scrumMuster.currentUser && (
+          {!initialData.scrumMaster.currentUser && (
             <StatistForPlayer>
               <Title title="Statistics:" />
               <VoteResults
@@ -174,7 +174,7 @@ const GamePage = (): JSX.Element => {
           )}
         </DIV>
         <ButtomPart>
-          {initialData.scrumMuster.id === currentUser.id ? (
+          {initialData.scrumMaster.id === currentUser.id ? (
             <VoteResults
               currentPage="game"
               issueName=""

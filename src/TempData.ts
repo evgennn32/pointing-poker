@@ -70,7 +70,7 @@ export const users = [
 
 export const initialData = {
   title: "Spring 23 planning (issues 13, 533, 5623, 3252, 6623, ...)",
-  scrumMuster: {
+  scrumMaster: {
     id: "4",
     image: "test",
     firstName: "Scram",
