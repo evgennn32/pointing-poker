@@ -2,6 +2,7 @@ import { io, Socket } from "socket.io-client";
 import User from "../../models/User";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
 import GameSettings from "../../models/GameSettings";
+import Card from "../../models/Card";
 
 const APIService = {
   connected: false,
@@ -55,6 +56,23 @@ const APIService = {
             roomId,
             cb,
           );
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
+  cardAdd: async (card: Card, roomId: string): Promise<Card | undefined> => {
+    if (APIService.connected) {
+      try {
+        return new Promise((resolve) => {
+          const cb = (res: { error: string; card: Card }): void => {
+            if (res.error) {
+              throw Error(res.error);
+            }
+            resolve(res.card);
+          };
+          APIService.socket.emit("game:card-add", card, roomId, cb);
         });
       } catch (e) {
         console.error(e);

@@ -3,6 +3,7 @@ import { GameRoomEntity } from "../../models/GameRoomEntity";
 import User from "../../models/User";
 import APIService from "../services/APIservice";
 import GameSettings from "../../models/GameSettings";
+import Card from "../../models/Card";
 
 const initialGame: GameRoomEntity = {
   roomName: "",
@@ -44,13 +45,21 @@ export const createGame = createAsyncThunk(
 );
 
 export const updateGameSettings = createAsyncThunk(
-  "game/createStatus",
+  "game/updateStatus",
   async (data: { settings: GameSettings; roomId: string }) => {
     const response = await APIService.gameUpdateSettings(
       data.settings,
       data.roomId,
     );
     console.log(response);
+    if (response) return response;
+  },
+);
+
+export const cardAdd = createAsyncThunk(
+  "game/addCardStatus",
+  async (data: { card: Card; roomId: string }) => {
+    const response = await APIService.cardAdd(data.card, data.roomId);
     if (response) return response;
   },
 );
@@ -70,9 +79,18 @@ export const gameSlice = createSlice({
     gameCreate: createGameReducer,
   },
   extraReducers: (builder) => {
-    builder.addCase(createGame.fulfilled, (state, action) => {
-      if (action.payload && action.payload.roomID) return action.payload;
-    });
+    builder
+      .addCase(createGame.fulfilled, (state, action) => {
+        if (action.payload && action.payload.roomID) return action.payload;
+      })
+      .addCase(updateGameSettings.fulfilled, (state, action) => {
+        if (action.payload) state.gameSettings = action.payload;
+      })
+      .addCase(cardAdd.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.cards.push(action.payload);
+        }
+      });
   },
 });
 

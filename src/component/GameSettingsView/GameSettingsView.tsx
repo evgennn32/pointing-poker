@@ -13,9 +13,10 @@ import {
   Label,
   InputsSwitchersWrapper,
 } from "./GameSettingsView.style";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
+import { cardAdd } from "../../app/slices/gameSlice";
 
 type GameSettingsProps = {
   setGameSetting: (gameSettings: GameSettings) => void;
@@ -23,10 +24,10 @@ type GameSettingsProps = {
 console.log("game = ");
 
 export const GameSettingsView = (props: GameSettingsProps): JSX.Element => {
+  const dispatch = useDispatch();
   const game = useSelector<RootState, GameRoomEntity>(
     (state: { game: GameRoomEntity }) => state.game,
   );
-
   const [settings, setSettings] = useState<GameSettings>({
     gameInProgress: false,
     scrumMasterAsPlayer: true,
@@ -136,15 +137,16 @@ export const GameSettingsView = (props: GameSettingsProps): JSX.Element => {
         ))}
         <PlayingCardAdd
           onClick={() => {
-            // TODO dispatch cardAdd
-            // game.cards.concat({
-            //   value: "12",
-            //   type: "",
-            //   shortType: settings.scoreTypeShort,
-            //   selected: false,
-            //   closed: false,
-            //   editable: true,
-            // });
+            const card = {
+              value: "12",
+              type: "",
+              shortType: game.gameSettings.scoreTypeShort,
+              selected: false,
+              closed: false,
+              editable: true,
+            };
+            const roomId = game.roomID;
+            dispatch(cardAdd({ card, roomId }));
           }}
         />
       </CardsWrapper>
