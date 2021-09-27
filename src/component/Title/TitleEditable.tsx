@@ -29,8 +29,9 @@ const TitleEditable = (props: TitleEditableProps): JSX.Element => {
     setIsEditing(!isEditing);
   };
   const editTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    console.log(e.target.value);
-    props.changeTitle(e.target.value);
+    if (e.target.value) {
+      props.changeTitle(e.target.value);
+    }
   };
   return (
     <TitleWrapper>
