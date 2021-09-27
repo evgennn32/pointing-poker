@@ -57,7 +57,7 @@ export const PopUpCreateIssue = (props: ClosePopUp): JSX.Element => {
         link: values.link,
         id: "",
         selected: false,
-        editable: game.scrumMaster.currentUser,
+        editable: false,
       };
       const roomId = game.roomID;
       dispatch(issueAdd({ issue, roomId }));
