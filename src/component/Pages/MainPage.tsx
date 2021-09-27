@@ -8,6 +8,7 @@ import Chat from "../Chat/Chat";
 import { useDispatch, useSelector } from "react-redux";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
 import { RootState } from "../../app/store";
+import { userUpdateState } from "../../app/slices/userSlice";
 import { Redirect } from "react-router";
 
 const Main = styled.main`
@@ -89,6 +90,7 @@ export const MainPage = (): JSX.Element => {
   );
   console.log("game name: ", game.roomName);
   if (game.roomID) {
+    dispatch(userUpdateState(game.scramMuster));
     return <Redirect to="/lobby" />;
   }
   const clickHandler = () => {
