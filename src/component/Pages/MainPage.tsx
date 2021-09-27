@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Popup from "reactjs-popup";
 import styled from "styled-components";
 import { Button } from "../Button/Button";
@@ -10,6 +10,7 @@ import { GameRoomEntity } from "../../models/GameRoomEntity";
 import { RootState } from "../../app/store";
 import { userUpdateState } from "../../app/slices/userSlice";
 import { Redirect } from "react-router";
+import { getUrlParam } from "../../shared/helpers";
 
 const Main = styled.main`
   position: relative;
@@ -85,16 +86,19 @@ const Input = styled.input`
 
 export const MainPage = (): JSX.Element => {
   const dispatch = useDispatch();
+  const [connectPopUpOpen, setConnectPopUpOpen] = useState(false);
   const game = useSelector<RootState, GameRoomEntity>(
     (state: { game: GameRoomEntity }) => state.game,
   );
-  console.log("game name: ", game.roomName);
   if (game.roomID) {
     dispatch(userUpdateState(game.scrumMaster));
     return <Redirect to="/lobby" />;
   }
-  const clickHandler = () => {
-    console.log("action");
+  const [connectUrl, setConnectUrl] = useState("");
+  const connectHandler = () => {
+    // const roomId = getUrlParam(connectUrl, "game");
+    // console.log(roomId);
+    // setConnectPopUpOpen(true);
   };
 
   return (
@@ -107,11 +111,7 @@ export const MainPage = (): JSX.Element => {
           Create session:
           <Popup
             trigger={
-              <Button
-                textContent="Start new game"
-                onClick={clickHandler}
-                isLightTheme={false}
-              />
+              <Button textContent="Start new game" isLightTheme={false} />
             }
             position="right center"
             nested
@@ -130,19 +130,15 @@ export const MainPage = (): JSX.Element => {
         <Label>
           Connect to lobby by URL:
           <InputWrapper>
-            <Input />
-            <Popup
-              trigger={
-                <Button
-                  textContent="Connect"
-                  onClick={clickHandler}
-                  isLightTheme={false}
-                />
-              }
-              position="right center"
-              nested
-              modal
-            >
+            <Input
+              value={connectUrl}
+              onChange={(event) => {
+                if (event.currentTarget.value) {
+                  setConnectUrl(event.currentTarget.value);
+                }
+              }}
+            />
+            <Popup open={connectPopUpOpen} position="right center" nested modal>
               {(close: () => void) => (
                 <PopUpConnectToLobby
                   close={close}
@@ -151,6 +147,11 @@ export const MainPage = (): JSX.Element => {
                 />
               )}
             </Popup>
+            <Button
+              textContent="Connect"
+              onClick={connectHandler}
+              isLightTheme={false}
+            />
           </InputWrapper>
         </Label>
       </Content>
