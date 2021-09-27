@@ -124,20 +124,13 @@ export const GameSettingsView = (props: GameSettingsProps): JSX.Element => {
       </InputsSwitchersWrapper>
       <Label>Add card values:</Label>
       <CardsWrapper>
-        {game.cards.map((card, index) => (
-          <PlayingCard
-            value={card.value}
-            type={card.type}
-            shortType={card.shortType}
-            selected={card.selected}
-            closed={card.closed}
-            editable={card.editable}
-            key={index}
-          />
+        {game.cards.map((card) => (
+          <PlayingCard {...card} key={card.id} />
         ))}
         <PlayingCardAdd
           onClick={() => {
             const card = {
+              id: "",
               value: "12",
               type: "",
               shortType: game.gameSettings.scoreTypeShort,

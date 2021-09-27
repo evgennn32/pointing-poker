@@ -96,6 +96,7 @@ export const currentUser = {
 
 export const cards = [
   {
+    id: "7",
     value: "12",
     type: "cup",
     shortType: "SP",
@@ -104,6 +105,7 @@ export const cards = [
     editable: true,
   },
   {
+    id: "6",
     value: "12",
     type: "regular",
     shortType: "SP",
@@ -112,6 +114,7 @@ export const cards = [
     editable: true,
   },
   {
+    id: "5",
     value: "12",
     type: "",
     shortType: "SP",
@@ -120,6 +123,7 @@ export const cards = [
     editable: true,
   },
   {
+    id: "4",
     value: "12",
     type: "",
     shortType: "SP",
@@ -131,24 +135,28 @@ export const cards = [
 
 export const voteResultCards = [
   {
+    id: "1",
     value: "12",
     type: "",
     shortType: "SP",
     percent: 5,
   },
   {
+    id: "2",
     value: "12",
     type: "",
     shortType: "SP",
     percent: 6,
   },
   {
+    id: "3",
     value: "12",
     type: "SP",
     shortType: "SP",
     percent: 5,
   },
   {
+    id: "4",
     value: "12",
     type: "SP",
     shortType: "SP",

@@ -16,6 +16,7 @@ type Props = {
 };
 
 interface VoteStatistics {
+  id: string;
   value: string;
   type: string;
   shortType: string;
@@ -46,6 +47,7 @@ export const VoteResults = ({
       {valueVoteArray.map((card) => (
         <CardWrapper>
           <PlayingCard
+            id={card.id}
             value={card.value}
             type={card.type}
             shortType={card.shortType}
