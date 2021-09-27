@@ -31,6 +31,7 @@ export const DIV = styled.div`
   justify-content: space-between;
   align-items: flex-end;
   padding-left: 20px;
+  column-gap: 15px;
 `;
 export const MasterWrapper = styled.div`
   display: flex;
