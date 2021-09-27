@@ -1,6 +1,7 @@
 import { io, Socket } from "socket.io-client";
 import User from "../../models/User";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
+import GameSettings from "../../models/GameSettings";
 
 const APIService = {
   connected: false,
@@ -29,6 +30,31 @@ const APIService = {
             resolve(res.game);
           };
           APIService.socket.emit("create:game", user, cb);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
+  gameUpdateSettings: async (
+    gameSettings: GameSettings,
+    roomId: string,
+  ): Promise<GameSettings | undefined> => {
+    if (APIService.connected) {
+      try {
+        return new Promise((resolve) => {
+          const cb = (res: { error: string; settings: GameSettings }): void => {
+            if (res.error) {
+              throw Error(res.error);
+            }
+            resolve(res.settings);
+          };
+          APIService.socket.emit(
+            "game:update-settings",
+            gameSettings,
+            roomId,
+            cb,
+          );
         });
       } catch (e) {
         console.error(e);

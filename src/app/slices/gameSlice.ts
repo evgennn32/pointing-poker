@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
 import User from "../../models/User";
 import APIService from "../services/APIservice";
+import GameSettings from "../../models/GameSettings";
 
 const initialGame: GameRoomEntity = {
   roomName: "",
@@ -24,7 +25,7 @@ const initialGame: GameRoomEntity = {
     scoreType: "",
     scoreTypeShort: "",
     roundTime: 0,
-    cardsArray: [],
+    timeOut: false,
     gameInProgress: false,
   },
   users: [],
@@ -38,6 +39,18 @@ export const createGame = createAsyncThunk(
   "game/createStatus",
   async (user: User) => {
     const response = await APIService.gameCreate(user);
+    if (response) return response;
+  },
+);
+
+export const updateGameSettings = createAsyncThunk(
+  "game/createStatus",
+  async (data: { settings: GameSettings; roomId: string }) => {
+    const response = await APIService.gameUpdateSettings(
+      data.settings,
+      data.roomId,
+    );
+    console.log(response);
     if (response) return response;
   },
 );

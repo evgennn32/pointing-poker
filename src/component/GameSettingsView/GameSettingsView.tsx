@@ -26,40 +26,7 @@ export const GameSettingsView = (props: GameSettingsProps): JSX.Element => {
   const game = useSelector<RootState, GameRoomEntity>(
     (state: { game: GameRoomEntity }) => state.game,
   );
-  const InitialCards = [
-    {
-      value: "unknown",
-      type: "cup",
-      shortType: "",
-      selected: false,
-      closed: false,
-      editable: true,
-    },
-    {
-      value: "12",
-      type: "story point",
-      shortType: "SP",
-      selected: false,
-      closed: false,
-      editable: true,
-    },
-    {
-      value: "12",
-      type: "story point",
-      shortType: "SP",
-      selected: false,
-      closed: false,
-      editable: true,
-    },
-    {
-      value: "12",
-      type: "story point",
-      shortType: "SP",
-      selected: false,
-      closed: false,
-      editable: true,
-    },
-  ];
+
   const [settings, setSettings] = useState<GameSettings>({
     gameInProgress: false,
     scrumMasterAsPlayer: true,
@@ -67,8 +34,8 @@ export const GameSettingsView = (props: GameSettingsProps): JSX.Element => {
     isTimerNeeded: true,
     scoreType: "story point",
     scoreTypeShort: "SP",
+    timeOut: false,
     roundTime: 0,
-    cardsArray: InitialCards,
   });
   useEffect(() => {
     props.setGameSetting(settings);
@@ -169,17 +136,15 @@ export const GameSettingsView = (props: GameSettingsProps): JSX.Element => {
         ))}
         <PlayingCardAdd
           onClick={() => {
-            setSettings({
-              ...settings,
-              cardsArray: settings.cardsArray.concat({
-                value: "12",
-                type: "",
-                shortType: settings.scoreTypeShort,
-                selected: false,
-                closed: false,
-                editable: true,
-              }),
-            });
+            // TODO dispatch cardAdd
+            // game.cards.concat({
+            //   value: "12",
+            //   type: "",
+            //   shortType: settings.scoreTypeShort,
+            //   selected: false,
+            //   closed: false,
+            //   editable: true,
+            // });
           }}
         />
       </CardsWrapper>
