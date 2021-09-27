@@ -4,6 +4,7 @@ import User from "../../models/User";
 import APIService from "../services/APIservice";
 import GameSettings from "../../models/GameSettings";
 import Card from "../../models/Card";
+import Issue from "../../models/Issue";
 
 const initialGame: GameRoomEntity = {
   roomName: "",
@@ -64,6 +65,14 @@ export const cardAdd = createAsyncThunk(
   },
 );
 
+export const issueAdd = createAsyncThunk(
+  "game/addIssueStatus",
+  async (data: { issue: Issue; roomId: string }) => {
+    const response = await APIService.issueAdd(data.issue, data.roomId);
+    if (response) return response;
+  },
+);
+
 const createGameReducer = (
   state: GameRoomEntity,
   action: PayloadAction<User>,
@@ -89,6 +98,11 @@ export const gameSlice = createSlice({
       .addCase(cardAdd.fulfilled, (state, action) => {
         if (action.payload) {
           state.cards.push(action.payload);
+        }
+      })
+      .addCase(issueAdd.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.issues.push(action.payload);
         }
       });
   },

@@ -15,6 +15,10 @@ import {
   Form,
   InputsWrapper,
 } from "./PopUps.styled";
+import { useDispatch, useSelector } from "react-redux";
+import { GameRoomEntity } from "../../models/GameRoomEntity";
+import { RootState } from "../../app/store";
+import { issueAdd } from "../../app/slices/gameSlice";
 
 type Inputs = {
   title: string;
@@ -23,6 +27,10 @@ type Inputs = {
 };
 
 export const PopUpCreateIssue = (props: ClosePopUp): JSX.Element => {
+  const dispatch = useDispatch();
+  const game = useSelector<RootState, GameRoomEntity>(
+    (state: { game: GameRoomEntity }) => state.game,
+  );
   const formik = useFormik<Inputs>({
     initialValues: {
       title: "",
@@ -43,6 +51,17 @@ export const PopUpCreateIssue = (props: ClosePopUp): JSX.Element => {
       return errors;
     },
     onSubmit: (values) => {
+      const issue = {
+        priority: values.priority,
+        issueName: values.title,
+        link: values.link,
+        id: "",
+        selected: false,
+        editable: game.scrumMaster.currentUser,
+      };
+      const roomId = game.roomID;
+      dispatch(issueAdd({ issue, roomId }));
+
       console.log(JSON.stringify(values, null, 2));
       props.close();
       formik.resetForm();
