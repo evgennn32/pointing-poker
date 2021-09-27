@@ -122,12 +122,12 @@ const APIService = {
   },
   issueUpdate: async (
     issue: Issue,
-    roomId: string
+    roomId: string,
   ): Promise<Issue[] | undefined> => {
-    if(APIService.connected) {
+    if (APIService.connected) {
       try {
         return new Promise((resolve) => {
-          const cb = (res: {error: string; issues: Issue[]}): void => {
+          const cb = (res: { error: string; issues: Issue[] }): void => {
             if (res.error) {
               throw Error(res.error);
             }
@@ -135,12 +135,11 @@ const APIService = {
           };
           APIService.socket.emit("game:issue-update", issue, roomId, cb);
         });
-      }
-      catch (e) {
+      } catch (e) {
         console.error(e);
       }
     }
-  }
+  },
 };
 
 export default APIService;
