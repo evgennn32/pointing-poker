@@ -7,6 +7,7 @@ interface VoteValue {
 const statisticsObserver = (
   valueVoteArray: Array<VoteValue>,
 ): {
+  id: string;
   percent: number;
   value: string;
   type: string;
@@ -28,10 +29,10 @@ const statisticsObserver = (
       uniqueVoteArray.push(card);
     }
   });
-  const resultStatisticsArray = uniqueVoteArray.map((card) => {
+  const resultStatisticsArray = uniqueVoteArray.map((card, index) => {
     const countCard = localStaticMap.get(card.value);
     const percent = Math.round((countCard / numberOfAllVotes) * 10000) / 100;
-    return { ...card, percent: percent };
+    return { ...card, id: `${index}`, percent: percent };
   });
   resultStatisticsArray.sort(
     (firstCard, secondCard) => secondCard.percent - firstCard.percent,

@@ -79,6 +79,26 @@ const APIService = {
       }
     }
   },
+  cardUpdate: async (
+    card: Card,
+    roomId: string,
+  ): Promise<Card[] | undefined> => {
+    if (APIService.connected) {
+      try {
+        return new Promise((resolve) => {
+          const cb = (res: { error: string; cards: Card[] }): void => {
+            if (res.error) {
+              throw Error(res.error);
+            }
+            resolve(res.cards);
+          };
+          APIService.socket.emit("game:card-update", card, roomId, cb);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
 };
 
 export default APIService;

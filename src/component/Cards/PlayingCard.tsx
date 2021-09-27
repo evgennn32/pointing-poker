@@ -14,24 +14,32 @@ import {
   Checkmark_stem,
   TopContent,
 } from "./PlayingCard.styled";
-
-interface CardProps {
-  value: string;
-  type: string;
-  shortType: string;
-  selected: boolean;
-  closed: boolean;
-  editable: boolean;
-}
+import { useDispatch, useSelector } from "react-redux";
+import { default as CardProps } from "../../models/Card";
+import { cardUpdate } from "../../app/slices/gameSlice";
+import { RootState } from "../../app/store";
+import { GameRoomEntity } from "../../models/GameRoomEntity";
 
 const PlayingCard = (props: CardProps): JSX.Element => {
+  const dispatch = useDispatch();
+  const game = useSelector<RootState, GameRoomEntity>(
+    (state: { game: GameRoomEntity }) => state.game,
+  );
+
   return (
     <Card>
       {props.editable ? (
         <TitleEditable
           title={props.value}
-          changeTitle={() => console.log(props.value)}
-        ></TitleEditable>
+          changeTitle={(value: string) =>
+            dispatch(
+              cardUpdate({
+                card: { ...props, value },
+                roomId: game.roomID,
+              }),
+            )
+          }
+        />
       ) : (
         <TopContent>
           <span>

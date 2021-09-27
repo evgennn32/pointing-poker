@@ -64,6 +64,14 @@ export const cardAdd = createAsyncThunk(
   },
 );
 
+export const cardUpdate = createAsyncThunk(
+  "game/updateCardStatus",
+  async (data: { card: Card; roomId: string }) => {
+    const response = await APIService.cardUpdate(data.card, data.roomId);
+    if (response) return response;
+  },
+);
+
 const createGameReducer = (
   state: GameRoomEntity,
   action: PayloadAction<User>,
@@ -89,6 +97,11 @@ export const gameSlice = createSlice({
       .addCase(cardAdd.fulfilled, (state, action) => {
         if (action.payload) {
           state.cards.push(action.payload);
+        }
+      })
+      .addCase(cardUpdate.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.cards = action.payload;
         }
       });
   },
