@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Popup from "reactjs-popup";
 import styled from "styled-components";
 import { Button } from "../Button/Button";
@@ -8,9 +8,10 @@ import Chat from "../Chat/Chat";
 import { useDispatch, useSelector } from "react-redux";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
 import { RootState } from "../../app/store";
-import { userUpdateState } from "../../app/slices/userSlice";
 import { Redirect } from "react-router";
 import { getUrlParam } from "../../shared/helpers";
+import User from "../../models/User";
+import { joinGame } from "../../app/slices/gameSlice";
 
 const Main = styled.main`
   position: relative;
@@ -85,21 +86,39 @@ const Input = styled.input`
 `;
 
 export const MainPage = (): JSX.Element => {
-  const dispatch = useDispatch();
   const [connectPopUpOpen, setConnectPopUpOpen] = useState(false);
+  const [connectUrl, setConnectUrl] = useState(
+    "localhost:3000?gameId=ku46munx2oo6ygpsb4lv",
+  );
+  const dispatch = useDispatch();
   const game = useSelector<RootState, GameRoomEntity>(
     (state: { game: GameRoomEntity }) => state.game,
   );
-  if (game.roomID) {
-    dispatch(userUpdateState(game.scrumMaster));
+  const user = useSelector<RootState, User>(
+    (state: { user: User }) => state.user,
+  );
+  useEffect(() => {
+    if (game.roomID && !game.error && !game.isLoading) {
+      setConnectPopUpOpen(true);
+    }
+  }, [game]);
+  if (game.roomID && user.id) {
     return <Redirect to="/lobby" />;
   }
-  const [connectUrl, setConnectUrl] = useState("");
-  const connectHandler = () => {
-    // const roomId = getUrlParam(connectUrl, "game");
-    // console.log(roomId);
-    // setConnectPopUpOpen(true);
+  const connectHandler = (): void => {
+    const gameId = getUrlParam(connectUrl, "gameId");
+    if (game.roomID) {
+      return setConnectPopUpOpen(true);
+    }
+    if (gameId) {
+      dispatch(joinGame(gameId));
+    } else {
+      console.log("no room id");
+      // TODO SHOW warning invalid URL
+    }
   };
+
+  const closeConnectModal = (): void => setConnectPopUpOpen(false);
 
   return (
     <Main>
@@ -138,7 +157,13 @@ export const MainPage = (): JSX.Element => {
                 }
               }}
             />
-            <Popup open={connectPopUpOpen} position="right center" nested modal>
+            <Popup
+              open={connectPopUpOpen}
+              onClose={closeConnectModal}
+              position="right center"
+              nested
+              modal
+            >
               {(close: () => void) => (
                 <PopUpConnectToLobby
                   close={close}

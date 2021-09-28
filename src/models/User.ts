@@ -8,4 +8,7 @@ export default interface User {
   ableToDelete: boolean;
   score: string;
   scramMaster: boolean;
+  observer?: boolean;
+  error?: string;
+  isLoading?: boolean;
 }

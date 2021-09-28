@@ -1,5 +1,5 @@
 import { FormikErrors, useFormik } from "formik";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./ReactPopUpDefault.css";
 import { Button } from "../Button/Button";
 import { Input } from "../styledComponents/Input/Input";
@@ -20,7 +20,12 @@ import {
   Avatar,
 } from "./PopUps.styled";
 import { createGame } from "../../app/slices/gameSlice";
-import { AppDispatch } from "../../app/store";
+import { AppDispatch, RootState } from "../../app/store";
+import { useSelector } from "react-redux";
+import { GameRoomEntity } from "../../models/GameRoomEntity";
+import { userCreate, userUpdateState } from "../../app/slices/userSlice";
+import { Redirect } from "react-router";
+import User from "../../models/User";
 
 type Inputs = {
   email: string;
@@ -37,11 +42,19 @@ type Props = ClosePopUp & {
 };
 
 export function PopUpConnectToLobby(props: Props): JSX.Element {
+  const [createGameProcess, setCreateGameProcess] = useState(false);
+  const [redirectToLobby, setRedirectToLobby] = useState(false);
+  const game = useSelector<RootState, GameRoomEntity>(
+    (state: { game: GameRoomEntity }) => state.game,
+  );
+  const user = useSelector<RootState, User>(
+    (state: { user: User }) => state.user,
+  );
   const formik = useFormik<Inputs>({
     initialValues: {
       email: "",
-      firstName: "",
-      lastName: "",
+      firstName: "Jhon",
+      lastName: "Gold",
       jobPosition: "",
       avatar: null,
       connectAsObserver: false,
@@ -64,14 +77,37 @@ export function PopUpConnectToLobby(props: Props): JSX.Element {
         currentUser: false,
         ableToDelete: true,
         score: "",
-        scramMaster: true,
+        scramMaster: props.createNewSession,
+        observer: values.connectAsObserver,
       };
-      props.dispatch(createGame(user));
-      // props.dispatch(gameCreate(user));
+      if (props.createNewSession) {
+        setCreateGameProcess(true);
+        props.dispatch(createGame(user));
+      } else {
+        console.log("popup user", user);
+        props.dispatch(userCreate({ user, roomId: game.roomID }));
+      }
       //props.close();
       formik.resetForm();
     },
   });
+
+  useEffect(() => {
+    if (props.createNewSession && game.roomID && createGameProcess) {
+      props.dispatch(userUpdateState(game.scrumMaster));
+    }
+  }, [game]);
+  useEffect(() => {
+    if (props.createNewSession && game.roomID && createGameProcess) {
+      setRedirectToLobby(true);
+    }
+    console.log("popup useffect user = ", user);
+  }, [user]);
+
+  if (redirectToLobby) {
+    return <Redirect to="/lobby" />;
+  }
+
   return (
     <WrapperConnectToLobby>
       <form onSubmit={formik.handleSubmit}>

@@ -38,16 +38,54 @@ const APIService = {
       }
     }
   },
+  gameJoin: async (
+    roomId: string,
+  ): Promise<{ game?: GameRoomEntity; error?: string } | undefined> => {
+    if (APIService.connected) {
+      try {
+        return new Promise((resolve) => {
+          const cb = (res: { error: string; game: GameRoomEntity }): void => {
+            resolve(res);
+          };
+          APIService.socket.emit("game:join", roomId, cb);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
+  userCreate: async (
+    user: User,
+    roomId: string,
+  ): Promise<{ user?: User; error?: string } | undefined> => {
+    if (APIService.connected) {
+      try {
+        return new Promise((resolve, reject) => {
+          const cb = (res: { error: string; user: User }): void => {
+            if (!res) reject({ error: "bad request" });
+            if (res && res.error) {
+              reject({ error: res.error });
+            }
+            resolve(res);
+          };
+          APIService.socket.emit("user:create", user, roomId, cb);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
   gameUpdateSettings: async (
     gameSettings: GameSettings,
     roomId: string,
   ): Promise<GameSettings | undefined> => {
     if (APIService.connected) {
       try {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
           const cb = (res: { error: string; settings: GameSettings }): void => {
-            if (res.error) {
-              throw Error(res.error);
+            if (!res) reject({ error: "bad request" });
+            if (res && res.error) {
+              reject({ error: res.error });
             }
             resolve(res.settings);
           };
