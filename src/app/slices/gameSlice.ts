@@ -79,6 +79,13 @@ export const cardAdd = createAsyncThunk(
     if (response) return response;
   },
 );
+export const cardDelete = createAsyncThunk(
+  "game/deleteCardStatus",
+  async (data: { cardId: string; roomId: string }) => {
+    const response = await APIService.cardDelete(data.cardId, data.roomId);
+    if (response) return response;
+  },
+);
 
 export const issueAdd = createAsyncThunk(
   "game/addIssueStatus",
@@ -87,10 +94,26 @@ export const issueAdd = createAsyncThunk(
     if (response) return response;
   },
 );
+export const issueDelete = createAsyncThunk(
+  "game/deleteIssueStatus",
+  async (data: { issueId: string; roomId: string }) => {
+    const response = await APIService.issueDelete(data.issueId, data.roomId);
+    if (response) return response;
+  },
+);
+
 export const cardUpdate = createAsyncThunk(
   "game/updateCardStatus",
   async (data: { card: Card; roomId: string }) => {
     const response = await APIService.cardUpdate(data.card, data.roomId);
+    if (response) return response;
+  },
+);
+
+export const issueUpdate = createAsyncThunk(
+  "game/updateIssueStatus",
+  async (data: { issue: Issue; roomId: string }) => {
+    const response = await APIService.issueUpdate(data.issue, data.roomId);
     if (response) return response;
   },
 );
@@ -131,9 +154,24 @@ export const gameSlice = createSlice({
           state.cards.push(action.payload);
         }
       })
+      .addCase(cardDelete.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.cards = action.payload;
+        }
+      })
       .addCase(issueAdd.fulfilled, (state, action) => {
         if (action.payload) {
           state.issues.push(action.payload);
+        }
+      })
+      .addCase(issueDelete.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.issues = action.payload;
+        }
+      })
+      .addCase(issueUpdate.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.issues = action.payload;
         }
       })
       .addCase(cardUpdate.fulfilled, (state, action) => {

@@ -118,6 +118,46 @@ const APIService = {
       }
     }
   },
+  cardUpdate: async (
+    card: Card,
+    roomId: string,
+  ): Promise<Card[] | undefined> => {
+    if (APIService.connected) {
+      try {
+        return new Promise((resolve) => {
+          const cb = (res: { error: string; cards: Card[] }): void => {
+            if (res.error) {
+              throw Error(res.error);
+            }
+            resolve(res.cards);
+          };
+          APIService.socket.emit("game:card-update", card, roomId, cb);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
+  cardDelete: async (
+    cardId: string,
+    roomId: string,
+  ): Promise<Card[] | undefined> => {
+    if (APIService.connected) {
+      try {
+        return new Promise((resolve) => {
+          const cb = (res: { error: string; cards: Card[] }): void => {
+            if (res.error) {
+              throw Error(res.error);
+            }
+            resolve(res.cards);
+          };
+          APIService.socket.emit("game:card-delete", cardId, roomId, cb);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
   issueAdd: async (
     issue: Issue,
     roomId: string,
@@ -138,20 +178,40 @@ const APIService = {
       }
     }
   },
-  cardUpdate: async (
-    card: Card,
+  issueDelete: async (
+    issueId: string,
     roomId: string,
-  ): Promise<Card[] | undefined> => {
+  ): Promise<Issue[] | undefined> => {
     if (APIService.connected) {
       try {
         return new Promise((resolve) => {
-          const cb = (res: { error: string; cards: Card[] }): void => {
+          const cb = (res: { error: string; issues: Issue[] }): void => {
             if (res.error) {
               throw Error(res.error);
             }
-            resolve(res.cards);
+            resolve(res.issues);
           };
-          APIService.socket.emit("game:card-update", card, roomId, cb);
+          APIService.socket.emit("game:issue-delete", issueId, roomId, cb);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
+  issueUpdate: async (
+    issue: Issue,
+    roomId: string,
+  ): Promise<Issue[] | undefined> => {
+    if (APIService.connected) {
+      try {
+        return new Promise((resolve) => {
+          const cb = (res: { error: string; issues: Issue[] }): void => {
+            if (res.error) {
+              throw Error(res.error);
+            }
+            resolve(res.issues);
+          };
+          APIService.socket.emit("game:issue-update", issue, roomId, cb);
         });
       } catch (e) {
         console.error(e);

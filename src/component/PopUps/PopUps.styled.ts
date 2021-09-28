@@ -85,12 +85,13 @@ export const Label = styled.label`
   @media (${MediaQuery.tablet}) {
     font-size: 20px;
     line-height: 12px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
   }
   @media (${MediaQuery.laptopHeight}) {
     font-size: 20px;
     line-height: 12px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    width: max-content;
   }
 `;
 export const Error = styled.span`
@@ -180,6 +181,7 @@ export const WrapperConnectToLobby = styled.div`
   margin: auto;
   z-index: 20;
   padding: 50px;
+  overflow-y: auto;
   @media (max-width: 1000px) {
     width: 700px;
   }
