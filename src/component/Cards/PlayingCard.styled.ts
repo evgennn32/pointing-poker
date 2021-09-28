@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { SVGDelete } from "../CreateIssue/CreateIssueAndIssue.style";
 
 export const Card = styled.div`
   position: relative;
@@ -32,6 +33,13 @@ export const Card = styled.div`
 `;
 export const TopContent = styled.div`
   height: 20%;
+`;
+export const SVGDeleteCard = styled(SVGDelete)`
+  position: absolute;
+  bottom: 2px;
+  width: 1.5rem;
+  left: 7px;
+  z-index: 1;
 `;
 export const CenterContent = styled.div`
   height: 60%;

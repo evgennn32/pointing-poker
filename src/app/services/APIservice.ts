@@ -100,6 +100,26 @@ const APIService = {
       }
     }
   },
+  cardDelete: async (
+    cardId: string,
+    roomId: string,
+  ): Promise<Card[] | undefined> => {
+    if (APIService.connected) {
+      try {
+        return new Promise((resolve) => {
+          const cb = (res: { error: string; cards: Card[] }): void => {
+            if (res.error) {
+              throw Error(res.error);
+            }
+            resolve(res.cards);
+          };
+          APIService.socket.emit("game:card-delete", cardId, roomId, cb);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
   issueAdd: async (
     issue: Issue,
     roomId: string,
@@ -114,6 +134,26 @@ const APIService = {
             resolve(res.issue);
           };
           APIService.socket.emit("game:issue-add", issue, roomId, cb);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
+  issueDelete: async (
+    issueId: string,
+    roomId: string,
+  ): Promise<Issue[] | undefined> => {
+    if (APIService.connected) {
+      try {
+        return new Promise((resolve) => {
+          const cb = (res: { error: string; issues: Issue[] }): void => {
+            if (res.error) {
+              throw Error(res.error);
+            }
+            resolve(res.issues);
+          };
+          APIService.socket.emit("game:issue-delete", issueId, roomId, cb);
         });
       } catch (e) {
         console.error(e);

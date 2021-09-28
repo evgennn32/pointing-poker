@@ -5,7 +5,6 @@ import APIService from "../services/APIservice";
 import GameSettings from "../../models/GameSettings";
 import Card from "../../models/Card";
 import Issue from "../../models/Issue";
-
 const initialGame: GameRoomEntity = {
   roomName: "",
   roomID: "",
@@ -36,7 +35,6 @@ const initialGame: GameRoomEntity = {
   gameResults: [],
   rounds: [],
 };
-
 export const createGame = createAsyncThunk(
   "game/createStatus",
   async (user: User) => {
@@ -44,7 +42,6 @@ export const createGame = createAsyncThunk(
     if (response) return response;
   },
 );
-
 export const updateGameSettings = createAsyncThunk(
   "game/updateStatus",
   async (data: { settings: GameSettings; roomId: string }) => {
@@ -56,7 +53,6 @@ export const updateGameSettings = createAsyncThunk(
     if (response) return response;
   },
 );
-
 export const cardAdd = createAsyncThunk(
   "game/addCardStatus",
   async (data: { card: Card; roomId: string }) => {
@@ -64,11 +60,10 @@ export const cardAdd = createAsyncThunk(
     if (response) return response;
   },
 );
-
-export const cardUpdate = createAsyncThunk(
-  "game/updateCardStatus",
-  async (data: { card: Card; roomId: string }) => {
-    const response = await APIService.cardUpdate(data.card, data.roomId);
+export const cardDelete = createAsyncThunk(
+  "game/deleteCardStatus",
+  async (data: { cardId: string; roomId: string }) => {
+    const response = await APIService.cardDelete(data.cardId, data.roomId);
     if (response) return response;
   },
 );
@@ -77,6 +72,21 @@ export const issueAdd = createAsyncThunk(
   "game/addIssueStatus",
   async (data: { issue: Issue; roomId: string }) => {
     const response = await APIService.issueAdd(data.issue, data.roomId);
+    if (response) return response;
+  },
+);
+export const issueDelete = createAsyncThunk(
+  "game/deleteIssueStatus",
+  async (data: { issueId: string; roomId: string }) => {
+    const response = await APIService.issueDelete(data.issueId, data.roomId);
+    if (response) return response;
+  },
+);
+
+export const cardUpdate = createAsyncThunk(
+  "game/updateCardStatus",
+  async (data: { card: Card; roomId: string }) => {
+    const response = await APIService.cardUpdate(data.card, data.roomId);
     if (response) return response;
   },
 );
@@ -96,7 +106,6 @@ const createGameReducer = (
   // APIService.gameCreate(action.payload);
   // console.log(action.payload);
 };
-
 export const gameSlice = createSlice({
   name: "game",
   initialState: initialGame,
@@ -116,7 +125,7 @@ export const gameSlice = createSlice({
           state.cards.push(action.payload);
         }
       })
-      .addCase(cardUpdate.fulfilled, (state, action) => {
+      .addCase(cardDelete.fulfilled, (state, action) => {
         if (action.payload) {
           state.cards = action.payload;
         }
@@ -126,13 +135,22 @@ export const gameSlice = createSlice({
           state.issues.push(action.payload);
         }
       })
+      .addCase(issueDelete.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.issues = action.payload;
+        }
+      })
       .addCase(issueUpdate.fulfilled, (state, action) => {
         if (action.payload) {
           state.issues = action.payload;
         }
+      })
+      .addCase(cardUpdate.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.cards = action.payload;
+        }
       });
   },
 });
-
 export const { gameCreate } = gameSlice.actions;
 export default gameSlice.reducer;
