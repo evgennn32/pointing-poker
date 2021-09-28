@@ -12,6 +12,7 @@ import {
   Checkmark_circle,
   Checkmark_kick,
   Checkmark_stem,
+  SVGDeleteCard,
   TopContent,
 } from "./PlayingCard.styled";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,17 +30,20 @@ const PlayingCard = (props: CardProps): JSX.Element => {
   return (
     <Card>
       {props.editable ? (
-        <TitleEditable
-          title={props.value}
-          changeTitle={(value: string) =>
-            dispatch(
-              cardUpdate({
-                card: { ...props, value },
-                roomId: game.roomID,
-              }),
-            )
-          }
-        />
+        <>
+          <TitleEditable
+            title={props.value}
+            changeTitle={(value: string) =>
+              dispatch(
+                cardUpdate({
+                  card: { ...props, value },
+                  roomId: game.roomID,
+                }),
+              )
+            }
+          />
+          <SVGDeleteCard />
+        </>
       ) : (
         <TopContent>
           <span>
