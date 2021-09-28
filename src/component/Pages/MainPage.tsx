@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Popup from "reactjs-popup";
 import styled from "styled-components";
 import { Button } from "../Button/Button";
@@ -8,8 +8,10 @@ import Chat from "../Chat/Chat";
 import { useDispatch, useSelector } from "react-redux";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
 import { RootState } from "../../app/store";
-import { userUpdateState } from "../../app/slices/userSlice";
 import { Redirect } from "react-router";
+import { getUrlParam } from "../../shared/helpers";
+import User from "../../models/User";
+import { joinGame } from "../../app/slices/gameSlice";
 
 const Main = styled.main`
   position: relative;
@@ -84,18 +86,39 @@ const Input = styled.input`
 `;
 
 export const MainPage = (): JSX.Element => {
+  const [connectPopUpOpen, setConnectPopUpOpen] = useState(false);
+  const [connectUrl, setConnectUrl] = useState(
+    "localhost:3000?gameId=ku46munx2oo6ygpsb4lv",
+  );
   const dispatch = useDispatch();
   const game = useSelector<RootState, GameRoomEntity>(
     (state: { game: GameRoomEntity }) => state.game,
   );
-  console.log("game name: ", game.roomName);
-  if (game.roomID) {
-    dispatch(userUpdateState(game.scrumMaster));
+  const user = useSelector<RootState, User>(
+    (state: { user: User }) => state.user,
+  );
+  useEffect(() => {
+    if (game.roomID && !game.error && !game.isLoading) {
+      setConnectPopUpOpen(true);
+    }
+  }, [game]);
+  if (game.roomID && user.id) {
     return <Redirect to="/lobby" />;
   }
-  const clickHandler = () => {
-    console.log("action");
+  const connectHandler = (): void => {
+    const gameId = getUrlParam(connectUrl, "gameId");
+    if (game.roomID) {
+      return setConnectPopUpOpen(true);
+    }
+    if (gameId) {
+      dispatch(joinGame(gameId));
+    } else {
+      console.log("no room id");
+      // TODO SHOW warning invalid URL
+    }
   };
+
+  const closeConnectModal = (): void => setConnectPopUpOpen(false);
 
   return (
     <Main>
@@ -107,11 +130,7 @@ export const MainPage = (): JSX.Element => {
           Create session:
           <Popup
             trigger={
-              <Button
-                textContent="Start new game"
-                onClick={clickHandler}
-                isLightTheme={false}
-              />
+              <Button textContent="Start new game" isLightTheme={false} />
             }
             position="right center"
             nested
@@ -130,15 +149,17 @@ export const MainPage = (): JSX.Element => {
         <Label>
           Connect to lobby by URL:
           <InputWrapper>
-            <Input />
+            <Input
+              value={connectUrl}
+              onChange={(event) => {
+                if (event.currentTarget.value) {
+                  setConnectUrl(event.currentTarget.value);
+                }
+              }}
+            />
             <Popup
-              trigger={
-                <Button
-                  textContent="Connect"
-                  onClick={clickHandler}
-                  isLightTheme={false}
-                />
-              }
+              open={connectPopUpOpen}
+              onClose={closeConnectModal}
               position="right center"
               nested
               modal
@@ -151,6 +172,11 @@ export const MainPage = (): JSX.Element => {
                 />
               )}
             </Popup>
+            <Button
+              textContent="Connect"
+              onClick={connectHandler}
+              isLightTheme={false}
+            />
           </InputWrapper>
         </Label>
       </Content>

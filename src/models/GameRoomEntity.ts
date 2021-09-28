@@ -16,6 +16,8 @@ export interface GameRoomEntity {
   cards: Card[];
   gameResults: GameResult[];
   rounds: Round[];
+  isLoading?: boolean;
+  error?: null | string;
 }
 
 

@@ -5,6 +5,7 @@ import APIService from "../services/APIservice";
 import GameSettings from "../../models/GameSettings";
 import Card from "../../models/Card";
 import Issue from "../../models/Issue";
+
 const initialGame: GameRoomEntity = {
   roomName: "",
   roomID: "",
@@ -35,6 +36,7 @@ const initialGame: GameRoomEntity = {
   gameResults: [],
   rounds: [],
 };
+
 export const createGame = createAsyncThunk(
   "game/createStatus",
   async (user: User) => {
@@ -42,6 +44,23 @@ export const createGame = createAsyncThunk(
     if (response) return response;
   },
 );
+
+export const joinGame = createAsyncThunk(
+  "game/joinStatus",
+  async (roomId: string, { rejectWithValue }) => {
+    try {
+      const response = await APIService.gameJoin(roomId);
+      if (response && response.error) {
+        return rejectWithValue(response.error);
+      }
+      return response;
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue("Failed while sending request");
+    }
+  },
+);
+
 export const updateGameSettings = createAsyncThunk(
   "game/updateStatus",
   async (data: { settings: GameSettings; roomId: string }) => {
@@ -49,10 +68,10 @@ export const updateGameSettings = createAsyncThunk(
       data.settings,
       data.roomId,
     );
-    console.log(response);
     if (response) return response;
   },
 );
+
 export const cardAdd = createAsyncThunk(
   "game/addCardStatus",
   async (data: { card: Card; roomId: string }) => {
@@ -106,6 +125,7 @@ const createGameReducer = (
   // APIService.gameCreate(action.payload);
   // console.log(action.payload);
 };
+
 export const gameSlice = createSlice({
   name: "game",
   initialState: initialGame,
@@ -116,6 +136,15 @@ export const gameSlice = createSlice({
     builder
       .addCase(createGame.fulfilled, (state, action) => {
         if (action.payload && action.payload.roomID) return action.payload;
+      })
+      .addCase(joinGame.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(joinGame.fulfilled, (state, action) => {
+        if (action.payload && action.payload.game) return action.payload.game;
+      })
+      .addCase(joinGame.rejected, (state, action) => {
+        state.error = action.payload as string;
       })
       .addCase(updateGameSettings.fulfilled, (state, action) => {
         if (action.payload) state.gameSettings = action.payload;
@@ -152,5 +181,6 @@ export const gameSlice = createSlice({
       });
   },
 });
+
 export const { gameCreate } = gameSlice.actions;
 export default gameSlice.reducer;
