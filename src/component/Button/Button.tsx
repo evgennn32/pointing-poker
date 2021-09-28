@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { MediaQuery } from "../styledComponents/MediaQuery/MediaQuery";
 
 type Props = {
   isLightTheme: boolean;
@@ -26,6 +27,9 @@ export const ButtonStyled = styled.button<{ isLight: boolean }>`
     props.isLight
       ? "background-color: white; color: #2b3a67;"
       : "background-color: #2b3a67; color: white;"}
+  @media (${MediaQuery.tablet}) {
+    width: 200px;
+  }
 `;
 
 export const Button = ({
