@@ -66,8 +66,8 @@ export const cardAdd = createAsyncThunk(
 );
 export const cardDelete = createAsyncThunk(
   "game/deleteCardStatus",
-  async (data: { card: Card; roomId: string }) => {
-    const response = await APIService.cardDelete(data.card, data.roomId);
+  async (data: { cardId: string; roomId: string }) => {
+    const response = await APIService.cardDelete(data.cardId, data.roomId);
     if (response) return response;
   },
 );
@@ -81,8 +81,8 @@ export const issueAdd = createAsyncThunk(
 );
 export const issueDelete = createAsyncThunk(
   "game/deleteIssueStatus",
-  async (data: { issue: Issue; roomId: string }) => {
-    const response = await APIService.issueDelete(data.issue, data.roomId);
+  async (data: { issueId: string; roomId: string }) => {
+    const response = await APIService.issueDelete(data.issueId, data.roomId);
     if (response) return response;
   },
 );

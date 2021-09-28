@@ -81,7 +81,7 @@ const APIService = {
     }
   },
   cardDelete: async (
-    card: Card,
+    cardId: string,
     roomId: string,
   ): Promise<Card[] | undefined> => {
     if (APIService.connected) {
@@ -93,7 +93,7 @@ const APIService = {
             }
             resolve(res.cards);
           };
-          APIService.socket.emit("game:card-delete", card, roomId, cb);
+          APIService.socket.emit("game:card-delete", cardId, roomId, cb);
         });
       } catch (e) {
         console.error(e);
@@ -121,7 +121,7 @@ const APIService = {
     }
   },
   issueDelete: async (
-    issue: Issue,
+    issueId: string,
     roomId: string,
   ): Promise<Issue[] | undefined> => {
     if (APIService.connected) {
@@ -133,7 +133,7 @@ const APIService = {
             }
             resolve(res.issues);
           };
-          APIService.socket.emit("game:issue-delete", issue, roomId, cb);
+          APIService.socket.emit("game:issue-delete", issueId, roomId, cb);
         });
       } catch (e) {
         console.error(e);

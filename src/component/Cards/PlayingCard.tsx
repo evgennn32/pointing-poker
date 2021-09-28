@@ -17,7 +17,7 @@ import {
 } from "./PlayingCard.styled";
 import { useDispatch, useSelector } from "react-redux";
 import { default as CardProps } from "../../models/Card";
-import { cardUpdate } from "../../app/slices/gameSlice";
+import { cardDelete, cardUpdate } from "../../app/slices/gameSlice";
 import { RootState } from "../../app/store";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
 
@@ -42,7 +42,16 @@ const PlayingCard = (props: CardProps): JSX.Element => {
               )
             }
           />
-          <SVGDeleteCard />
+          <SVGDeleteCard
+            onClick={() => {
+              dispatch(
+                cardDelete({
+                  cardId: props.id,
+                  roomId: game.roomID,
+                }),
+              );
+            }}
+          />
         </>
       ) : (
         <TopContent>
