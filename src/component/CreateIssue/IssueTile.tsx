@@ -11,7 +11,7 @@ import TitleEditable from "../Title/TitleEditable";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
-import { issueDelete } from "../../app/slices/gameSlice";
+import { issueDelete, issueUpdate } from "../../app/slices/gameSlice";
 
 export const IssueTile = (props: Issue): JSX.Element => {
   const dispatch = useDispatch();
@@ -25,7 +25,14 @@ export const IssueTile = (props: Issue): JSX.Element => {
           <>
             <TitleEditable
               title={props.issueName}
-              changeTitle={() => console.log(props.issueName)}
+              changeTitle={(issueName: string) =>
+                dispatch(
+                  issueUpdate({
+                    issue: { ...props, issueName },
+                    roomId: game.roomID,
+                  }),
+                )
+              }
             />
             <SVGDelete
               onClick={() => {

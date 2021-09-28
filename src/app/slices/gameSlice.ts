@@ -5,7 +5,6 @@ import APIService from "../services/APIservice";
 import GameSettings from "../../models/GameSettings";
 import Card from "../../models/Card";
 import Issue from "../../models/Issue";
-
 const initialGame: GameRoomEntity = {
   roomName: "",
   roomID: "",
@@ -36,7 +35,6 @@ const initialGame: GameRoomEntity = {
   gameResults: [],
   rounds: [],
 };
-
 export const createGame = createAsyncThunk(
   "game/createStatus",
   async (user: User) => {
@@ -44,7 +42,6 @@ export const createGame = createAsyncThunk(
     if (response) return response;
   },
 );
-
 export const updateGameSettings = createAsyncThunk(
   "game/updateStatus",
   async (data: { settings: GameSettings; roomId: string }) => {
@@ -56,7 +53,6 @@ export const updateGameSettings = createAsyncThunk(
     if (response) return response;
   },
 );
-
 export const cardAdd = createAsyncThunk(
   "game/addCardStatus",
   async (data: { card: Card; roomId: string }) => {
@@ -95,6 +91,14 @@ export const cardUpdate = createAsyncThunk(
   },
 );
 
+export const issueUpdate = createAsyncThunk(
+  "game/updateIssueStatus",
+  async (data: { issue: Issue; roomId: string }) => {
+    const response = await APIService.issueUpdate(data.issue, data.roomId);
+    if (response) return response;
+  },
+);
+
 const createGameReducer = (
   state: GameRoomEntity,
   action: PayloadAction<User>,
@@ -102,7 +106,6 @@ const createGameReducer = (
   // APIService.gameCreate(action.payload);
   // console.log(action.payload);
 };
-
 export const gameSlice = createSlice({
   name: "game",
   initialState: initialGame,
@@ -137,6 +140,11 @@ export const gameSlice = createSlice({
           state.issues = action.payload;
         }
       })
+      .addCase(issueUpdate.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.issues = action.payload;
+        }
+      })
       .addCase(cardUpdate.fulfilled, (state, action) => {
         if (action.payload) {
           state.cards = action.payload;
@@ -144,6 +152,5 @@ export const gameSlice = createSlice({
       });
   },
 });
-
 export const { gameCreate } = gameSlice.actions;
 export default gameSlice.reducer;
