@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Main } from "../styledComponents/Main/Main";
 import { SideBar } from "../styledComponents/Sidebar/SideBar";
 import { Page } from "../styledComponents/Page/Page";
@@ -19,6 +19,7 @@ import User from "../../models/User";
 import { Redirect } from "react-router";
 import GameSettings from "../../models/GameSettings";
 import { updateGameSettings } from "../../app/slices/gameSlice";
+import APIService from "../../app/services/APIservice";
 
 const Container = styled.div`
   display: flex;
@@ -77,7 +78,9 @@ const IssuesWrap = styled.div`
 
 const LobbyPage = (): JSX.Element => {
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    APIService.handleSocketEvents(dispatch);
+  });
   const game = useSelector<RootState, GameRoomEntity>(
     (state: { game: GameRoomEntity }) => state.game,
   );
@@ -87,11 +90,9 @@ const LobbyPage = (): JSX.Element => {
   const updateSettings = (settings: GameSettings) => {
     dispatch(updateGameSettings({ settings, roomId: game.roomID }));
   };
-  console.log(game);
   const user = useSelector<RootState, User>(
     (state: { user: User }) => state.user,
   );
-
   const chatActive = useSelector((state: RootState) => state.chat.isActive);
   const gameLink = game.roomID
     ? `${window.location.host}?gameId=${game.roomID}`
