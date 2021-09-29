@@ -78,6 +78,27 @@ const APIService = {
       }
     }
   },
+  userDelete: async (
+    userId: string,
+    roomId: string,
+  ): Promise<{ users?: User[]; error?: string } | undefined> => {
+    if (APIService.connected) {
+      try {
+        return new Promise((resolve, reject) => {
+          const cb = (res: { error: string; users: User[] }): void => {
+            if (!res) reject({ error: "bad request" });
+            if (res && res.error) {
+              reject({ error: res.error });
+            }
+            resolve(res);
+          };
+          APIService.socket.emit("user:delete", userId, roomId, cb);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
   gameUpdateSettings: async (
     gameSettings: GameSettings,
     roomId: string,
