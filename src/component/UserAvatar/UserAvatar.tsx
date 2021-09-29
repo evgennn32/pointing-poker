@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Avatar, Initials } from "../PopUps/PopUps.styled";
 import {
   Button,
@@ -10,7 +10,6 @@ import {
 import User from "../../models/User";
 import { Tile } from "../styledComponents/Tile/Tile";
 import { useDispatch } from "react-redux";
-import APIService from "../../app/services/APIservice";
 import { PopUpKIckPlayer } from "../PopUps/PopUpKickPlayer";
 import Popup from "reactjs-popup";
 
@@ -20,9 +19,6 @@ interface UserWithClassName extends User {
 
 export const UserAvatar = (props: UserWithClassName): JSX.Element => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    APIService.handleSocketEvents(dispatch);
-  });
   return (
     <Tile className={props.className}>
       <Avatar avatar={props.image}>
