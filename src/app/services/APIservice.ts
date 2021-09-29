@@ -4,9 +4,12 @@ import { GameRoomEntity } from "../../models/GameRoomEntity";
 import GameSettings from "../../models/GameSettings";
 import Card from "../../models/Card";
 import Issue from "../../models/Issue";
+import { AppDispatch } from "../store";
+import { updateGameIssues } from "../slices/gameSlice";
 
 const APIService = {
   connected: false,
+  handleEventStarted: false,
   socket: {} as Socket,
   connect: (): void => {
     APIService.socket = io("http://localhost:4000/", {
@@ -216,6 +219,15 @@ const APIService = {
       } catch (e) {
         console.error(e);
       }
+    }
+  },
+  handleSocketEvents: (dispatch: AppDispatch): void => {
+    if (APIService.connected && !APIService.handleEventStarted) {
+      APIService.handleEventStarted = true;
+      const socket = APIService.socket;
+      socket.on("game:issues-update", (data: { issues: Issue[] }): void => {
+        if (data && data.issues) dispatch(updateGameIssues(data.issues));
+      });
     }
   },
 };

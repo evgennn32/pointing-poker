@@ -118,19 +118,18 @@ export const issueUpdate = createAsyncThunk(
   },
 );
 
-const createGameReducer = (
+const updateIssuesReducer = (
   state: GameRoomEntity,
-  action: PayloadAction<User>,
+  action: PayloadAction<Issue[]>,
 ) => {
-  // APIService.gameCreate(action.payload);
-  // console.log(action.payload);
+  state.issues = action.payload;
 };
 
 export const gameSlice = createSlice({
   name: "game",
   initialState: initialGame,
   reducers: {
-    gameCreate: createGameReducer,
+    updateGameIssues: updateIssuesReducer,
   },
   extraReducers: (builder) => {
     builder
@@ -182,5 +181,5 @@ export const gameSlice = createSlice({
   },
 });
 
-export const { gameCreate } = gameSlice.actions;
+export const { updateGameIssues } = gameSlice.actions;
 export default gameSlice.reducer;
