@@ -12,6 +12,7 @@ import { Redirect } from "react-router";
 import { getUrlParam } from "../../shared/helpers";
 import User from "../../models/User";
 import { joinGame } from "../../app/slices/gameSlice";
+import Loader from "../Loader/Loader";
 
 const Main = styled.main`
   position: relative;
@@ -120,6 +121,7 @@ export const MainPage = (): JSX.Element => {
 
   return (
     <Main>
+      <Loader show={game.isLoading ? game.isLoading : false} />
       <Chat />
       <MainLogo src="./images/MainLogo.png" />
       <Content>
