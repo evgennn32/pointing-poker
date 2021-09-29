@@ -1,15 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Avatar, Initials } from "../PopUps/PopUps.styled";
-import { Button, Name, NameAndPosition, SmallTxt } from "./UserAvatar.styled";
+import {
+  Button,
+  CircleWithDiagonalSVG,
+  Name,
+  NameAndPosition,
+  SmallTxt,
+} from "./UserAvatar.styled";
 import User from "../../models/User";
 import { Tile } from "../styledComponents/Tile/Tile";
-import { ReactComponent as CircleWithDiagonal } from "./../../assets/icons/circle-diagonal-line.svg";
+import { useDispatch } from "react-redux";
+import APIService from "../../app/services/APIservice";
+import { PopUpKIckPlayer } from "../PopUps/PopUpKickPlayer";
+import Popup from "reactjs-popup";
 
 interface UserWithClassName extends User {
   className?: string;
 }
 
 export const UserAvatar = (props: UserWithClassName): JSX.Element => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    APIService.handleSocketEvents(dispatch);
+  });
   return (
     <Tile className={props.className}>
       <Avatar avatar={props.image}>
@@ -27,7 +40,16 @@ export const UserAvatar = (props: UserWithClassName): JSX.Element => {
       </NameAndPosition>
       {props.ableToDelete && (
         <Button>
-          <CircleWithDiagonal />
+          <Popup
+            trigger={<CircleWithDiagonalSVG />}
+            position="right center"
+            nested
+            modal
+          >
+            {(close: () => void) => (
+              <PopUpKIckPlayer user={props} close={close} dispatch={dispatch} />
+            )}
+          </Popup>
         </Button>
       )}
     </Tile>
