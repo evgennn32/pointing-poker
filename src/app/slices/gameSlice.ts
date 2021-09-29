@@ -35,6 +35,8 @@ const initialGame: GameRoomEntity = {
   cards: [],
   gameResults: [],
   rounds: [],
+  isLoading: false,
+  error: null,
 };
 
 export const createGame = createAsyncThunk(
@@ -42,6 +44,22 @@ export const createGame = createAsyncThunk(
   async (user: User) => {
     const response = await APIService.gameCreate(user);
     if (response) return response;
+  },
+);
+
+export const deleteGame = createAsyncThunk(
+  "game/deleteStatus",
+  async (roomId: string, { rejectWithValue }) => {
+    try {
+      const response = await APIService.gameDelete(roomId);
+      if (response && response.error) {
+        return rejectWithValue(response.error);
+      }
+      return initialGame;
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue("Failed while sending request");
+    }
   },
 );
 
@@ -143,6 +161,16 @@ export const gameSlice = createSlice({
     builder
       .addCase(createGame.fulfilled, (state, action) => {
         if (action.payload && action.payload.roomID) return action.payload;
+      })
+      .addCase(deleteGame.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteGame.fulfilled, (state, action) => {
+        return action.payload;
+      })
+      .addCase(deleteGame.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
       })
       .addCase(joinGame.pending, (state) => {
         state.isLoading = true;
