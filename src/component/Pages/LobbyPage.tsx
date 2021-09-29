@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Main } from "../styledComponents/Main/Main";
 import { SideBar } from "../styledComponents/Sidebar/SideBar";
 import { Page } from "../styledComponents/Page/Page";
@@ -78,7 +78,7 @@ const IssuesWrap = styled.div`
 
 const LobbyPage = (): JSX.Element => {
   const dispatch = useDispatch();
-
+  const [redirectToGame, setRedirectToGame] = useState(false);
   const game = useSelector<RootState, GameRoomEntity>(
     (state: { game: GameRoomEntity }) => state.game,
   );
@@ -97,6 +97,16 @@ const LobbyPage = (): JSX.Element => {
   const gameLink = game.roomID
     ? `${window.location.host}?gameId=${game.roomID}`
     : "No game";
+
+  useEffect(() => {
+    if (game.gameSettings.gameInProgress) {
+      setRedirectToGame(true);
+    }
+  }, [game]);
+  if (redirectToGame) {
+    return <Redirect to="/game" />;
+  }
+
   return (
     <Page sidebarActive={chatActive}>
       <Main>
