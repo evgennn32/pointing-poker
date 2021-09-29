@@ -11,7 +11,7 @@ import { RootState } from "../../app/store";
 import { Redirect } from "react-router";
 import { getUrlParam } from "../../shared/helpers";
 import User from "../../models/User";
-import { joinGame } from "../../app/slices/gameSlice";
+import { joinGame, updateGameUsers } from "../../app/slices/gameSlice";
 
 const Main = styled.main`
   position: relative;
@@ -87,9 +87,7 @@ const Input = styled.input`
 
 export const MainPage = (): JSX.Element => {
   const [connectPopUpOpen, setConnectPopUpOpen] = useState(false);
-  const [connectUrl, setConnectUrl] = useState(
-    "localhost:3000?gameId=ku46munx2oo6ygpsb4lv",
-  );
+  const [connectUrl, setConnectUrl] = useState("");
   const dispatch = useDispatch();
   const game = useSelector<RootState, GameRoomEntity>(
     (state: { game: GameRoomEntity }) => state.game,

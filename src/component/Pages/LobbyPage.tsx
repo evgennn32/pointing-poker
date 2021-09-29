@@ -18,7 +18,10 @@ import { GameRoomEntity } from "../../models/GameRoomEntity";
 import User from "../../models/User";
 import { Redirect } from "react-router";
 import GameSettings from "../../models/GameSettings";
-import { updateGameSettings } from "../../app/slices/gameSlice";
+import {
+  updateGameSettings,
+  updateGameUsers,
+} from "../../app/slices/gameSlice";
 import APIService from "../../app/services/APIservice";
 
 const Container = styled.div`
@@ -84,15 +87,22 @@ const LobbyPage = (): JSX.Element => {
   const game = useSelector<RootState, GameRoomEntity>(
     (state: { game: GameRoomEntity }) => state.game,
   );
+  const user = useSelector<RootState, User>(
+    (state: { user: User }) => state.user,
+  );
+  const userInGameState = game.users.find((res) => res.id === user.id);
+  if (!userInGameState) {
+    const users = [...game.users];
+    users.push(user);
+    dispatch(updateGameUsers(users));
+  }
   if (!game.roomID) {
     return <Redirect to="/" />;
   }
   const updateSettings = (settings: GameSettings) => {
     dispatch(updateGameSettings({ settings, roomId: game.roomID }));
   };
-  const user = useSelector<RootState, User>(
-    (state: { user: User }) => state.user,
-  );
+
   const chatActive = useSelector((state: RootState) => state.chat.isActive);
   const gameLink = game.roomID
     ? `${window.location.host}?gameId=${game.roomID}`
