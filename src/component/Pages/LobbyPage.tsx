@@ -19,6 +19,7 @@ import User from "../../models/User";
 import { Redirect } from "react-router";
 import GameSettings from "../../models/GameSettings";
 import { updateGameSettings } from "../../app/slices/gameSlice";
+import { io } from "socket.io-client";
 
 const Container = styled.div`
   display: flex;
