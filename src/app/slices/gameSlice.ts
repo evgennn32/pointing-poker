@@ -125,11 +125,19 @@ const updateIssuesReducer = (
   state.issues = action.payload;
 };
 
+const updateUsersReducer = (
+  state: GameRoomEntity,
+  action: PayloadAction<User[]>,
+) => {
+  state.users = action.payload;
+};
+
 export const gameSlice = createSlice({
   name: "game",
   initialState: initialGame,
   reducers: {
     updateGameIssues: updateIssuesReducer,
+    updateGameUsers: updateUsersReducer,
   },
   extraReducers: (builder) => {
     builder
@@ -181,5 +189,5 @@ export const gameSlice = createSlice({
   },
 });
 
-export const { updateGameIssues } = gameSlice.actions;
+export const { updateGameIssues, updateGameUsers } = gameSlice.actions;
 export default gameSlice.reducer;

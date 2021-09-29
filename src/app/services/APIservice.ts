@@ -5,7 +5,7 @@ import GameSettings from "../../models/GameSettings";
 import Card from "../../models/Card";
 import Issue from "../../models/Issue";
 import { AppDispatch } from "../store";
-import { updateGameIssues } from "../slices/gameSlice";
+import { updateGameIssues, updateGameUsers } from "../slices/gameSlice";
 
 const APIService = {
   connected: false,
@@ -227,6 +227,9 @@ const APIService = {
       const socket = APIService.socket;
       socket.on("game:issues-update", (data: { issues: Issue[] }): void => {
         if (data && data.issues) dispatch(updateGameIssues(data.issues));
+      });
+      socket.on("game:users-update", (data: { users: User[] }): void => {
+        if (data && data.users) dispatch(updateGameUsers(data.users));
       });
     }
   },

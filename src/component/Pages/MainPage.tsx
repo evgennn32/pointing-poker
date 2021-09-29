@@ -87,9 +87,7 @@ const Input = styled.input`
 
 export const MainPage = (): JSX.Element => {
   const [connectPopUpOpen, setConnectPopUpOpen] = useState(false);
-  const [connectUrl, setConnectUrl] = useState(
-    "localhost:3000?gameId=ku46munx2oo6ygpsb4lv",
-  );
+  const [connectUrl, setConnectUrl] = useState("");
   const dispatch = useDispatch();
   const game = useSelector<RootState, GameRoomEntity>(
     (state: { game: GameRoomEntity }) => state.game,
