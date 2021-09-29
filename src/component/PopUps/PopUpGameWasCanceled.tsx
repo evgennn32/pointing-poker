@@ -18,6 +18,7 @@ export const PopUpGameWasCanceled = (props: ClosePopUp): JSX.Element => {
         onClick={() => {
           history.push("/");
           props.close();
+          //TODO when call popup add closeOnDocumentClick={false} so it doesn't close on document click
         }}
         isLightTheme={false}
       ></Button>
