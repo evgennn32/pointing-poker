@@ -121,7 +121,13 @@ const LobbyPage = (): JSX.Element => {
                   isLightTheme={false}
                   textContent="Start Game"
                   onClick={() => {
-                    // TODO handle start game click
+                    const socket = io("game", {
+                      transports: ["websocket"],
+                    });
+                    socket.on("start game", () => {
+                      window.location.href = "/game";
+                    });
+                    socket.emit("start");
                   }}
                 />
                 <Button
