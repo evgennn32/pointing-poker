@@ -11,7 +11,7 @@ import { RootState } from "../../app/store";
 import { Redirect } from "react-router";
 import { getUrlParam } from "../../shared/helpers";
 import User from "../../models/User";
-import { joinGame, updateGameUsers } from "../../app/slices/gameSlice";
+import { joinGame } from "../../app/slices/gameSlice";
 
 const Main = styled.main`
   position: relative;
