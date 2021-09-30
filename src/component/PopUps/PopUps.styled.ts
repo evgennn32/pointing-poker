@@ -116,6 +116,7 @@ export const Label = styled.label`
     font-size: 20px;
     line-height: 12px;
     margin-bottom: 10px;
+    width: max-content;
   }
   @media (${MediaQuery.laptopHeight}) {
     font-size: 20px;
