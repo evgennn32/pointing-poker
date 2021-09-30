@@ -118,6 +118,22 @@ export const issueUpdate = createAsyncThunk(
   },
 );
 
+export const userDelete = createAsyncThunk(
+  "game/deleteUserStatus",
+  async (data: { userId: string; roomId: string }, { rejectWithValue }) => {
+    try {
+      const response = await APIService.userDelete(data.userId, data.roomId);
+      if (response && response.error) {
+        return rejectWithValue(response.error);
+      }
+      return response;
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue("Failed while sending request");
+    }
+  },
+);
+
 const updateIssuesReducer = (
   state: GameRoomEntity,
   action: PayloadAction<Issue[]>,
@@ -184,6 +200,19 @@ export const gameSlice = createSlice({
       .addCase(cardUpdate.fulfilled, (state, action) => {
         if (action.payload) {
           state.cards = action.payload;
+        }
+      })
+      .addCase(userDelete.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(userDelete.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(userDelete.fulfilled, (state, action) => {
+        if (action.payload && action.payload.users) {
+          state.isLoading = false;
+          state.users = action.payload.users;
         }
       });
   },
