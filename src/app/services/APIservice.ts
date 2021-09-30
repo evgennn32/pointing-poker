@@ -5,7 +5,13 @@ import GameSettings from "../../models/GameSettings";
 import Card from "../../models/Card";
 import Issue from "../../models/Issue";
 import { AppDispatch } from "../store";
-import { updateGameIssues, updateGameUsers } from "../slices/gameSlice";
+import {
+  updateGameIssues,
+  updateGameUsers,
+  updateGameSettingsState,
+  addGameRound,
+} from "../slices/gameSlice";
+import Round from "../../models/Round";
 
 const APIService = {
   connected: false,
@@ -48,11 +54,9 @@ const APIService = {
       try {
         return new Promise((resolve, reject) => {
           const cb = (res: { error: string; success: boolean }): void => {
-            console.log(res);
             if (res.error) {
               return reject(res);
             }
-            console.log(res);
             return resolve(res);
           };
           APIService.socket.emit("game:delete", roomId, cb);
@@ -78,6 +82,28 @@ const APIService = {
       }
     }
   },
+  gameStart: async (
+    roomId: string,
+  ): Promise<
+    { gameSettings?: GameSettings; round: Round; error?: string } | undefined
+  > => {
+    if (APIService.connected) {
+      try {
+        return new Promise((resolve) => {
+          const cb = (res: {
+            error: string;
+            gameSettings: GameSettings;
+            round: Round;
+          }): void => {
+            resolve(res);
+          };
+          APIService.socket.emit("game:start", roomId, cb);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
   userCreate: async (
     user: User,
     roomId: string,
@@ -93,6 +119,27 @@ const APIService = {
             resolve(res);
           };
           APIService.socket.emit("user:create", user, roomId, cb);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
+  roundCreate: async (
+    issueId: string,
+    roomId: string,
+  ): Promise<{ round?: Round; error?: string } | undefined> => {
+    if (APIService.connected) {
+      try {
+        return new Promise((resolve, reject) => {
+          const cb = (res: { error: string; round: Round }): void => {
+            if (!res) reject({ error: "bad request" });
+            if (res && res.error) {
+              reject({ error: res.error });
+            }
+            resolve(res);
+          };
+          APIService.socket.emit("round:create", issueId, roomId, cb);
         });
       } catch (e) {
         console.error(e);
@@ -273,6 +320,14 @@ const APIService = {
       socket.on("game:users-update", (data: { users: User[] }): void => {
         if (data && data.users) dispatch(updateGameUsers(data.users));
       });
+      socket.on(
+        "game:start",
+        (data: { gameSettings: GameSettings; round: Round }): void => {
+          if (data && data.round) dispatch(addGameRound(data.round));
+          if (data && data.gameSettings)
+            dispatch(updateGameSettingsState(data.gameSettings));
+        },
+      );
     }
   },
 };

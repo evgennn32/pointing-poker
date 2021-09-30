@@ -5,6 +5,7 @@ import APIService from "../services/APIservice";
 import GameSettings from "../../models/GameSettings";
 import Card from "../../models/Card";
 import Issue from "../../models/Issue";
+import Round from "../../models/Round";
 
 const initialGame: GameRoomEntity = {
   roomName: "",
@@ -68,6 +69,21 @@ export const joinGame = createAsyncThunk(
   async (roomId: string, { rejectWithValue }) => {
     try {
       const response = await APIService.gameJoin(roomId);
+      if (response && response.error) {
+        return rejectWithValue(response.error);
+      }
+      return response;
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue("Failed while sending request");
+    }
+  },
+);
+export const startGame = createAsyncThunk(
+  "game/startStatus",
+  async (roomId: string, { rejectWithValue }) => {
+    try {
+      const response = await APIService.gameStart(roomId);
       if (response && response.error) {
         return rejectWithValue(response.error);
       }
@@ -166,12 +182,28 @@ const updateUsersReducer = (
   state.users = action.payload;
 };
 
+const updateSettingsReducer = (
+  state: GameRoomEntity,
+  action: PayloadAction<GameSettings>,
+) => {
+  state.gameSettings = action.payload;
+};
+
+const addRoundReducer = (
+  state: GameRoomEntity,
+  action: PayloadAction<Round>,
+) => {
+  state.rounds.push(action.payload);
+};
+
 export const gameSlice = createSlice({
   name: "game",
   initialState: initialGame,
   reducers: {
     updateGameIssues: updateIssuesReducer,
     updateGameUsers: updateUsersReducer,
+    updateGameSettingsState: updateSettingsReducer,
+    addGameRound: addRoundReducer,
   },
   extraReducers: (builder) => {
     builder
@@ -197,6 +229,19 @@ export const gameSlice = createSlice({
         }
       })
       .addCase(joinGame.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(startGame.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(startGame.fulfilled, (state, action) => {
+        if (action.payload && action.payload.gameSettings) {
+          state.gameSettings = action.payload.gameSettings;
+          state.rounds.push(action.payload.round);
+        }
+      })
+      .addCase(startGame.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       })
@@ -249,5 +294,10 @@ export const gameSlice = createSlice({
   },
 });
 
-export const { updateGameIssues, updateGameUsers } = gameSlice.actions;
+export const {
+  updateGameIssues,
+  updateGameUsers,
+  updateGameSettingsState,
+  addGameRound,
+} = gameSlice.actions;
 export default gameSlice.reducer;

@@ -16,13 +16,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
 import User from "../../models/User";
-import { Redirect } from "react-router";
+import { Redirect, useHistory } from "react-router";
 import GameSettings from "../../models/GameSettings";
 import {
   deleteGame,
+  startGame,
   updateGameSettings,
   updateGameUsers,
 } from "../../app/slices/gameSlice";
+import { roundUpdateState } from "../../app/slices/roundSlice";
 import APIService from "../../app/services/APIservice";
 
 const Container = styled.div`
@@ -82,6 +84,7 @@ const IssuesWrap = styled.div`
 
 const LobbyPage = (): JSX.Element => {
   const dispatch = useDispatch();
+  const history = useHistory();
   useEffect(() => {
     APIService.handleSocketEvents(dispatch);
   });
@@ -98,15 +101,24 @@ const LobbyPage = (): JSX.Element => {
     dispatch(updateGameUsers(users));
   }
   const chatActive = useSelector((state: RootState) => state.chat.isActive);
-  if (!game.roomID) {
-    return <Redirect to="/" />;
-  }
+
   const updateSettings = (settings: GameSettings) => {
     dispatch(updateGameSettings({ settings, roomId: game.roomID }));
   };
   const gameLink = game.roomID
     ? `${window.location.host}?gameId=${game.roomID}`
     : "No game";
+
+  useEffect(() => {
+    if (game.gameSettings.gameInProgress && game.rounds.length) {
+      dispatch(roundUpdateState(game.rounds[0]));
+      history.replace("/game");
+    }
+  }, [game]);
+  if (!game.roomID) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <Page sidebarActive={chatActive}>
       <Main>
@@ -132,7 +144,7 @@ const LobbyPage = (): JSX.Element => {
                   isLightTheme={false}
                   textContent="Start Game"
                   onClick={() => {
-                    // TODO handle start game click
+                    dispatch(startGame(game.roomID));
                   }}
                 />
                 <Button
@@ -152,7 +164,7 @@ const LobbyPage = (): JSX.Element => {
                 isLightTheme={true}
                 textContent="Exit"
                 onClick={() => {
-                  // TODO handle exit game click
+                  window.location.replace("/");
                 }}
               />
             </BtnsWrap>

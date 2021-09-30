@@ -7,4 +7,6 @@ export  default interface Round {
   roundInProgress: boolean;
   usersVoteResults: UserVoteResult[];
   statistics: VoteResult[] | null;
+  isLoading?: boolean;
+  error?: string;
 }
