@@ -26,7 +26,7 @@ import { UserAvatar } from "../UserAvatar/UserAvatar";
 import { VoteResults } from "../VoteResults/VoteResults";
 import { MediaQuery } from "../styledComponents/MediaQuery/MediaQuery";
 
-export const DIV = styled.div`
+export const DIV = styled.div<{ isPlayer: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -34,20 +34,13 @@ export const DIV = styled.div`
   column-gap: 15px;
   @media (${MediaQuery.laptopWidth}) {
     padding: 0 20px;
+    align-items: self-start;
   }
   @media (max-width: 670px) {
-    display: grid;
-    grid-template-rows: 50% 50%;
-    grid-template-columns: 45% 55%;
-    justify-items: start;
-  }
-  @media (max-width: 470px) {
-    grid-template-columns: 50% 55%;
-  }
-  @media (${MediaQuery.mobile}) {
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: 55% 20%;
+    ${(props) =>
+      !props.isPlayer
+        ? "display: flex;flex-direction: column;"
+        : "display: grid;justify-items: start;grid-template-columns: 50% 50%;grid-template-rows: 27% 50%;"}
   }
 `;
 export const MasterWrapper = styled.div`
@@ -160,7 +153,7 @@ const GamePage = (): JSX.Element => {
             isLightTheme={true}
           />
         </MasterWrapper>
-        <DIV>
+        <DIV isPlayer={initialData.scrumMaster.id === currentUser.id}>
           <IssuesBlockWrap>
             <Title title="Issues:" />
             <IssuesBlock
