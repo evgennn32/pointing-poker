@@ -39,6 +39,22 @@ export const roundCreate = createAsyncThunk(
   },
 );
 
+export const roundStart = createAsyncThunk(
+  "round/startStatus",
+  async (data: { roundId: string; roomId: string }, { rejectWithValue }) => {
+    try {
+      const response = await APIService.roundStart(data.roundId, data.roomId);
+      if (response && response.error) {
+        return rejectWithValue(response.error);
+      }
+      return response;
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue("Failed while sending request");
+    }
+  },
+);
+
 export const roundSlice = createSlice({
   name: "round",
   initialState: initialRound,
@@ -56,6 +72,18 @@ export const roundSlice = createSlice({
         state.error = action.payload as string;
       })
       .addCase(roundCreate.fulfilled, (state, action) => {
+        if (action.payload && action.payload.round) {
+          return { ...action.payload.round, isLoading: false };
+        }
+      })
+      .addCase(roundStart.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(roundStart.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(roundStart.fulfilled, (state, action) => {
         if (action.payload && action.payload.round) {
           return { ...action.payload.round, isLoading: false };
         }

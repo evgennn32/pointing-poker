@@ -23,6 +23,7 @@ import { RootState } from "../../app/store";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
 import User from "../../models/User";
 import Round from "../../models/Round";
+import { roundStart } from "../../app/slices/roundSlice";
 export const DIV = styled.div`
   display: flex;
   justify-content: space-between;
@@ -154,6 +155,12 @@ const GamePage = (): JSX.Element => {
                   onClick={() => {
                     {
                       /* TODO start round */
+                      dispatch(
+                        roundStart({
+                          roundId: round.roundId,
+                          roomId: game.roomID,
+                        }),
+                      );
                     }
                   }}
                   isLightTheme={false}
