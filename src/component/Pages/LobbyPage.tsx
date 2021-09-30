@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Main } from "../styledComponents/Main/Main";
 import { SideBar } from "../styledComponents/Sidebar/SideBar";
 import { Page } from "../styledComponents/Page/Page";
@@ -16,13 +16,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
 import User from "../../models/User";
-import { Redirect } from "react-router";
+import { Redirect, useHistory } from "react-router";
 import GameSettings from "../../models/GameSettings";
 import {
   deleteGame,
+  startGame,
   updateGameSettings,
   updateGameUsers,
 } from "../../app/slices/gameSlice";
+import { roundUpdateState } from "../../app/slices/roundSlice";
 import APIService from "../../app/services/APIservice";
 
 const Container = styled.div`
@@ -82,6 +84,7 @@ const IssuesWrap = styled.div`
 
 const LobbyPage = (): JSX.Element => {
   const dispatch = useDispatch();
+  const history = useHistory();
   useEffect(() => {
     APIService.handleSocketEvents(dispatch);
   });
@@ -107,6 +110,14 @@ const LobbyPage = (): JSX.Element => {
   const gameLink = game.roomID
     ? `${window.location.host}?gameId=${game.roomID}`
     : "No game";
+
+  useEffect(() => {
+    if (game.gameSettings.gameInProgress && game.rounds.length) {
+      dispatch(roundUpdateState(game.rounds[0]));
+      history.replace("/game");
+    }
+  }, [game]);
+
   return (
     <Page sidebarActive={chatActive}>
       <Main>
@@ -132,7 +143,7 @@ const LobbyPage = (): JSX.Element => {
                   isLightTheme={false}
                   textContent="Start Game"
                   onClick={() => {
-                    // TODO handle start game click
+                    dispatch(startGame(game.roomID));
                   }}
                 />
                 <Button
