@@ -1,11 +1,9 @@
 import React from "react";
-import { useHistory } from "react-router";
 import { Button } from "../Button/Button";
 import { ClosePopUp } from "./ClosePopUp";
 import { Wrapper, Span, P, H2 } from "./PopUps.styled";
 
 export const PopUpGameWasCanceled = (props: ClosePopUp): JSX.Element => {
-  const history = useHistory();
   return (
     <Wrapper>
       <H2>Oops...</H2>
@@ -16,7 +14,7 @@ export const PopUpGameWasCanceled = (props: ClosePopUp): JSX.Element => {
       <Button
         textContent="Yes"
         onClick={() => {
-          history.push("/");
+          window.location.assign("/");
           props.close();
           //TODO when call popup add closeOnDocumentClick={false} so it doesn't close on document click
         }}
