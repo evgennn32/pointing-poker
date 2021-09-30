@@ -32,6 +32,7 @@ export const ButtonStyled = styled.button<{ isLight: boolean }>`
   }
   @media (${MediaQuery.mobile}) {
     width: 70%;
+    min-width: 135px;
   }
 `;
 

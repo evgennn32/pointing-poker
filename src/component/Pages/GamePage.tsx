@@ -32,6 +32,23 @@ export const DIV = styled.div`
   align-items: flex-end;
   padding-left: 20px;
   column-gap: 15px;
+  @media (${MediaQuery.laptopWidth}) {
+    padding: 0 20px;
+  }
+  @media (max-width: 670px) {
+    display: grid;
+    grid-template-rows: 50% 50%;
+    grid-template-columns: 45% 55%;
+    justify-items: start;
+  }
+  @media (max-width: 470px) {
+    grid-template-columns: 50% 55%;
+  }
+  @media (${MediaQuery.mobile}) {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 55% 20%;
+  }
 `;
 export const MasterWrapper = styled.div`
   display: flex;
@@ -45,9 +62,30 @@ export const MasterWrapper = styled.div`
     gap: 10px;
   }
 `;
-export const ButtomPart = styled(DIV)`
+export const IssuesBlockWrap = styled.div`
+  @media (max-width: 670px) {
+    grid-row-start: span 2;
+  }
+  @media (${MediaQuery.mobile}) {
+    grid-column-start: span 2;
+  }
+`;
+export const ButtomPart = styled.div`
+  display: flex;
+  align-items: flex-end;
+  padding-left: 20px;
+  column-gap: 15px;
   justify-content: flex-start;
   flex-wrap: wrap;
+  @media (${MediaQuery.mobile}) {
+    padding-left: 0px;
+  }
+`;
+export const TitleMedia = styled.div`
+  @media (${MediaQuery.mobile}) {
+    position: absolute;
+    bottom: 430px;
+  }
 `;
 export const Paragraph = styled.p`
   margin-left: 20px;
@@ -64,12 +102,18 @@ export const TimerAndBtn = styled.div`
   height: 110px;
   justify-content: space-between;
   align-self: baseline;
+  @media (${MediaQuery.mobile}) {
+    margin-top: 20px;
+  }
 `;
 export const NextIssueBtn = styled.div`
   margin-top: 155px;
   flex-grow: 1;
   text-align: end;
   align-self: start;
+  @media (${MediaQuery.mobile}) {
+    margin-top: 85px;
+  }
 `;
 export const StatistForPlayer = styled.div`
   display: flex;
@@ -117,7 +161,7 @@ const GamePage = (): JSX.Element => {
           />
         </MasterWrapper>
         <DIV>
-          <div>
+          <IssuesBlockWrap>
             <Title title="Issues:" />
             <IssuesBlock
               issues={
@@ -132,11 +176,13 @@ const GamePage = (): JSX.Element => {
             {initialData.scrumMaster.id === currentUser.id && (
               <>
                 <CreateIssue />
-                <Title title="Statistics:" />
+                <TitleMedia>
+                  <Title title="Statistics:" />
+                </TitleMedia>
                 {/* TODO show statistic only when the game ended */}
               </>
             )}
-          </div>
+          </IssuesBlockWrap>
           {initialData.scrumMaster.id === currentUser.id && (
             <>
               <TimerAndBtn>

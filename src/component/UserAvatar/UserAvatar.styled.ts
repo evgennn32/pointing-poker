@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { MediaQuery } from "../styledComponents/MediaQuery/MediaQuery";
 import { ReactComponent as CircleWithDiagonal } from "./../../assets/icons/circle-diagonal-line.svg";
 
 export const CircleWithDiagonalSVG = styled(CircleWithDiagonal)`
@@ -25,9 +26,15 @@ export const NameAndPosition = styled.div`
 export const Name = styled.p`
   margin: 3px;
   font-weight: bold;
+  @media (${MediaQuery.tablet}) {
+    margin: 0 3px;
+  }
 `;
 export const SmallTxt = styled.p`
   margin: 3px;
+  @media (${MediaQuery.tablet}) {
+    margin: 0 3px;
+  }
 `;
 export const Button = styled.button`
   width: 30px;

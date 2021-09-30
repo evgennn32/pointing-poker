@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { SVGDelete } from "../CreateIssue/CreateIssueAndIssue.style";
+import { MediaQuery } from "../styledComponents/MediaQuery/MediaQuery";
 
 export const Card = styled.div`
   position: relative;
@@ -29,6 +30,12 @@ export const Card = styled.div`
     font-family: Ruda-Bold, sans-serif;
     outline: none;
     border: none;
+  }
+  @media (${MediaQuery.tablet}) {
+    margin: 5px;
+  }
+  @media (${MediaQuery.mobile}) {
+    margin: 2px;
   }
 `;
 export const TopContent = styled.div`
