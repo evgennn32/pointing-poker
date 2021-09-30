@@ -1,5 +1,12 @@
 import styled from "styled-components";
+import { ReactComponent as CircleWithDiagonal } from "./../../assets/icons/circle-diagonal-line.svg";
 
+export const CircleWithDiagonalSVG = styled(CircleWithDiagonal)`
+  &:hover {
+    transform: scale(1.1);
+    transition: 0.3s;
+  }
+`;
 export const Wrapper = styled.div`
   width: 300px;
   height: 100px;

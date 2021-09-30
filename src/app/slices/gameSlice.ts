@@ -35,6 +35,8 @@ const initialGame: GameRoomEntity = {
   cards: [],
   gameResults: [],
   rounds: [],
+  isLoading: false,
+  error: null,
 };
 
 export const createGame = createAsyncThunk(
@@ -42,6 +44,22 @@ export const createGame = createAsyncThunk(
   async (user: User) => {
     const response = await APIService.gameCreate(user);
     if (response) return response;
+  },
+);
+
+export const deleteGame = createAsyncThunk(
+  "game/deleteStatus",
+  async (roomId: string, { rejectWithValue }) => {
+    try {
+      const response = await APIService.gameDelete(roomId);
+      if (response && response.error) {
+        return rejectWithValue(response.error);
+      }
+      return initialGame;
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue("Failed while sending request");
+    }
   },
 );
 
@@ -118,32 +136,68 @@ export const issueUpdate = createAsyncThunk(
   },
 );
 
-const createGameReducer = (
+export const userDelete = createAsyncThunk(
+  "game/deleteUserStatus",
+  async (data: { userId: string; roomId: string }, { rejectWithValue }) => {
+    try {
+      const response = await APIService.userDelete(data.userId, data.roomId);
+      if (response && response.error) {
+        return rejectWithValue(response.error);
+      }
+      return response;
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue("Failed while sending request");
+    }
+  },
+);
+
+const updateIssuesReducer = (
   state: GameRoomEntity,
-  action: PayloadAction<User>,
+  action: PayloadAction<Issue[]>,
 ) => {
-  // APIService.gameCreate(action.payload);
-  // console.log(action.payload);
+  state.issues = action.payload;
+};
+
+const updateUsersReducer = (
+  state: GameRoomEntity,
+  action: PayloadAction<User[]>,
+) => {
+  state.users = action.payload;
 };
 
 export const gameSlice = createSlice({
   name: "game",
   initialState: initialGame,
   reducers: {
-    gameCreate: createGameReducer,
+    updateGameIssues: updateIssuesReducer,
+    updateGameUsers: updateUsersReducer,
   },
   extraReducers: (builder) => {
     builder
       .addCase(createGame.fulfilled, (state, action) => {
         if (action.payload && action.payload.roomID) return action.payload;
       })
+      .addCase(deleteGame.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteGame.fulfilled, (state, action) => {
+        return action.payload;
+      })
+      .addCase(deleteGame.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
       .addCase(joinGame.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(joinGame.fulfilled, (state, action) => {
-        if (action.payload && action.payload.game) return action.payload.game;
+        if (action.payload && action.payload.game) {
+          return { ...action.payload.game, isLoading: false };
+        }
       })
       .addCase(joinGame.rejected, (state, action) => {
+        state.isLoading = false;
         state.error = action.payload as string;
       })
       .addCase(updateGameSettings.fulfilled, (state, action) => {
@@ -178,9 +232,22 @@ export const gameSlice = createSlice({
         if (action.payload) {
           state.cards = action.payload;
         }
+      })
+      .addCase(userDelete.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(userDelete.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(userDelete.fulfilled, (state, action) => {
+        if (action.payload && action.payload.users) {
+          state.isLoading = false;
+          state.users = action.payload.users;
+        }
       });
   },
 });
 
-export const { gameCreate } = gameSlice.actions;
+export const { updateGameIssues, updateGameUsers } = gameSlice.actions;
 export default gameSlice.reducer;

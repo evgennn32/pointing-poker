@@ -12,6 +12,7 @@ import { Redirect } from "react-router";
 import { getUrlParam } from "../../shared/helpers";
 import User from "../../models/User";
 import { joinGame } from "../../app/slices/gameSlice";
+import Loader from "../Loader/Loader";
 
 const Main = styled.main`
   position: relative;
@@ -87,9 +88,7 @@ const Input = styled.input`
 
 export const MainPage = (): JSX.Element => {
   const [connectPopUpOpen, setConnectPopUpOpen] = useState(false);
-  const [connectUrl, setConnectUrl] = useState(
-    "localhost:3000?gameId=ku46munx2oo6ygpsb4lv",
-  );
+  const [connectUrl, setConnectUrl] = useState("");
   const dispatch = useDispatch();
   const game = useSelector<RootState, GameRoomEntity>(
     (state: { game: GameRoomEntity }) => state.game,
@@ -122,6 +121,7 @@ export const MainPage = (): JSX.Element => {
 
   return (
     <Main>
+      <Loader show={game.isLoading ? game.isLoading : false} />
       <Chat />
       <MainLogo src="./images/MainLogo.png" />
       <Content>
