@@ -94,7 +94,7 @@ export const Label = styled.label`
     width: max-content;
   }
   @media (${MediaQuery.mobile}) {
-    width: 100px;
+    width: 270px;
   }
 `;
 export const Error = styled.span`
@@ -116,6 +116,9 @@ export const InputsWrapper = styled.div`
 export const FormWrapper = styled.div`
   display: grid;
   grid-template-columns: 66% auto;
+  @media (${MediaQuery.laptopHeight}) {
+    grid-template-columns: 62% auto;
+  }
   @media (${MediaQuery.tablet}) {
     grid-template-columns: 50% auto;
   }
@@ -129,12 +132,22 @@ export const ConnectAsObserverAndCancel = styled.div`
   align-items: end;
   justify-items: end;
   max-height: 100%;
+  @media (${MediaQuery.mobile}) {
+    height: fit-content;
+    grid-template-rows: auto 0px 45px;
+    align-self: self-end;
+  }
 `;
 export const ConnectAsObserver = styled.div`
   display: flex;
   text-align: center;
   align-items: center;
   margin-top: 15px;
+  @media (max-width: 600px) {
+    & > #my-radio-group {
+      width: min-content;
+    }
+  }
 `;
 export const Initials = styled.p`
   font-style: normal;
@@ -160,15 +173,24 @@ export const InputsWrapperConnectToLobby = styled.div`
   height: 700px;
   max-height: 100%;
   @media (${MediaQuery.tablet}) {
-    height: 500px;
+    height: max-content;
+    gap: 10px;
   }
   @media (${MediaQuery.laptopHeight}) {
-    height: 500px;
+    height: max-content;
+    gap: 10px;
+  }
+  @media (${MediaQuery.mobile}) {
+    height: max-content;
+    gap: 10px;
   }
 `;
 export const OneInputWrapperConnectToLobby = styled.div`
   display: flex;
   flex-direction: column;
+  @media (${MediaQuery.mobile}) {
+    gap: 5px;
+  }
 `;
 export const WrapperConnectToLobby = styled.div`
   width: 776px;

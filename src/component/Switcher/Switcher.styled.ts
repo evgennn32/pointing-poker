@@ -12,6 +12,7 @@ export const CheckBoxLabel = styled.label`
   border-radius: 15px;
   background: #c4c4c4;
   cursor: pointer;
+  margin-left: 5px;
   &::after {
     content: "";
     display: block;

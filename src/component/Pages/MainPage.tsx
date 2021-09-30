@@ -58,8 +58,12 @@ const Label = styled.label`
   font-weight: 300;
   font-size: 24px;
   line-height: 28px;
+  @media (${MediaQuery.tablet}) {
+    width: 270px;
+    gap: 10px;
+  }
   @media (${MediaQuery.mobile}) {
-    width: min-content;
+    width: 270px;
     gap: 10px;
   }
 `;

@@ -30,6 +30,9 @@ export const ButtonStyled = styled.button<{ isLight: boolean }>`
   @media (${MediaQuery.tablet}) {
     width: 200px;
   }
+  @media (${MediaQuery.mobile}) {
+    width: 70%;
+  }
 `;
 
 export const Button = ({
