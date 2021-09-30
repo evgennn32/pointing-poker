@@ -93,6 +93,9 @@ export const Label = styled.label`
     margin-bottom: 10px;
     width: max-content;
   }
+  @media (${MediaQuery.mobile}) {
+    width: 100px;
+  }
 `;
 export const Error = styled.span`
   justify-self: baseline;
