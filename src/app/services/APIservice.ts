@@ -6,6 +6,7 @@ import Card from "../../models/Card";
 import Issue from "../../models/Issue";
 import { AppDispatch } from "../store";
 import { updateGameIssues, updateGameUsers } from "../slices/gameSlice";
+import Round from "../../models/Round";
 
 const APIService = {
   connected: false,
@@ -93,6 +94,27 @@ const APIService = {
             resolve(res);
           };
           APIService.socket.emit("user:create", user, roomId, cb);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
+  roundCreate: async (
+    issueId: string,
+    roomId: string,
+  ): Promise<{ round?: Round; error?: string } | undefined> => {
+    if (APIService.connected) {
+      try {
+        return new Promise((resolve, reject) => {
+          const cb = (res: { error: string; round: Round }): void => {
+            if (!res) reject({ error: "bad request" });
+            if (res && res.error) {
+              reject({ error: res.error });
+            }
+            resolve(res);
+          };
+          APIService.socket.emit("round:create", issueId, roomId, cb);
         });
       } catch (e) {
         console.error(e);
