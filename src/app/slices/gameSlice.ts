@@ -192,9 +192,12 @@ export const gameSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(joinGame.fulfilled, (state, action) => {
-        if (action.payload && action.payload.game) return action.payload.game;
+        if (action.payload && action.payload.game) {
+          return { ...action.payload.game, isLoading: false };
+        }
       })
       .addCase(joinGame.rejected, (state, action) => {
+        state.isLoading = false;
         state.error = action.payload as string;
       })
       .addCase(updateGameSettings.fulfilled, (state, action) => {
