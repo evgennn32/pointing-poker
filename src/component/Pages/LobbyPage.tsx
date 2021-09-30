@@ -19,6 +19,7 @@ import User from "../../models/User";
 import { Redirect } from "react-router";
 import GameSettings from "../../models/GameSettings";
 import {
+  deleteGame,
   updateGameSettings,
   updateGameUsers,
 } from "../../app/slices/gameSlice";
@@ -96,14 +97,13 @@ const LobbyPage = (): JSX.Element => {
     users.push(user);
     dispatch(updateGameUsers(users));
   }
+  const chatActive = useSelector((state: RootState) => state.chat.isActive);
   if (!game.roomID) {
     return <Redirect to="/" />;
   }
   const updateSettings = (settings: GameSettings) => {
     dispatch(updateGameSettings({ settings, roomId: game.roomID }));
   };
-
-  const chatActive = useSelector((state: RootState) => state.chat.isActive);
   const gameLink = game.roomID
     ? `${window.location.host}?gameId=${game.roomID}`
     : "No game";
@@ -139,7 +139,8 @@ const LobbyPage = (): JSX.Element => {
                   isLightTheme={true}
                   textContent="Cancel Game"
                   onClick={() => {
-                    // TODO handle cancel game click
+                    dispatch(deleteGame(game.roomID));
+                    // window.location.href = "/";
                   }}
                 />
               </BtnsWrap>

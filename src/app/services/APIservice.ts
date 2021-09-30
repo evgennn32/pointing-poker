@@ -41,6 +41,27 @@ const APIService = {
       }
     }
   },
+  gameDelete: async (
+    roomId: string,
+  ): Promise<{ success?: boolean; error?: string } | undefined> => {
+    if (APIService.connected) {
+      try {
+        return new Promise((resolve, reject) => {
+          const cb = (res: { error: string; success: boolean }): void => {
+            console.log(res);
+            if (res.error) {
+              return reject(res);
+            }
+            console.log(res);
+            return resolve(res);
+          };
+          APIService.socket.emit("game:delete", roomId, cb);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
   gameJoin: async (
     roomId: string,
   ): Promise<{ game?: GameRoomEntity; error?: string } | undefined> => {
