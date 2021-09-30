@@ -15,6 +15,10 @@ export const ResultWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: 10px;
+  margin-top: 15px;
+  @media (${MediaQuery.tablet}) {
+    margin-top: 15px;
+  }
 `;
 
 export const CardWrapper = styled.div`
