@@ -5,7 +5,12 @@ import GameSettings from "../../models/GameSettings";
 import Card from "../../models/Card";
 import Issue from "../../models/Issue";
 import { AppDispatch } from "../store";
-import { updateGameIssues, updateGameUsers } from "../slices/gameSlice";
+import {
+  updateGameIssues,
+  updateGameUsers,
+  updateGameSettingsState,
+  addGameRound,
+} from "../slices/gameSlice";
 import Round from "../../models/Round";
 
 const APIService = {
@@ -315,6 +320,14 @@ const APIService = {
       socket.on("game:users-update", (data: { users: User[] }): void => {
         if (data && data.users) dispatch(updateGameUsers(data.users));
       });
+      socket.on(
+        "game:start",
+        (data: { gameSettings: GameSettings; round: Round }): void => {
+          if (data && data.round) dispatch(addGameRound(data.round));
+          if (data && data.gameSettings)
+            dispatch(updateGameSettingsState(data.gameSettings));
+        },
+      );
     }
   },
 };

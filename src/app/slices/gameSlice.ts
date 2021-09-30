@@ -5,6 +5,7 @@ import APIService from "../services/APIservice";
 import GameSettings from "../../models/GameSettings";
 import Card from "../../models/Card";
 import Issue from "../../models/Issue";
+import Round from "../../models/Round";
 
 const initialGame: GameRoomEntity = {
   roomName: "",
@@ -181,12 +182,28 @@ const updateUsersReducer = (
   state.users = action.payload;
 };
 
+const updateSettingsReducer = (
+  state: GameRoomEntity,
+  action: PayloadAction<GameSettings>,
+) => {
+  state.gameSettings = action.payload;
+};
+
+const addRoundReducer = (
+  state: GameRoomEntity,
+  action: PayloadAction<Round>,
+) => {
+  state.rounds.push(action.payload);
+};
+
 export const gameSlice = createSlice({
   name: "game",
   initialState: initialGame,
   reducers: {
     updateGameIssues: updateIssuesReducer,
     updateGameUsers: updateUsersReducer,
+    updateGameSettingsState: updateSettingsReducer,
+    addGameRound: addRoundReducer,
   },
   extraReducers: (builder) => {
     builder
@@ -277,5 +294,10 @@ export const gameSlice = createSlice({
   },
 });
 
-export const { updateGameIssues, updateGameUsers } = gameSlice.actions;
+export const {
+  updateGameIssues,
+  updateGameUsers,
+  updateGameSettingsState,
+  addGameRound,
+} = gameSlice.actions;
 export default gameSlice.reducer;
