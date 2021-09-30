@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Main } from "../styledComponents/Main/Main";
 import { SideBar } from "../styledComponents/Sidebar/SideBar";
 import { Page } from "../styledComponents/Page/Page";
@@ -101,9 +101,7 @@ const LobbyPage = (): JSX.Element => {
     dispatch(updateGameUsers(users));
   }
   const chatActive = useSelector((state: RootState) => state.chat.isActive);
-  if (!game.roomID) {
-    return <Redirect to="/" />;
-  }
+
   const updateSettings = (settings: GameSettings) => {
     dispatch(updateGameSettings({ settings, roomId: game.roomID }));
   };
@@ -117,6 +115,9 @@ const LobbyPage = (): JSX.Element => {
       history.replace("/game");
     }
   }, [game]);
+  if (!game.roomID) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Page sidebarActive={chatActive}>
@@ -163,7 +164,7 @@ const LobbyPage = (): JSX.Element => {
                 isLightTheme={true}
                 textContent="Exit"
                 onClick={() => {
-                  // TODO handle exit game click
+                  window.location.replace("/");
                 }}
               />
             </BtnsWrap>
