@@ -49,11 +49,9 @@ const APIService = {
       try {
         return new Promise((resolve, reject) => {
           const cb = (res: { error: string; success: boolean }): void => {
-            console.log(res);
             if (res.error) {
               return reject(res);
             }
-            console.log(res);
             return resolve(res);
           };
           APIService.socket.emit("game:delete", roomId, cb);
@@ -73,6 +71,28 @@ const APIService = {
             resolve(res);
           };
           APIService.socket.emit("game:join", roomId, cb);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
+  gameStart: async (
+    roomId: string,
+  ): Promise<
+    { gameSettings?: GameSettings; round: Round; error?: string } | undefined
+  > => {
+    if (APIService.connected) {
+      try {
+        return new Promise((resolve) => {
+          const cb = (res: {
+            error: string;
+            gameSettings: GameSettings;
+            round: Round;
+          }): void => {
+            resolve(res);
+          };
+          APIService.socket.emit("game:start", roomId, cb);
         });
       } catch (e) {
         console.error(e);

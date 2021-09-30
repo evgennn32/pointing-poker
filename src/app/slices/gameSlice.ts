@@ -78,6 +78,21 @@ export const joinGame = createAsyncThunk(
     }
   },
 );
+export const startGame = createAsyncThunk(
+  "game/startStatus",
+  async (roomId: string, { rejectWithValue }) => {
+    try {
+      const response = await APIService.gameStart(roomId);
+      if (response && response.error) {
+        return rejectWithValue(response.error);
+      }
+      return response;
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue("Failed while sending request");
+    }
+  },
+);
 
 export const updateGameSettings = createAsyncThunk(
   "game/updateStatus",
@@ -197,6 +212,19 @@ export const gameSlice = createSlice({
         }
       })
       .addCase(joinGame.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(startGame.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(startGame.fulfilled, (state, action) => {
+        if (action.payload && action.payload.gameSettings) {
+          state.gameSettings = action.payload.gameSettings;
+          state.rounds.push(action.payload.round);
+        }
+      })
+      .addCase(startGame.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       })
