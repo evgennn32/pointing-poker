@@ -133,8 +133,12 @@ export const Error = styled.span`
   font-size: 1.5rem;
   color: red;
   align-self: center;
+  width: max-content;
+  margin-left: 5px;
   @media (${MediaQuery.tablet}) {
     grid-column-start: span 2;
+    align-self: flex-start;
+    margin-left: 0px;
   }
 `;
 export const Form = styled.form`
