@@ -25,10 +25,12 @@ import User from "../../models/User";
 import Round from "../../models/Round";
 import {
   roundAddVote,
+  roundCreate,
   roundStart,
   roundStop,
 } from "../../app/slices/roundSlice";
 import Card from "../../models/Card";
+import { addGameRound } from "../../app/slices/gameSlice";
 
 export const DIV = styled.div<{ isPlayer: boolean }>`
   display: flex;
@@ -139,6 +141,10 @@ const GamePage = (): JSX.Element => {
   useEffect(() => {
     setTimerStarted(round.roundInProgress);
   }, [round.roundInProgress]);
+  useEffect(() => {
+    console.log("update game");
+    dispatch(addGameRound(round));
+  }, [round.roundId]);
 
   if (!game.roomID || !user.id) {
     window.location.replace("/");
@@ -176,6 +182,16 @@ const GamePage = (): JSX.Element => {
   const sopTimerHandler = () => {
     console.log("stop timer");
     dispatch(roundStop({ roundId: round.roundId, roomId: game.roomID }));
+  };
+  const createNewRound = () => {
+    const restIssues = game.issues.filter((issue) => {
+      return game.rounds.find((round) => {
+        return round.issueId !== issue.id;
+      });
+    });
+    if (restIssues.length) {
+      dispatch(roundCreate({ issueId: restIssues[0].id, roomId: game.roomID }));
+    }
   };
 
   return (
@@ -279,9 +295,7 @@ const GamePage = (): JSX.Element => {
               <NextIssueBtn>
                 <Button
                   textContent="Next Issue"
-                  onClick={() => {
-                    /* TODO create new round */
-                  }}
+                  onClick={createNewRound}
                   isLightTheme={false}
                 />
               </NextIssueBtn>
