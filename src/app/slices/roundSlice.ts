@@ -56,6 +56,22 @@ export const roundStart = createAsyncThunk(
   },
 );
 
+export const roundStop = createAsyncThunk(
+  "round/stopStatus",
+  async (data: { roundId: string; roomId: string }, { rejectWithValue }) => {
+    try {
+      const response = await APIService.roundStop(data.roundId, data.roomId);
+      if (response && response.error) {
+        return rejectWithValue(response.error);
+      }
+      return response;
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue("Failed while sending request");
+    }
+  },
+);
+
 export const roundAddVote = createAsyncThunk(
   "round/addVoteStatus",
   async (
@@ -109,6 +125,18 @@ export const roundSlice = createSlice({
         state.error = action.payload as string;
       })
       .addCase(roundStart.fulfilled, (state, action) => {
+        if (action.payload && action.payload.round) {
+          return { ...action.payload.round, isLoading: false };
+        }
+      })
+      .addCase(roundStop.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(roundStop.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(roundStop.fulfilled, (state, action) => {
         if (action.payload && action.payload.round) {
           return { ...action.payload.round, isLoading: false };
         }

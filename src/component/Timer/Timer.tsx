@@ -4,12 +4,11 @@ import {
   TimerMinutesInput,
   TimerSecondsInput,
 } from "./Timer.styled";
-import { AppDispatch } from "../../app/store";
 
 type Props = {
   readOnly: boolean;
   started: boolean;
-  cb?: (dispatch: AppDispatch) => void;
+  cb?: () => void;
   roundTime?: number;
 };
 
@@ -26,8 +25,17 @@ const changeHandler = (value: string, max: string) => {
 /* eslint max-lines-per-function: 0 */
 
 const Timer = (props: Props): JSX.Element => {
-  const [minutesValue, setMinutesValue] = React.useState("00");
-  const [secondsValue, setSecondsValue] = React.useState("05");
+  const time = props.roundTime;
+  let minutesString = "00";
+  let secondsString = "05";
+  if (time) {
+    const seconds = time % 60;
+    const minutes = (time - seconds) / 60;
+    seconds < 10 ? (secondsString = `0${seconds}`) : seconds.toString();
+    minutes < 10 ? (minutesString = `0${minutes}`) : minutes.toString();
+  }
+  const [minutesValue, setMinutesValue] = React.useState(minutesString);
+  const [secondsValue, setSecondsValue] = React.useState(secondsString);
   const [ticking, setTicking] = React.useState(props.started);
   React.useEffect(() => {
     setTicking(props.started);
@@ -57,8 +65,8 @@ const Timer = (props: Props): JSX.Element => {
     }
   }, [ticking, secondsValue]);
   React.useEffect(() => {
-    if (!ticking) {
-      console.log("round end");
+    if (!ticking && props.started && props.cb) {
+      props.cb();
     }
   }, [ticking]);
   return (
