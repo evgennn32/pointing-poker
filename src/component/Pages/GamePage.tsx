@@ -1,16 +1,7 @@
 import { title } from "process";
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Issue from "../../models/Issue";
-import {
-  cards,
-  currentUser,
-  gameSettings,
-  initialData,
-  issues,
-  users,
-  voteResultCards,
-} from "../../TempData";
 import { Button } from "../Button/Button";
 import PlayingCard from "../Cards/PlayingCard";
 import { CreateIssue } from "../CreateIssue/CreateIssue";
@@ -25,6 +16,14 @@ import TitleEditable from "../Title/TitleEditable";
 import { UserAvatar } from "../UserAvatar/UserAvatar";
 import { VoteResults } from "../VoteResults/VoteResults";
 import { MediaQuery } from "../styledComponents/MediaQuery/MediaQuery";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
+import APIService from "../../app/services/APIservice";
+import { RootState } from "../../app/store";
+import { GameRoomEntity } from "../../models/GameRoomEntity";
+import User from "../../models/User";
+import Round from "../../models/Round";
+import { roundStart } from "../../app/slices/roundSlice";
 
 export const DIV = styled.div<{ isPlayer: boolean }>`
   display: flex;
@@ -116,67 +115,77 @@ export const StatistForPlayer = styled.div`
 `;
 
 const GamePage = (): JSX.Element => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  useEffect(() => {
+    APIService.handleSocketEvents(dispatch);
+  });
+  const game = useSelector<RootState, GameRoomEntity>(
+    (state: { game: GameRoomEntity }) => state.game,
+  );
+  const user = useSelector<RootState, User>(
+    (state: { user: User }) => state.user,
+  );
+  const round = useSelector<RootState, Round>(
+    (state: { round: Round }) => state.round,
+  );
+
+  if (!game.roomID || !user.id) {
+    window.location.replace("/");
+  }
+
+  const voteResultCards = round.statistics?.map((res) => {
+    return { ...res.card, percent: +res.result };
+  });
+
   return (
     <Page sidebarActive={true}>
       <Main>
         <TitleEditable
-          title={initialData.title}
-          changeTitle={() => console.log(title)}
+          title={game.roomName}
+          changeTitle={() => {
+            // TODO change game title
+            console.log(title);
+          }}
         />
         <MasterWrapper>
           <div>
             <Paragraph>Scram master:</Paragraph>
-            <UserAvatar
-              id="cds"
-              image={null}
-              firstName="cds"
-              lastName="cds"
-              position="sdc"
-              currentUser={true}
-              ableToDelete={true}
-              score="sdc"
-              scramMaster={true}
-            />
+            <UserAvatar {...game.scrumMaster} />
           </div>
-          {initialData.scrumMaster.id !== currentUser.id && (
-            <Timer readOnly={true} />
-          )}
+          {game.scrumMaster.id !== user.id && <Timer readOnly={true} />}
           <Button
-            textContent={
-              initialData.scrumMaster.id === currentUser.id
-                ? "Stop Game"
-                : "Exit"
-            }
+            textContent={game.scrumMaster.id === user.id ? "Stop Game" : "Exit"}
             onClick={() => {
-              /* TODO Stop game or exit */
+              if (!user.scramMaster) {
+                return window.location.replace("/");
+              }
+              /* TODO Stop game */
+              history.replace("/result");
             }}
             isLightTheme={true}
           />
         </MasterWrapper>
-        <DIV isPlayer={initialData.scrumMaster.id === currentUser.id}>
+        <DIV isPlayer={game.scrumMaster.id !== user.id}>
           <IssuesBlockWrap>
             <Title title="Issues:" />
             <IssuesBlock
               issues={
-                initialData.scrumMaster.id !== currentUser.id
-                  ? issues.map<Issue>((iss) => {
+                game.scrumMaster.id !== user.id
+                  ? game.issues.map<Issue>((iss) => {
                       return { ...iss, editable: false };
                     })
-                  : issues
+                  : game.issues
               }
             />
             {/* TODO add issues with no ability to edit/del */}
-            {initialData.scrumMaster.id === currentUser.id && (
-              <>
-                <CreateIssue />
-                <TitleMedia>
-                  <Title title="Statistics:" />
-                </TitleMedia>
-                {/* TODO show statistic only when the game ended */}
-              </>
+
+            {game.scrumMaster.id === user.id && <CreateIssue />}
+            {user.scramMaster && !round.roundInProgress && voteResultCards && (
+              <Title title="Statistics:" />
             )}
           </IssuesBlockWrap>
-          {initialData.scrumMaster.id === currentUser.id && (
+          {game.scrumMaster.id === user.id && (
             <>
               <TimerAndBtn>
                 <Timer readOnly={false} />
@@ -184,7 +193,13 @@ const GamePage = (): JSX.Element => {
                   textContent="Run Round"
                   onClick={() => {
                     {
-                      /* TODO start game */
+                      /* TODO start round */
+                      dispatch(
+                        roundStart({
+                          roundId: round.roundId,
+                          roomId: game.roomID,
+                        }),
+                      );
                     }
                   }}
                   isLightTheme={false}
@@ -194,14 +209,14 @@ const GamePage = (): JSX.Element => {
                 <Button
                   textContent="Next Issue"
                   onClick={() => {
-                    /* TODO select next issue */
+                    /* TODO create new round */
                   }}
                   isLightTheme={false}
                 />
               </NextIssueBtn>
             </>
           )}
-          {!initialData.scrumMaster.currentUser && (
+          {!user.scramMaster && !round.roundInProgress && voteResultCards && (
             <StatistForPlayer>
               <Title title="Statistics:" />
               <VoteResults
@@ -214,23 +229,26 @@ const GamePage = (): JSX.Element => {
           )}
         </DIV>
         <ButtomPart>
-          {initialData.scrumMaster.id === currentUser.id ? (
-            <VoteResults
-              currentPage="game"
-              issueName=""
-              valueVoteArray={voteResultCards}
-              priority=""
-            />
-          ) : (
-            cards.map((el, ind) => <PlayingCard {...el} key={ind} />)
-          )}
+          {game.scrumMaster.id === user.id &&
+            !round.roundInProgress &&
+            voteResultCards && (
+              <VoteResults
+                currentPage="game"
+                issueName=""
+                valueVoteArray={voteResultCards}
+                priority=""
+              />
+            )}
+          {game.scrumMaster.id !== user.id
+            ? game.cards.map((el, ind) => <PlayingCard {...el} key={ind} />)
+            : null}
           {/* TODO editable:false for non master add show statistic only when the game ended */}
         </ButtomPart>
       </Main>
       <SideBar>
         <PlayersScoreView
-          users={users}
-          scoreType={gameSettings.scoreTypeShort}
+          users={round.usersVoteResults}
+          scoreType={game.gameSettings.scoreTypeShort}
         />
       </SideBar>
     </Page>
