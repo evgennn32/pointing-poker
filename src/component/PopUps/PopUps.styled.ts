@@ -19,6 +19,17 @@ export const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   text-align: center;
+  @media (${MediaQuery.laptopWidth}) {
+    width: 700px;
+  }
+  @media (${MediaQuery.tablet}) {
+    width: 82%;
+    padding: 30px;
+  }
+  @media (${MediaQuery.mobile}) {
+    width: 90%;
+    padding: 15px 5px;
+  }
 `;
 export const H2 = styled.h2`
   font-family: Roboto;
@@ -48,6 +59,11 @@ export const ButtonsWrapper = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  @media (${MediaQuery.tablet}) {
+    gap: 10px;
+    align-self: center;
+    width: auto;
+  }
 `;
 export const Span = styled.span`
   color: #60dabf;
@@ -62,6 +78,15 @@ export const OneInputWrapper = styled.div`
   justify-items: baseline;
   align-items: center;
   margin-bottom: 30px;
+  @media (${MediaQuery.tablet}) {
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 45px 30px;
+  }
+  @media (${MediaQuery.mobile}) {
+    grid-template-columns: 170px 110px;
+    grid-template-rows: 45px 30px;
+    justify-items: end;
+  }
 `;
 export const Select = styled.select`
   margin: 5px 0;
@@ -76,6 +101,11 @@ export const Select = styled.select`
   font-weight: bold;
   font-size: 24px;
   line-height: 28px;
+  @media (${MediaQuery.mobile}) {
+    width: 200px;
+    height: 25px;
+    font-size: 18px;
+  }
 `;
 export const Label = styled.label`
   font-style: normal;
@@ -86,6 +116,7 @@ export const Label = styled.label`
     font-size: 20px;
     line-height: 12px;
     margin-bottom: 10px;
+    width: max-content;
   }
   @media (${MediaQuery.laptopHeight}) {
     font-size: 20px;
@@ -93,12 +124,18 @@ export const Label = styled.label`
     margin-bottom: 10px;
     width: max-content;
   }
+  @media (${MediaQuery.mobile}) {
+    width: 270px;
+  }
 `;
 export const Error = styled.span`
   justify-self: baseline;
   font-size: 1.5rem;
   color: red;
   align-self: center;
+  @media (${MediaQuery.tablet}) {
+    grid-column-start: span 2;
+  }
 `;
 export const Form = styled.form`
   display: flex;
@@ -113,6 +150,9 @@ export const InputsWrapper = styled.div`
 export const FormWrapper = styled.div`
   display: grid;
   grid-template-columns: 66% auto;
+  @media (${MediaQuery.laptopHeight}) {
+    grid-template-columns: 62% auto;
+  }
   @media (${MediaQuery.tablet}) {
     grid-template-columns: 50% auto;
   }
@@ -126,12 +166,22 @@ export const ConnectAsObserverAndCancel = styled.div`
   align-items: end;
   justify-items: end;
   max-height: 100%;
+  @media (${MediaQuery.mobile}) {
+    height: fit-content;
+    grid-template-rows: auto 0px 45px;
+    align-self: self-end;
+  }
 `;
 export const ConnectAsObserver = styled.div`
   display: flex;
   text-align: center;
   align-items: center;
   margin-top: 15px;
+  @media (max-width: 600px) {
+    & > #my-radio-group {
+      width: min-content;
+    }
+  }
 `;
 export const Initials = styled.p`
   font-style: normal;
@@ -157,15 +207,24 @@ export const InputsWrapperConnectToLobby = styled.div`
   height: 700px;
   max-height: 100%;
   @media (${MediaQuery.tablet}) {
-    height: 500px;
+    height: max-content;
+    gap: 10px;
   }
   @media (${MediaQuery.laptopHeight}) {
-    height: 500px;
+    height: max-content;
+    gap: 10px;
+  }
+  @media (${MediaQuery.mobile}) {
+    height: max-content;
+    gap: 10px;
   }
 `;
 export const OneInputWrapperConnectToLobby = styled.div`
   display: flex;
   flex-direction: column;
+  @media (${MediaQuery.mobile}) {
+    gap: 5px;
+  }
 `;
 export const WrapperConnectToLobby = styled.div`
   width: 776px;

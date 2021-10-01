@@ -13,6 +13,7 @@ import { getUrlParam } from "../../shared/helpers";
 import User from "../../models/User";
 import { joinGame } from "../../app/slices/gameSlice";
 import Loader from "../Loader/Loader";
+import { MediaQuery } from "../styledComponents/MediaQuery/MediaQuery";
 
 const Main = styled.main`
   position: relative;
@@ -57,12 +58,19 @@ const Label = styled.label`
   font-weight: 300;
   font-size: 24px;
   line-height: 28px;
+  @media (${MediaQuery.tablet}) {
+    width: 270px;
+    gap: 10px;
+  }
+  @media (${MediaQuery.mobile}) {
+    width: 270px;
+    gap: 10px;
+  }
 `;
 
 const InputWrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 10px;
   @media (max-width: 650px) {
     flex-direction: column;
     gap: 20px;

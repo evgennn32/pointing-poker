@@ -4,9 +4,13 @@ import styled from "styled-components";
 import { changeChatActive } from "../../app/slices/chatSlice";
 import Logo from "../Logo/Logo";
 import { ReactComponent as ChatIcon } from "./../../assets/icons/chat-icon.svg";
+import { MediaQuery } from "../styledComponents/MediaQuery/MediaQuery";
 
 const HeaderWrapper = styled.header`
   position: relative;
+  @media (${MediaQuery.mobile}) {
+    margin-bottom: 20px;
+  }
 `;
 const TopBackground = styled.div`
   width: 100%;

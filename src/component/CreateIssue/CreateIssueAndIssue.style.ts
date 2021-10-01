@@ -42,9 +42,7 @@ export const Priority = styled.p`
   position: absolute;
   margin-top: 65px;
   @media (${MediaQuery.tablet}) {
-    display: block;
-    position: initial;
-    margin: 0;
+    margin-top: 55px;
   }
 `;
 export const IssueName = styled.p`
@@ -59,7 +57,7 @@ export const IssueName = styled.p`
   color: #000000;
   @media (${MediaQuery.tablet}) {
     margin: 0;
-    line-height: 12px;
+    line-height: 20px;
   }
 `;
 export const SVGPlus = styled(Plus)`

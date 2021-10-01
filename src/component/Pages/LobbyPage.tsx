@@ -26,6 +26,7 @@ import {
 } from "../../app/slices/gameSlice";
 import { roundUpdateState } from "../../app/slices/roundSlice";
 import APIService from "../../app/services/APIservice";
+import { MediaQuery } from "../styledComponents/MediaQuery/MediaQuery";
 
 const Container = styled.div`
   display: flex;
@@ -59,6 +60,12 @@ const UserAvatarStyled = styled(UserAvatar)`
 
 const CopyLinkWrap = styled.div`
   display: flex;
+  @media (${MediaQuery.tablet}) {
+    flex-wrap: wrap;
+    & > input {
+      border-right: 1px solid #2b3a67;
+    }
+  }
 `;
 
 const InputStyled = styled(Input)`
@@ -67,6 +74,7 @@ const InputStyled = styled(Input)`
 
 const BtnsWrap = styled.div<{ alignRight?: boolean }>`
   display: flex;
+  flex-wrap: wrap;
   justify-content: ${(props) =>
     props.alignRight ? "flex-end" : "space-between"};
   margin: 30px 0;

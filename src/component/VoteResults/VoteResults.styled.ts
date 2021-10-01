@@ -1,8 +1,12 @@
 import styled from "styled-components";
+import { MediaQuery } from "../styledComponents/MediaQuery/MediaQuery";
 
 export const StatisticsWrapper = styled.aside`
   width: calc(100% - 40px);
   padding: 20px;
+  @media (${MediaQuery.mobile}) {
+    padding: 20px 5px;
+  }
 `;
 
 export const ResultWrapper = styled.div`
@@ -11,6 +15,10 @@ export const ResultWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: 10px;
+  margin-top: 15px;
+  @media (${MediaQuery.tablet}) {
+    margin-top: 15px;
+  }
 `;
 
 export const CardWrapper = styled.div`

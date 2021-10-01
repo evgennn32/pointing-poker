@@ -11,8 +11,15 @@ export const MembersWrapper = styled.div`
 `;
 export const Wrapper = styled.div`
   display: flex;
-  width: 688px;
+  justify-content: flex-end;
+  @media (${MediaQuery.laptopWidth}) {
+    justify-content: flex-start;
+  }
   @media (${MediaQuery.tablet}) {
     width: max-content;
+    justify-content: flex-start;
+  }
+  @media (${MediaQuery.mobile}) {
+    flex-direction: column;
   }
 `;

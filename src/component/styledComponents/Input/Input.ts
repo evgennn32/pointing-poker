@@ -16,12 +16,7 @@ export const Input = styled.input`
   &:focus {
     outline: none;
   }
-  @media (${MediaQuery.tablet}) {
-    width: 200px;
-    height: 25px;
-    font-size: 18px;
-  }
-  @media (${MediaQuery.laptopHeight}) {
+  @media (${MediaQuery.mobile}) {
     width: 200px;
     height: 25px;
     font-size: 18px;
