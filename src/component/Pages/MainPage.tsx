@@ -187,6 +187,11 @@ export const MainPage = (): JSX.Element => {
               isLightTheme={false}
             />
             {!correctURL && <Error>Invalid URL</Error>}
+            {game.error === "No such game or URL is incorrect" && (
+              <Error>Game doesn&apos;t exist</Error>
+            )}
+            {game.error !== "No such game or URL is incorrect" &&
+              game.error && <Error>Something goes wrong...Try again</Error>}
           </InputWrapper>
         </Label>
       </Content>
