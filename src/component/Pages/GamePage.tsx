@@ -23,7 +23,11 @@ import { RootState } from "../../app/store";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
 import User from "../../models/User";
 import Round from "../../models/Round";
-import { roundAddVote, roundStart } from "../../app/slices/roundSlice";
+import {
+  roundAddVote,
+  roundStart,
+  roundStop,
+} from "../../app/slices/roundSlice";
 import Card from "../../models/Card";
 
 export const DIV = styled.div<{ isPlayer: boolean }>`
@@ -157,7 +161,6 @@ const GamePage = (): JSX.Element => {
             userId: user.id,
             score: selectedCard.value,
           };
-          console.log(data);
           dispatch(roundAddVote(data));
           if (card.selected) {
             // TODO cancel vote
@@ -169,6 +172,10 @@ const GamePage = (): JSX.Element => {
       });
       setPlayingCards(cards);
     }
+  };
+  const sopTimerHandler = () => {
+    console.log("stop timer");
+    dispatch(roundStop({ roundId: round.roundId, roomId: game.roomID }));
   };
 
   return (
@@ -187,7 +194,11 @@ const GamePage = (): JSX.Element => {
             <UserAvatar {...game.scrumMaster} />
           </div>
           {game.scrumMaster.id !== user.id && (
-            <Timer readOnly={true} started={timerStarted} />
+            <Timer
+              readOnly={true}
+              started={timerStarted}
+              roundTime={game.gameSettings.roundTime}
+            />
           )}
           <Button
             textContent={game.scrumMaster.id === user.id ? "Stop Game" : "Exit"}
@@ -208,7 +219,8 @@ const GamePage = (): JSX.Element => {
               issues={
                 game.scrumMaster.id !== user.id
                   ? game.issues.map<Issue>((iss) => {
-                      return { ...iss, editable: false };
+                      const selected = iss.id === round.issueId;
+                      return { ...iss, editable: false, selected: true };
                     })
                   : game.issues
               }
@@ -223,22 +235,46 @@ const GamePage = (): JSX.Element => {
           {game.scrumMaster.id === user.id && (
             <>
               <TimerAndBtn>
-                <Timer readOnly={false} started={round.roundInProgress} />
-                <Button
-                  textContent="Run Round"
-                  onClick={() => {
-                    {
-                      /* TODO start round */
-                      dispatch(
-                        roundStart({
-                          roundId: round.roundId,
-                          roomId: game.roomID,
-                        }),
-                      );
-                    }
-                  }}
-                  isLightTheme={false}
+                <Timer
+                  readOnly={false}
+                  started={round.roundInProgress}
+                  cb={sopTimerHandler}
                 />
+                {!round.roundInProgress && (
+                  <Button
+                    textContent="Run Round"
+                    onClick={() => {
+                      {
+                        dispatch(
+                          roundStart({
+                            roundId: round.roundId,
+                            roomId: game.roomID,
+                          }),
+                        );
+                      }
+                    }}
+                    isLightTheme={false}
+                  />
+                )}
+                {/* TODO round restart button and action */}
+                {round.roundInProgress && (
+                  <Button
+                    textContent="Round Stop"
+                    onClick={() => {
+                      {
+                        if (round.roundInProgress) {
+                          dispatch(
+                            roundStop({
+                              roundId: round.roundId,
+                              roomId: game.roomID,
+                            }),
+                          );
+                        }
+                      }
+                    }}
+                    isLightTheme={false}
+                  />
+                )}
               </TimerAndBtn>
               <NextIssueBtn>
                 <Button
