@@ -4,9 +4,13 @@ import {
   TimerMinutesInput,
   TimerSecondsInput,
 } from "./Timer.styled";
+import { AppDispatch } from "../../app/store";
 
 type Props = {
   readOnly: boolean;
+  started: boolean;
+  cb?: (dispatch: AppDispatch) => void;
+  roundTime?: number;
 };
 
 const changeHandler = (value: string, max: string) => {
@@ -21,10 +25,13 @@ const changeHandler = (value: string, max: string) => {
 
 /* eslint max-lines-per-function: 0 */
 
-const Timer = ({ readOnly }: Props): JSX.Element => {
-  const [minutesValue, setMinutesValue] = React.useState("02");
-  const [secondsValue, setSecondsValue] = React.useState("30");
-  const [ticking, setTicking] = React.useState(false);
+const Timer = (props: Props): JSX.Element => {
+  const [minutesValue, setMinutesValue] = React.useState("00");
+  const [secondsValue, setSecondsValue] = React.useState("05");
+  const [ticking, setTicking] = React.useState(props.started);
+  React.useEffect(() => {
+    setTicking(props.started);
+  }, [props.started]);
 
   React.useEffect(() => {
     if (ticking) {
@@ -49,10 +56,15 @@ const Timer = ({ readOnly }: Props): JSX.Element => {
       }, 1000);
     }
   }, [ticking, secondsValue]);
+  React.useEffect(() => {
+    if (!ticking) {
+      console.log("round end");
+    }
+  }, [ticking]);
   return (
     <TimerWrapper>
       <TimerMinutesInput
-        readOnly={readOnly}
+        readOnly={props.readOnly}
         min="0"
         max="4"
         step="1"
@@ -64,7 +76,7 @@ const Timer = ({ readOnly }: Props): JSX.Element => {
         }}
       />
       <TimerSecondsInput
-        readOnly={readOnly}
+        readOnly={props.readOnly}
         min="0"
         max="59"
         step="1"

@@ -168,6 +168,29 @@ const APIService = {
       }
     }
   },
+  roundAddVote: async (data: {
+    roomId: string;
+    roundId: string;
+    userId: string;
+    score: string;
+  }): Promise<{ round?: Round; error?: string } | undefined> => {
+    if (APIService.connected) {
+      try {
+        return new Promise((resolve, reject) => {
+          const cb = (res: { error: string; round: Round }): void => {
+            if (!res) reject({ error: "bad request" });
+            if (res && res.error) {
+              reject({ error: res.error });
+            }
+            resolve(res);
+          };
+          APIService.socket.emit("round:add-vote", data, cb);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
   userDelete: async (
     userId: string,
     roomId: string,
