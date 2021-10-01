@@ -142,8 +142,12 @@ const GamePage = (): JSX.Element => {
     setTimerStarted(round.roundInProgress);
   }, [round.roundInProgress]);
   useEffect(() => {
-    console.log("update game");
-    dispatch(addGameRound(round));
+    const cards = playingCards.map((card) => ({ ...card, selected: false }));
+    setPlayingCards(cards);
+    const roundExists = game.rounds.find(
+      (res) => round.roundId === res.roundId,
+    );
+    if (!roundExists) dispatch(addGameRound(round));
   }, [round.roundId]);
 
   if (!game.roomID || !user.id) {
@@ -184,13 +188,23 @@ const GamePage = (): JSX.Element => {
     dispatch(roundStop({ roundId: round.roundId, roomId: game.roomID }));
   };
   const createNewRound = () => {
-    const restIssues = game.issues.filter((issue) => {
-      return game.rounds.find((round) => {
-        return round.issueId !== issue.id;
-      });
+    let nextIssueIndex = 0;
+    game.issues.forEach((issue, index) => {
+      if (issue.id === round.issueId && index + 1 < game.issues.length) {
+        nextIssueIndex = index + 1;
+      }
     });
-    if (restIssues.length) {
-      dispatch(roundCreate({ issueId: restIssues[0].id, roomId: game.roomID }));
+    console.log("nextIssueId", nextIssueIndex);
+    if (
+      game.issues.length &&
+      game.issues[nextIssueIndex].id !== round.issueId
+    ) {
+      dispatch(
+        roundCreate({
+          issueId: game.issues[nextIssueIndex].id,
+          roomId: game.roomID,
+        }),
+      );
     }
   };
 

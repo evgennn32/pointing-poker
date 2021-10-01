@@ -7,7 +7,7 @@ const IssuesBlock = (props: { issues: Issue[] }): JSX.Element => {
   return (
     <IssuesWrapper>
       {props.issues.map((singleIssue) => (
-        <IssueTile {...singleIssue} key={singleIssue.issueName} />
+        <IssueTile {...singleIssue} key={singleIssue.id} />
       ))}
     </IssuesWrapper>
   );
