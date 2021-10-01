@@ -14,6 +14,7 @@ import User from "../../models/User";
 import { joinGame } from "../../app/slices/gameSlice";
 import Loader from "../Loader/Loader";
 import { MediaQuery } from "../styledComponents/MediaQuery/MediaQuery";
+import { Error } from "../PopUps/PopUps.styled";
 
 const Main = styled.main`
   position: relative;
@@ -97,6 +98,7 @@ const Input = styled.input`
 export const MainPage = (): JSX.Element => {
   const [connectPopUpOpen, setConnectPopUpOpen] = useState(false);
   const [connectUrl, setConnectUrl] = useState("");
+  const [correctURL, setCorrectUrl] = useState(true);
   const dispatch = useDispatch();
   const game = useSelector<RootState, GameRoomEntity>(
     (state: { game: GameRoomEntity }) => state.game,
@@ -120,8 +122,7 @@ export const MainPage = (): JSX.Element => {
     if (gameId) {
       dispatch(joinGame(gameId));
     } else {
-      console.log("no room id");
-      // TODO SHOW warning invalid URL
+      setCorrectUrl(false);
     }
   };
 
@@ -185,6 +186,7 @@ export const MainPage = (): JSX.Element => {
               onClick={connectHandler}
               isLightTheme={false}
             />
+            {!correctURL && <Error>Invalid URL</Error>}
           </InputWrapper>
         </Label>
       </Content>
