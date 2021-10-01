@@ -11,6 +11,7 @@ import {
   updateGameSettingsState,
   addGameRound,
 } from "../slices/gameSlice";
+import { roundUpdateState } from "../slices/roundSlice";
 import Round from "../../models/Round";
 
 const APIService = {
@@ -140,6 +141,27 @@ const APIService = {
             resolve(res);
           };
           APIService.socket.emit("round:create", issueId, roomId, cb);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
+  roundStart: async (
+    roundId: string,
+    roomId: string,
+  ): Promise<{ round?: Round; error?: string } | undefined> => {
+    if (APIService.connected) {
+      try {
+        return new Promise((resolve, reject) => {
+          const cb = (res: { error: string; round: Round }): void => {
+            if (!res) reject({ error: "bad request" });
+            if (res && res.error) {
+              reject({ error: res.error });
+            }
+            resolve(res);
+          };
+          APIService.socket.emit("round:start", roundId, roomId, cb);
         });
       } catch (e) {
         console.error(e);
@@ -328,6 +350,9 @@ const APIService = {
             dispatch(updateGameSettingsState(data.gameSettings));
         },
       );
+      socket.on("round:update", (data: { round: Round }): void => {
+        if (data && data.round) dispatch(roundUpdateState(data.round));
+      });
     }
   },
 };
