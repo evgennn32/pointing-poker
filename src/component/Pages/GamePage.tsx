@@ -1,5 +1,5 @@
 import { title } from "process";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Issue from "../../models/Issue";
 import { Button } from "../Button/Button";
@@ -23,7 +23,8 @@ import { RootState } from "../../app/store";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
 import User from "../../models/User";
 import Round from "../../models/Round";
-import { roundStart } from "../../app/slices/roundSlice";
+import { roundAddVote, roundStart } from "../../app/slices/roundSlice";
+import Card from "../../models/Card";
 
 export const DIV = styled.div<{ isPlayer: boolean }>`
   display: flex;
@@ -129,6 +130,11 @@ const GamePage = (): JSX.Element => {
   const round = useSelector<RootState, Round>(
     (state: { round: Round }) => state.round,
   );
+  const [timerStarted, setTimerStarted] = useState(round.roundInProgress);
+  const [playingCards, setPlayingCards] = useState(game.cards);
+  useEffect(() => {
+    setTimerStarted(round.roundInProgress);
+  }, [round.roundInProgress]);
 
   if (!game.roomID || !user.id) {
     window.location.replace("/");
@@ -137,6 +143,33 @@ const GamePage = (): JSX.Element => {
   const voteResultCards = round.statistics?.map((res) => {
     return { ...res.card, percent: +res.result };
   });
+
+  const voteHandler = (selectedCard: Card) => {
+    if (
+      round.roundInProgress ||
+      (game.gameSettings.changingCardInRoundEnd && round.roundEnded)
+    ) {
+      const cards = playingCards.map((card) => {
+        if (card.id === selectedCard.id) {
+          const data = {
+            roomId: game.roomID,
+            roundId: round.roundId,
+            userId: user.id,
+            score: selectedCard.value,
+          };
+          console.log(data);
+          dispatch(roundAddVote(data));
+          if (card.selected) {
+            // TODO cancel vote
+            return { ...card, selected: false };
+          }
+          return { ...card, selected: true };
+        }
+        return { ...card, selected: false };
+      });
+      setPlayingCards(cards);
+    }
+  };
 
   return (
     <Page sidebarActive={true}>
@@ -153,7 +186,9 @@ const GamePage = (): JSX.Element => {
             <Paragraph>Scram master:</Paragraph>
             <UserAvatar {...game.scrumMaster} />
           </div>
-          {game.scrumMaster.id !== user.id && <Timer readOnly={true} />}
+          {game.scrumMaster.id !== user.id && (
+            <Timer readOnly={true} started={timerStarted} />
+          )}
           <Button
             textContent={game.scrumMaster.id === user.id ? "Stop Game" : "Exit"}
             onClick={() => {
@@ -188,7 +223,7 @@ const GamePage = (): JSX.Element => {
           {game.scrumMaster.id === user.id && (
             <>
               <TimerAndBtn>
-                <Timer readOnly={false} />
+                <Timer readOnly={false} started={round.roundInProgress} />
                 <Button
                   textContent="Run Round"
                   onClick={() => {
@@ -239,8 +274,17 @@ const GamePage = (): JSX.Element => {
                 priority=""
               />
             )}
-          {game.scrumMaster.id !== user.id
-            ? game.cards.map((el, ind) => <PlayingCard {...el} key={ind} />)
+          {game.gameSettings.scrumMasterAsPlayer
+            ? playingCards.map((el, ind) => (
+                <div
+                  onClick={() => {
+                    voteHandler(el);
+                  }}
+                  key={el.id}
+                >
+                  <PlayingCard {...el} editable={false} key={ind} />
+                </div>
+              ))
             : null}
           {/* TODO editable:false for non master add show statistic only when the game ended */}
         </ButtomPart>

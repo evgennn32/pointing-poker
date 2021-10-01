@@ -119,7 +119,7 @@ export const GameSettingsView = (props: GameSettingsProps): JSX.Element => {
         </OneSettingWrapper>
         <OneSettingWrapper>
           <Label>Round time:</Label>
-          <Timer readOnly={true}></Timer> {/* TODO timer need to be finished */}
+          <Timer readOnly={true} started={false}></Timer>
         </OneSettingWrapper>
       </InputsSwitchersWrapper>
       <Label>Add card values:</Label>

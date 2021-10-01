@@ -6,4 +6,5 @@ export default interface Card {
   selected: boolean;
   closed: boolean;
   editable: boolean;
+  onClick?: (e: Event) => void;
 }

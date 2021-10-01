@@ -10,6 +10,7 @@ const initialRound: Round = {
   statistics: null,
   isLoading: false,
   error: "",
+  roundEnded: false,
 };
 
 const roundUpdateStateReducer = (
@@ -55,6 +56,30 @@ export const roundStart = createAsyncThunk(
   },
 );
 
+export const roundAddVote = createAsyncThunk(
+  "round/addVoteStatus",
+  async (
+    data: {
+      roomId: string;
+      roundId: string;
+      userId: string;
+      score: string;
+    },
+    { rejectWithValue },
+  ) => {
+    try {
+      const response = await APIService.roundAddVote(data);
+      if (response && response.error) {
+        return rejectWithValue(response.error);
+      }
+      return response;
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue("Failed while sending request");
+    }
+  },
+);
+
 export const roundSlice = createSlice({
   name: "round",
   initialState: initialRound,
@@ -84,6 +109,18 @@ export const roundSlice = createSlice({
         state.error = action.payload as string;
       })
       .addCase(roundStart.fulfilled, (state, action) => {
+        if (action.payload && action.payload.round) {
+          return { ...action.payload.round, isLoading: false };
+        }
+      })
+      .addCase(roundAddVote.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(roundAddVote.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(roundAddVote.fulfilled, (state, action) => {
         if (action.payload && action.payload.round) {
           return { ...action.payload.round, isLoading: false };
         }

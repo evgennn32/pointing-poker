@@ -9,4 +9,5 @@ export  default interface Round {
   statistics: VoteResult[] | null;
   isLoading?: boolean;
   error?: string;
+  roundEnded: boolean;
 }
