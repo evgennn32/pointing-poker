@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Main } from "../styledComponents/Main/Main";
 import { SideBar } from "../styledComponents/Sidebar/SideBar";
 import { Page } from "../styledComponents/Page/Page";
@@ -27,6 +27,7 @@ import {
 import { roundUpdateState } from "../../app/slices/roundSlice";
 import APIService from "../../app/services/APIservice";
 import { MediaQuery } from "../styledComponents/MediaQuery/MediaQuery";
+import { Error } from "../PopUps/PopUps.styled";
 
 const Container = styled.div`
   display: flex;
@@ -102,6 +103,7 @@ const LobbyPage = (): JSX.Element => {
   const user = useSelector<RootState, User>(
     (state: { user: User }) => state.user,
   );
+  const [allowedToStartGame, setAllowedToStartGame] = useState(true);
   const userInGameState = game.users.find((res) => res.id === user.id);
   if (!userInGameState) {
     const users = [...game.users];
@@ -152,9 +154,12 @@ const LobbyPage = (): JSX.Element => {
                   isLightTheme={false}
                   textContent="Start Game"
                   onClick={() => {
-                    dispatch(startGame(game.roomID));
+                    game.issues.length === 0
+                      ? setAllowedToStartGame(false)
+                      : dispatch(startGame(game.roomID));
                   }}
                 />
+                {!allowedToStartGame && <Error>Add issue(s) to start</Error>}
                 <Button
                   isLightTheme={true}
                   textContent="Cancel Game"
