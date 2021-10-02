@@ -250,9 +250,12 @@ const GamePage = (): JSX.Element => {
                 game.scrumMaster.id !== user.id
                   ? game.issues.map<Issue>((iss) => {
                       const selected = iss.id === round.issueId;
-                      return { ...iss, editable: false, selected: true };
+                      return { ...iss, editable: false, selected: selected };
                     })
-                  : game.issues
+                  : game.issues.map<Issue>((iss) => {
+                      const selected = iss.id === round.issueId;
+                      return { ...iss, selected: selected };
+                    })
               }
             />
             {/* TODO add issues with no ability to edit/del */}
