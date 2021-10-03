@@ -184,7 +184,6 @@ const GamePage = (): JSX.Element => {
     }
   };
   const sopTimerHandler = () => {
-    console.log("stop timer");
     dispatch(roundStop({ roundId: round.roundId, roomId: game.roomID }));
   };
   const createNewRound = () => {
@@ -194,7 +193,6 @@ const GamePage = (): JSX.Element => {
         nextIssueIndex = index + 1;
       }
     });
-    console.log("nextIssueId", nextIssueIndex);
     if (
       game.issues.length &&
       game.issues[nextIssueIndex].id !== round.issueId
