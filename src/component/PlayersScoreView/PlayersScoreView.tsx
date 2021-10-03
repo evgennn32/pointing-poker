@@ -23,7 +23,7 @@ export const PlayersScoreView = (props: {
   useEffect(() => {
     console.log(round);
     setUsers(props.users);
-  }, [round.roundInProgress]);
+  }, [round.roundInProgress, round.roundId]);
   return (
     <Wrapper>
       <ScoreWrapper>
@@ -31,14 +31,16 @@ export const PlayersScoreView = (props: {
         {users.map((singleUser) => (
           <ScoreTile
             score={
-              singleUser.score || round.roundEnded
+              round.roundEnded
                 ? singleUser.score
+                  ? singleUser.score
+                  : "unknown"
                 : "In progress"
             }
             scoreTypeShort={
-              !round.roundInProgress &&
-              singleUser.score &&
-              singleUser.score === "unknown"
+              !round.roundEnded ||
+              (round.roundEnded && singleUser.score === "unknown") ||
+              (round.roundEnded && !singleUser.score)
                 ? ""
                 : props.scoreType
             }

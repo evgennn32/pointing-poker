@@ -273,7 +273,9 @@ const GamePage = (): JSX.Element => {
                 />
                 {!round.roundInProgress && (
                   <Button
-                    textContent="Run Round"
+                    textContent={
+                      round.roundEnded ? "Restart Round" : "Run Round"
+                    }
                     onClick={() => {
                       {
                         dispatch(
