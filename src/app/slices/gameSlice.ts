@@ -193,7 +193,12 @@ const addRoundReducer = (
   state: GameRoomEntity,
   action: PayloadAction<Round>,
 ) => {
-  state.rounds.push(action.payload);
+  const roundIsset = state.rounds.find((round) => {
+    action.payload.roundId === round.roundId;
+  });
+  if (!roundIsset) {
+    state.rounds.push(action.payload);
+  }
 };
 
 export const gameSlice = createSlice({
@@ -244,6 +249,13 @@ export const gameSlice = createSlice({
       .addCase(startGame.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
+      })
+      .addCase(updateGameSettings.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(updateGameSettings.pending, (state) => {
+        state.isLoading = true;
       })
       .addCase(updateGameSettings.fulfilled, (state, action) => {
         if (action.payload) state.gameSettings = action.payload;

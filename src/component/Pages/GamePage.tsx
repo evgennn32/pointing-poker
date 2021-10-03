@@ -23,6 +23,7 @@ import User from "../../models/User";
 import Round from "../../models/Round";
 import {
   roundAddVote,
+  roundCreate,
   roundStart,
   roundStop,
 } from "../../app/slices/roundSlice";
@@ -37,6 +38,7 @@ import {
   StatistForPlayer,
   TimerAndBtn,
 } from "./GamePage.styled";
+import { addGameRound } from "../../app/slices/gameSlice";
 
 const GamePage = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -58,6 +60,14 @@ const GamePage = (): JSX.Element => {
   useEffect(() => {
     setTimerStarted(round.roundInProgress);
   }, [round.roundInProgress]);
+  useEffect(() => {
+    const cards = playingCards.map((card) => ({ ...card, selected: false }));
+    setPlayingCards(cards);
+    const roundExists = game.rounds.find(
+      (res) => round.roundId === res.roundId,
+    );
+    if (!roundExists) dispatch(addGameRound(round));
+  }, [round.roundId]);
 
   if (!game.roomID || !user.id) {
     window.location.replace("/");
@@ -95,6 +105,26 @@ const GamePage = (): JSX.Element => {
   const sopTimerHandler = () => {
     console.log("stop timer");
     dispatch(roundStop({ roundId: round.roundId, roomId: game.roomID }));
+  };
+  const createNewRound = () => {
+    let nextIssueIndex = 0;
+    game.issues.forEach((issue, index) => {
+      if (issue.id === round.issueId && index + 1 < game.issues.length) {
+        nextIssueIndex = index + 1;
+      }
+    });
+    console.log("nextIssueId", nextIssueIndex);
+    if (
+      game.issues.length &&
+      game.issues[nextIssueIndex].id !== round.issueId
+    ) {
+      dispatch(
+        roundCreate({
+          issueId: game.issues[nextIssueIndex].id,
+          roomId: game.roomID,
+        }),
+      );
+    }
   };
 
   return (
@@ -198,9 +228,7 @@ const GamePage = (): JSX.Element => {
               <NextIssueBtn>
                 <Button
                   textContent="Next Issue"
-                  onClick={() => {
-                    /* TODO create new round */
-                  }}
+                  onClick={createNewRound}
                   isLightTheme={false}
                 />
               </NextIssueBtn>
