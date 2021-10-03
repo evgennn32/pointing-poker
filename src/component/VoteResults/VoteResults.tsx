@@ -44,8 +44,8 @@ export const VoteResults = ({
       />
     )}
     <ResultWrapper>
-      {valueVoteArray.map((card) => (
-        <CardWrapper>
+      {valueVoteArray.map((card, index) => (
+        <CardWrapper key={index}>
           <PlayingCard
             id={card.id}
             value={card.value}
