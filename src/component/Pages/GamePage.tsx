@@ -103,7 +103,6 @@ const GamePage = (): JSX.Element => {
     }
   };
   const sopTimerHandler = () => {
-    console.log("stop timer");
     dispatch(roundStop({ roundId: round.roundId, roomId: game.roomID }));
   };
   const createNewRound = () => {
@@ -113,7 +112,6 @@ const GamePage = (): JSX.Element => {
         nextIssueIndex = index + 1;
       }
     });
-    console.log("nextIssueId", nextIssueIndex);
     if (
       game.issues.length &&
       game.issues[nextIssueIndex].id !== round.issueId
@@ -169,9 +167,12 @@ const GamePage = (): JSX.Element => {
                 game.scrumMaster.id !== user.id
                   ? game.issues.map<Issue>((iss) => {
                       const selected = iss.id === round.issueId;
-                      return { ...iss, editable: false, selected: true };
+                      return { ...iss, editable: false, selected: selected };
                     })
-                  : game.issues
+                  : game.issues.map<Issue>((iss) => {
+                      const selected = iss.id === round.issueId;
+                      return { ...iss, selected: selected };
+                    })
               }
             />
             {/* TODO add issues with no ability to edit/del */}
@@ -191,7 +192,9 @@ const GamePage = (): JSX.Element => {
                 />
                 {!round.roundInProgress && (
                   <Button
-                    textContent="Run Round"
+                    textContent={
+                      round.roundEnded ? "Restart Round" : "Run Round"
+                    }
                     onClick={() => {
                       {
                         dispatch(
