@@ -1,10 +1,8 @@
 import React from "react";
-import statisticsObserver from "../../app/services/statistics";
 import Chat from "../Chat/Chat";
 import { Main } from "../styledComponents/Main/Main";
 import Title from "../Title/Title";
 import { VoteResults } from "../VoteResults/VoteResults";
-import voteValue from "../VoteResults/VoteResults.test.value";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
@@ -21,6 +19,7 @@ const GameResultPage = (): JSX.Element => {
           (issue) => ` ${issue.issueName}`,
         )})`}
       />
+      {console.log(game.rounds)}
       {game.rounds.map((result, index) => {
         const issue = game.issues.find((issue) => result.issueId === issue.id);
         return (

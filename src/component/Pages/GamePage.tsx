@@ -30,7 +30,7 @@ import {
   roundStop,
 } from "../../app/slices/roundSlice";
 import Card from "../../models/Card";
-import { addGameRound } from "../../app/slices/gameSlice";
+import { addGameRound, updateGameState } from "../../app/slices/gameSlice";
 
 export const DIV = styled.div<{ isPlayer: boolean }>`
   display: flex;
@@ -144,11 +144,8 @@ const GamePage = (): JSX.Element => {
   useEffect(() => {
     const cards = playingCards.map((card) => ({ ...card, selected: false }));
     setPlayingCards(cards);
-    const roundExists = game.rounds.find(
-      (res) => round.roundId === res.roundId,
-    );
-    if (!roundExists) dispatch(addGameRound(round));
-  }, [round.roundId]);
+    dispatch(updateGameState(game.roomID));
+  }, [round.roundId, round.statistics]);
 
   if (!game.roomID || !user.id) {
     window.location.replace("/");

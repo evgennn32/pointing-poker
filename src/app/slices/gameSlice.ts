@@ -95,6 +95,22 @@ export const startGame = createAsyncThunk(
   },
 );
 
+export const updateGameState = createAsyncThunk(
+  "game/updateStateStatus",
+  async (roomId: string, { rejectWithValue }) => {
+    try {
+      const response = await APIService.gameUpdateState(roomId);
+      if (response && response.error) {
+        return rejectWithValue(response.error);
+      }
+      return response;
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue("Failed while sending request");
+    }
+  },
+);
+
 export const updateGameSettings = createAsyncThunk(
   "game/updateStatus",
   async (data: { settings: GameSettings; roomId: string }) => {
@@ -188,15 +204,19 @@ const updateSettingsReducer = (
 ) => {
   state.gameSettings = action.payload;
 };
+const updateGameReducer = (
+  state: GameRoomEntity,
+  action: PayloadAction<GameRoomEntity>,
+) => action.payload;
 
 const addRoundReducer = (
   state: GameRoomEntity,
   action: PayloadAction<Round>,
 ) => {
-  const roundIsset = state.rounds.find((round) => {
+  const existingRound = state.rounds.find((round) => {
     action.payload.roundId === round.roundId;
   });
-  if (!roundIsset) {
+  if (!existingRound) {
     state.rounds.push(action.payload);
   }
 };
@@ -209,6 +229,7 @@ export const gameSlice = createSlice({
     updateGameUsers: updateUsersReducer,
     updateGameSettingsState: updateSettingsReducer,
     addGameRound: addRoundReducer,
+    updateGame: updateGameReducer,
   },
   extraReducers: (builder) => {
     builder
@@ -259,6 +280,16 @@ export const gameSlice = createSlice({
       })
       .addCase(updateGameSettings.fulfilled, (state, action) => {
         if (action.payload) state.gameSettings = action.payload;
+      })
+      .addCase(updateGameState.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(updateGameState.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateGameState.fulfilled, (state, action) => {
+        if (action.payload) return action.payload;
       })
       .addCase(cardAdd.fulfilled, (state, action) => {
         if (action.payload) {
@@ -311,5 +342,6 @@ export const {
   updateGameUsers,
   updateGameSettingsState,
   addGameRound,
+  updateGame,
 } = gameSlice.actions;
 export default gameSlice.reducer;

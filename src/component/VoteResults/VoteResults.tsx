@@ -16,17 +16,6 @@ type Props = {
   currentPage?: string;
 };
 
-interface VoteStatistics {
-  card: {
-    value: string;
-    type: string;
-    shortType: string;
-    selected: false;
-    closed: false;
-  };
-  value: string;
-}
-
 /* eslint react/jsx-key: [0] */
 // it is really unnecessary rule for vote cards, the don't have an ID
 
