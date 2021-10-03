@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Main } from "../styledComponents/Main/Main";
 import { SideBar } from "../styledComponents/Sidebar/SideBar";
 import { Page } from "../styledComponents/Page/Page";
-import styled from "styled-components";
-import { UserAvatar } from "../UserAvatar/UserAvatar";
 import Title from "../Title/Title";
-import { Input } from "../styledComponents/Input/Input";
 import { Button } from "../Button/Button";
 import Members from "../Members/Members";
 import { IssueTile } from "../CreateIssue/IssueTile";
@@ -26,70 +23,17 @@ import {
 } from "../../app/slices/gameSlice";
 import { roundUpdateState } from "../../app/slices/roundSlice";
 import APIService from "../../app/services/APIservice";
-import { MediaQuery } from "../styledComponents/MediaQuery/MediaQuery";
 import { Error } from "../PopUps/PopUps.styled";
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  width: calc(100% - 40px);
-  max-width: 1000px;
-  margin: 20px auto 0px;
-  padding: 0 20px 100px;
-`;
-
-const ScrumMasterLabel = styled.div`
-  font-family: Ruda-Bold, sans-serif;
-  font-size: 12px;
-  color: rgba(0, 0, 0, 0.6);
-`;
-
-const LinkToLobbyLabel = styled.div`
-  font-family: Roboto, sans-serif;
-  font-style: italic;
-  font-weight: normal;
-  font-size: 24px;
-  line-height: 28px;
-  color: #000;
-`;
-
-const UserAvatarStyled = styled(UserAvatar)`
-  margin: 10px 0 20px 0;
-`;
-
-const CopyLinkWrap = styled.div`
-  display: flex;
-  @media (${MediaQuery.tablet}) {
-    flex-wrap: wrap;
-    & > input {
-      border-right: 1px solid #2b3a67;
-    }
-  }
-`;
-
-const InputStyled = styled(Input)`
-  border-right: none;
-`;
-
-const BtnsWrap = styled.div<{ alignRight?: boolean }>`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: ${(props) =>
-    props.alignRight ? "flex-end" : "space-between"};
-  margin: 30px 0;
-  width: 100%;
-  & :last-child {
-    margin-right: 40px;
-  }
-`;
-
-const IssuesWrap = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-`;
+import {
+  BtnsWrap,
+  Container,
+  CopyLinkWrap,
+  InputStyled,
+  IssuesWrap,
+  LinkToLobbyLabel,
+  ScrumMasterLabel,
+  UserAvatarStyled,
+} from "./LobbyPage.styled";
 
 const LobbyPage = (): JSX.Element => {
   const dispatch = useDispatch();
