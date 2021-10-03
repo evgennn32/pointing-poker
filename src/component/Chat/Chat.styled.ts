@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ButtonStyled } from "../Button/Button";
+import { ButtonStyled } from "../Button/Button.styled";
 import { Input } from "../styledComponents/Input/Input";
 import { MediaQuery } from "../styledComponents/MediaQuery/MediaQuery";
 
