@@ -154,10 +154,6 @@ const GamePage = (): JSX.Element => {
     window.location.replace("/");
   }
 
-  const voteResultCards = round.statistics?.map((res) => {
-    return { ...res.card, percent: +res.result };
-  });
-
   const voteHandler = (selectedCard: Card) => {
     if (
       round.roundInProgress ||
@@ -187,6 +183,7 @@ const GamePage = (): JSX.Element => {
     dispatch(roundStop({ roundId: round.roundId, roomId: game.roomID }));
   };
   const createNewRound = () => {
+    dispatch(roundStop({ roundId: round.roundId, roomId: game.roomID }));
     let nextIssueIndex = 0;
     game.issues.forEach((issue, index) => {
       if (issue.id === round.issueId && index + 1 < game.issues.length) {
@@ -259,9 +256,9 @@ const GamePage = (): JSX.Element => {
             {/* TODO add issues with no ability to edit/del */}
 
             {game.scrumMaster.id === user.id && <CreateIssue />}
-            {user.scramMaster && !round.roundInProgress && voteResultCards && (
-              <Title title="Statistics:" />
-            )}
+            {user.scramMaster &&
+              !round.roundInProgress &&
+              !!round.statistics?.length && <Title title="Statistics:" />}
           </IssuesBlockWrap>
           {game.scrumMaster.id === user.id && (
             <>
@@ -318,26 +315,28 @@ const GamePage = (): JSX.Element => {
               </NextIssueBtn>
             </>
           )}
-          {!user.scramMaster && !round.roundInProgress && voteResultCards && (
-            <StatistForPlayer>
-              <Title title="Statistics:" />
-              <VoteResults
-                currentPage="game"
-                issueName=""
-                valueVoteArray={voteResultCards}
-                priority=""
-              />
-            </StatistForPlayer>
-          )}
+          {!user.scramMaster &&
+            !round.roundInProgress &&
+            !!round.statistics?.length && (
+              <StatistForPlayer>
+                <Title title="Statistics:" />
+                <VoteResults
+                  currentPage="game"
+                  issueName=""
+                  valueVoteArray={round.statistics ? round.statistics : []}
+                  priority=""
+                />
+              </StatistForPlayer>
+            )}
         </DIV>
         <ButtomPart>
           {game.scrumMaster.id === user.id &&
             !round.roundInProgress &&
-            voteResultCards && (
+            !!round.statistics?.length && (
               <VoteResults
                 currentPage="game"
                 issueName=""
-                valueVoteArray={voteResultCards}
+                valueVoteArray={round.statistics ? round.statistics : []}
                 priority=""
               />
             )}
@@ -353,7 +352,6 @@ const GamePage = (): JSX.Element => {
                 </div>
               ))
             : null}
-          {/* TODO editable:false for non master add show statistic only when the game ended */}
         </ButtomPart>
       </Main>
       <SideBar>
