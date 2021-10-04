@@ -1,6 +1,5 @@
 import { title } from "process";
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import Issue from "../../models/Issue";
 import { Button } from "../Button/Button";
 import PlayingCard from "../Cards/PlayingCard";
@@ -15,7 +14,6 @@ import Title from "../Title/Title";
 import TitleEditable from "../Title/TitleEditable";
 import { UserAvatar } from "../UserAvatar/UserAvatar";
 import { VoteResults } from "../VoteResults/VoteResults";
-import { MediaQuery } from "../styledComponents/MediaQuery/MediaQuery";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import APIService from "../../app/services/APIservice";
@@ -40,7 +38,7 @@ import {
   StatistForPlayer,
   TimerAndBtn,
 } from "./GamePage.styled";
-import { addGameRound } from "../../app/slices/gameSlice";
+import { updateGameState } from "../../app/slices/gameSlice";
 
 const GamePage = (): JSX.Element => {
   const dispatch = useDispatch();
