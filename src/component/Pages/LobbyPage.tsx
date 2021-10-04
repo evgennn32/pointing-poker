@@ -78,7 +78,7 @@ const LobbyPage = (): JSX.Element => {
       <Main>
         <Container>
           <Title title={game.roomName} />
-          <ScrumMasterLabel>Scram master:</ScrumMasterLabel>
+          <ScrumMasterLabel>Scrum master:</ScrumMasterLabel>
           <UserAvatarStyled {...game.scrumMaster} />
           {user.id === game.scrumMaster.id && (
             <>
@@ -126,7 +126,13 @@ const LobbyPage = (): JSX.Element => {
               />
             </BtnsWrap>
           )}
-          <Members users={game.users} />
+          <Members
+            users={game.users.filter(
+              (user) =>
+                !user.scrumMaster ||
+                (user.scrumMaster && game.gameSettings.scrumMasterAsPlayer),
+            )}
+          />
           {user.id === game.scrumMaster.id && (
             <>
               <Title title="Issues:" />

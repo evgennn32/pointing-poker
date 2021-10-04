@@ -19,7 +19,7 @@ const initialGame: GameRoomEntity = {
     currentUser: false,
     ableToDelete: false,
     score: "",
-    scramMaster: false,
+    scrumMaster: false,
   },
   gameSettings: {
     scrumMasterAsPlayer: true,

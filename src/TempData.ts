@@ -42,7 +42,7 @@ export const users = [
     currentUser: false,
     ableToDelete: true,
     score: "test",
-    scramMaster: false,
+    scrumMaster: false,
   },
   {
     id: "2",
@@ -53,7 +53,7 @@ export const users = [
     currentUser: false,
     ableToDelete: true,
     score: "test",
-    scramMaster: false,
+    scrumMaster: false,
   },
   {
     id: "3",
@@ -64,7 +64,7 @@ export const users = [
     currentUser: false,
     ableToDelete: true,
     score: "test",
-    scramMaster: true,
+    scrumMaster: true,
   },
 ];
 
@@ -73,20 +73,20 @@ export const initialData = {
   scrumMaster: {
     id: "4",
     image: "test",
-    firstName: "Scram",
+    firstName: "Scrum",
     lastName: "Master",
     position: "test",
     currentUser: true,
     ableToDelete: true,
     score: "test",
-    scramMaster: true,
+    scrumMaster: true,
   },
 };
 
 export const currentUser = {
   id: "4",
   image: "test",
-  firstName: "Scram",
+  firstName: "Scrum",
   lastName: "Master",
   position: "test",
   currentUser: false,
