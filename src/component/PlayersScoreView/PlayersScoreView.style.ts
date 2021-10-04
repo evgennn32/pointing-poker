@@ -12,6 +12,9 @@ export const MembersWrapper = styled.div`
 export const Wrapper = styled.div`
   display: flex;
   justify-content: flex-end;
+  & > * {
+    margin: 5px;
+  }
   @media (${MediaQuery.laptopWidth}) {
     justify-content: flex-start;
   }
