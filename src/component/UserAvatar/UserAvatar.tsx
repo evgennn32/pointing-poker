@@ -38,9 +38,8 @@ export const UserAvatar = (props: UserWithClassName): JSX.Element => {
         )}
       </Avatar>
       <NameAndPosition>
-        {game.scrumMaster.id === user.id && (
-          <SmallTxt>It&apos;s you! {user.observer ? "Observer" : ""}</SmallTxt>
-        )}
+        {game.scrumMaster.id === user.id && <SmallTxt>It&apos;s you!</SmallTxt>}
+        {user.observer && <SmallTxt>Observer</SmallTxt>}
         <Name>{props.firstName + " " + props.lastName}</Name>
         {props.position !== "" && <SmallTxt>{props.position}</SmallTxt>}
       </NameAndPosition>
