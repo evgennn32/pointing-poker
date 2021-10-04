@@ -38,7 +38,7 @@ import {
   StatistForPlayer,
   TimerAndBtn,
 } from "./GamePage.styled";
-import { updateGameState } from "../../app/slices/gameSlice";
+import { stopGame, updateGameState } from "../../app/slices/gameSlice";
 
 const GamePage = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -117,6 +117,9 @@ const GamePage = (): JSX.Element => {
       );
     }
   };
+  if (!game.gameSettings.gameInProgress) {
+    history.replace("/result");
+  }
 
   return (
     <Page sidebarActive={true}>
@@ -147,7 +150,7 @@ const GamePage = (): JSX.Element => {
                 return window.location.replace("/");
               }
               /* TODO Stop game */
-              history.replace("/result");
+              dispatch(stopGame(game.roomID));
             }}
             isLightTheme={true}
           />

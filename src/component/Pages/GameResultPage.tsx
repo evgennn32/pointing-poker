@@ -11,6 +11,9 @@ const GameResultPage = (): JSX.Element => {
   const game = useSelector<RootState, GameRoomEntity>(
     (state: { game: GameRoomEntity }) => state.game,
   );
+  if (!game.roomID) {
+    window.location.replace("/");
+  }
   return (
     <Main>
       <Chat />
@@ -19,7 +22,6 @@ const GameResultPage = (): JSX.Element => {
           (issue) => ` ${issue.issueName}`,
         )})`}
       />
-      {console.log(game.rounds)}
       {game.rounds.map((result, index) => {
         const issue = game.issues.find((issue) => result.issueId === issue.id);
         return (
