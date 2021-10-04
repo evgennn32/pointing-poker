@@ -95,7 +95,7 @@ const GamePage = (): JSX.Element => {
       setPlayingCards(cards);
     }
   };
-  const sopTimerHandler = () => {
+  const stopTimerHandler = () => {
     dispatch(roundStop({ roundId: round.roundId, roomId: game.roomID }));
   };
   const createNewRound = () => {
@@ -184,7 +184,8 @@ const GamePage = (): JSX.Element => {
                 <Timer
                   readOnly={false}
                   started={round.roundInProgress}
-                  cb={sopTimerHandler}
+                  cb={stopTimerHandler}
+                  roundTime={game.gameSettings.roundTime}
                 />
                 {!round.roundInProgress && (
                   <Button
