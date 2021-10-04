@@ -84,6 +84,22 @@ const APIService = {
       }
     }
   },
+  gameStop: async (
+    roomId: string,
+  ): Promise<{ game?: GameRoomEntity; error?: string } | undefined> => {
+    if (APIService.connected) {
+      try {
+        return new Promise((resolve) => {
+          const cb = (res: { error: string; game: GameRoomEntity }): void => {
+            resolve(res);
+          };
+          APIService.socket.emit("game:end", roomId, cb);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
   gameStart: async (
     roomId: string,
   ): Promise<
