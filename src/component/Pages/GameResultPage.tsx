@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
 import { Button } from "../Button/Button";
-import voteValue from "../VoteResults/VoteResults.test.value";
 
 const GameResultPage = (): JSX.Element => {
   const game = useSelector<RootState, GameRoomEntity>(
@@ -26,36 +25,24 @@ const GameResultPage = (): JSX.Element => {
       />
       <Button
         isLightTheme={false}
-        textContent={"Download in .cvs"}
+        textContent={"Download in .csv"}
         onClick={() => {
-          const head = "Issue Name, Priority, Type, Short Type, Value, Percent";
-          let csv = "";
-          let csvv = "";
-          game.gameResults.forEach((el) => {
-            csv += el.issue.issueName.concat(",", el.issue.priority);
-            el.voteResults.forEach((el) => {
-              csvv += el.card.type
-                .concat(",", el.card.value)
-                .concat(",", el.value);
-            });
-            csv += "," + csvv;
+          let csv = "Issue Name, Priority, Type, Short Type, Value, Percent\n";
+          game.rounds.forEach((el) => {
+            const issue = game.issues.find((issue) => el.issueId === issue.id);
+            csv += issue?.issueName.concat(",", issue.priority) + ",";
+            csv += el.statistics
+              ?.map((el) => [
+                el.card.type,
+                el.card.shortType,
+                el.card.value,
+                el.value,
+                "\n",
+                "",
+              ])
+              .join(",");
             csv += "\n";
           });
-          // voteValue.issues.forEach(function (el) {
-          //   csv += el.issueName.concat(",", el.priority);
-          //   statisticsObserver(el.results).forEach((el) => {
-          //     csvv +=
-          //       el.shortType
-          //         .concat(",", el.type)
-          //         .concat(",", el.shortType)
-          //         .concat(",", el.value)
-          //         .concat(",", el.percent.toString()) + ",";
-          //   });
-          //   csv += "," + csvv;
-          //   csv += "\n";
-          // });
-          csv = head + "\n" + csv;
-          console.log(csv);
           const hiddenElement = document.createElement("a");
           hiddenElement.href = "data:text/csv;charset=utf-8," + encodeURI(csv);
           hiddenElement.target = "_blank";
