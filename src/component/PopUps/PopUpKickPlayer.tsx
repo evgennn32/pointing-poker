@@ -43,14 +43,14 @@ export const PopUpKIckPlayer = (props: UserToKickOut): JSX.Element => {
             }
             props.close();
           }}
-        ></Button>
+        />
         <Button
           textContent="No"
           isLightTheme={true}
           onClick={() => {
             props.close();
           }}
-        ></Button>
+        />
       </ButtonsWrapper>
     </Wrapper>
   );
