@@ -60,3 +60,11 @@ export const EnterInput = styled(Input)`
     font-size: 24px;
   }
 `;
+export const ChatMessageWrapper = styled.div`
+  width: 100%;
+  display: flex;
+`;
+export const ChatMessageStyled = styled.div`
+  flex-basis: 60%;
+  display: flex;
+`;

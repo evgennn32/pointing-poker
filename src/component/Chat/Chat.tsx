@@ -9,6 +9,8 @@ import {
 import {
   ChatEnterWrapper,
   ChatHistoryWrapper,
+  ChatMessageStyled,
+  ChatMessageWrapper,
   ChatWrapper,
   CloseButton,
   EnterButton,
@@ -16,6 +18,7 @@ import {
 } from "./Chat.styled";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
 import User from "../../models/User";
+import { UserAvatar } from "../UserAvatar/UserAvatar";
 
 const Chat = (): JSX.Element => {
   const [message, setMessage] = useState("");
@@ -32,7 +35,14 @@ const Chat = (): JSX.Element => {
   return (
     <ChatWrapper active={chat.isActive}>
       <CloseButton onClick={() => dispatch(changeChatActive())}>X</CloseButton>
-      <ChatHistoryWrapper />
+      <ChatHistoryWrapper>
+        {chat.messages.map((message, index) => (
+          <ChatMessageWrapper key={index}>
+            <ChatMessageStyled>{message.message}</ChatMessageStyled>
+            <UserAvatar {...message.user} />
+          </ChatMessageWrapper>
+        ))}
+      </ChatHistoryWrapper>
       <ChatEnterWrapper>
         <EnterInput
           value={message}
