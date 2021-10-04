@@ -37,6 +37,7 @@ export const VoteResults = ({
       />
     )}
     <ResultWrapper>
+      {(!valueVoteArray || !valueVoteArray.length) && <h2>No results</h2>}
       {valueVoteArray.map((result, index) => (
         <CardWrapper key={index}>
           <PlayingCard
