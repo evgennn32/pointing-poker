@@ -9,9 +9,11 @@ import {
 } from "./UserAvatar.styled";
 import User from "../../models/User";
 import { Tile } from "../styledComponents/Tile/Tile";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { PopUpKIckPlayer } from "../PopUps/PopUpKickPlayer";
 import Popup from "reactjs-popup";
+import { GameRoomEntity } from "../../models/GameRoomEntity";
+import { RootState } from "../../app/store";
 
 interface UserWithClassName extends User {
   className?: string;
@@ -19,18 +21,26 @@ interface UserWithClassName extends User {
 
 export const UserAvatar = (props: UserWithClassName): JSX.Element => {
   const dispatch = useDispatch();
+  const game = useSelector<RootState, GameRoomEntity>(
+    (state: { game: GameRoomEntity }) => state.game,
+  );
+  const user = useSelector<RootState, User>(
+    (state: { user: User }) => state.user,
+  );
   return (
     <Tile className={props.className}>
       <Avatar avatar={props.image}>
-        {props.firstName !== "" && props.image === null && (
+        {props.firstName !== "" && !props.image && (
           <Initials>{props.firstName[0]}</Initials>
         )}
-        {props.lastName !== "" && props.image === null && (
+        {props.lastName !== "" && !props.image && (
           <Initials>{props.lastName[0]}</Initials>
         )}
       </Avatar>
       <NameAndPosition>
-        {props.currentUser && <SmallTxt>It&apos;s you!</SmallTxt>}
+        {game.scrumMaster.id === user.id && (
+          <SmallTxt>It&apos;s you! {user.observer ? "Observer" : ""}</SmallTxt>
+        )}
         <Name>{props.firstName + " " + props.lastName}</Name>
         {props.position !== "" && <SmallTxt>{props.position}</SmallTxt>}
       </NameAndPosition>
