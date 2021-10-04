@@ -76,7 +76,7 @@ export function PopUpConnectToLobby(props: Props): JSX.Element {
         currentUser: false,
         ableToDelete: true,
         score: "",
-        scramMaster: props.createNewSession,
+        scrumMaster: props.createNewSession,
         observer: values.connectAsObserver,
       };
       if (props.createNewSession) {

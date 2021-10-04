@@ -11,7 +11,7 @@ const initialUser: User = {
   currentUser: false,
   ableToDelete: false,
   score: "",
-  scramMaster: false,
+  scrumMaster: false,
 };
 
 const userUpdateStateReducer = (state: User, action: PayloadAction<User>) => {

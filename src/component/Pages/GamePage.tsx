@@ -133,7 +133,7 @@ const GamePage = (): JSX.Element => {
         />
         <MasterWrapper>
           <div>
-            <Paragraph>Scram master:</Paragraph>
+            <Paragraph>Scrum master:</Paragraph>
             <UserAvatar {...game.scrumMaster} />
           </div>
           {game.scrumMaster.id !== user.id && (
@@ -146,7 +146,7 @@ const GamePage = (): JSX.Element => {
           <Button
             textContent={game.scrumMaster.id === user.id ? "Stop Game" : "Exit"}
             onClick={() => {
-              if (!user.scramMaster) {
+              if (!user.scrumMaster) {
                 return window.location.replace("/");
               }
               /* TODO Stop game */
@@ -174,7 +174,7 @@ const GamePage = (): JSX.Element => {
             {/* TODO add issues with no ability to edit/del */}
 
             {game.scrumMaster.id === user.id && <CreateIssue />}
-            {user.scramMaster &&
+            {user.scrumMaster &&
               !round.roundInProgress &&
               !!round.statistics?.length && <Title title="Statistics:" />}
           </IssuesBlockWrap>
@@ -234,7 +234,7 @@ const GamePage = (): JSX.Element => {
               </NextIssueBtn>
             </>
           )}
-          {!user.scramMaster &&
+          {!user.scrumMaster &&
             !round.roundInProgress &&
             !!round.statistics?.length && (
               <StatistForPlayer>
@@ -259,7 +259,7 @@ const GamePage = (): JSX.Element => {
                 priority=""
               />
             )}
-          {game.gameSettings.scrumMasterAsPlayer
+          {game.gameSettings.scrumMasterAsPlayer && !user.observer
             ? playingCards.map((el, ind) => (
                 <div
                   onClick={() => {
