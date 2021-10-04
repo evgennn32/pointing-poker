@@ -7,21 +7,14 @@ import {
   ResultWrapper,
   StatisticsWrapper,
 } from "./VoteResults.styled";
+import VoteResult from "../../models/VoteResult";
 
 type Props = {
   issueName: string;
   priority: string;
-  valueVoteArray: Array<VoteStatistics>;
+  valueVoteArray: Array<VoteResult>;
   currentPage?: string;
 };
-
-interface VoteStatistics {
-  id: string;
-  value: string;
-  type: string;
-  shortType: string;
-  percent: number;
-}
 
 /* eslint react/jsx-key: [0] */
 // it is really unnecessary rule for vote cards, the don't have an ID
@@ -44,18 +37,18 @@ export const VoteResults = ({
       />
     )}
     <ResultWrapper>
-      {valueVoteArray.map((card, index) => (
+      {valueVoteArray.map((result, index) => (
         <CardWrapper key={index}>
           <PlayingCard
-            id={card.id}
-            value={card.value}
-            type={card.type}
-            shortType={card.shortType}
+            id={result.card.id}
+            value={result.card.value}
+            type={result.card.type}
+            shortType={result.card.shortType}
             selected={false}
             editable={false}
             closed={false}
           />
-          <PercentWrapper>{`${card.percent}%`}</PercentWrapper>
+          <PercentWrapper>{result.value}</PercentWrapper>
         </CardWrapper>
       ))}
     </ResultWrapper>

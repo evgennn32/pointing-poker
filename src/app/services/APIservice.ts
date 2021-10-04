@@ -10,6 +10,7 @@ import {
   updateGameUsers,
   updateGameSettingsState,
   addGameRound,
+  updateGame,
 } from "../slices/gameSlice";
 import { roundUpdateState } from "../slices/roundSlice";
 import Round from "../../models/Round";
@@ -259,6 +260,26 @@ const APIService = {
       }
     }
   },
+  gameUpdateState: async (
+    roomId: string,
+  ): Promise<GameRoomEntity | undefined> => {
+    if (APIService.connected) {
+      try {
+        return new Promise((resolve, reject) => {
+          const cb = (res: { error: string; game: GameRoomEntity }): void => {
+            if (!res) reject({ error: "bad request" });
+            if (res && res.error) {
+              reject({ error: res.error });
+            }
+            resolve(res.game);
+          };
+          APIService.socket.emit("game:update-state", roomId, cb);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
   cardAdd: async (card: Card, roomId: string): Promise<Card | undefined> => {
     if (APIService.connected) {
       try {
@@ -394,6 +415,9 @@ const APIService = {
             dispatch(updateGameSettingsState(data.gameSettings));
         },
       );
+      socket.on("game:update", (data: { game: GameRoomEntity }): void => {
+        if (data && data.game) dispatch(updateGame(data.game));
+      });
       socket.on("round:update", (data: { round: Round }): void => {
         if (data && data.round) dispatch(roundUpdateState(data.round));
       });
