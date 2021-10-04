@@ -32,7 +32,7 @@ type Inputs = {
   firstName: string;
   lastName: string;
   jobPosition: string;
-  avatar: File | null;
+  avatar: string | null;
   connectAsObserver: boolean;
 };
 
@@ -67,10 +67,9 @@ export function PopUpConnectToLobby(props: Props): JSX.Element {
       return errors;
     },
     onSubmit: (values: Inputs) => {
-      // TODO handle image to blob
       const user = {
         id: "",
-        image: "",
+        image: values.avatar ? values.avatar : "",
         firstName: values.firstName,
         lastName: values.lastName,
         position: values.jobPosition,
@@ -166,21 +165,22 @@ export function PopUpConnectToLobby(props: Props): JSX.Element {
                 type="file"
                 onChange={(event) => {
                   if (event.currentTarget.files !== null) {
-                    formik.setFieldValue(
-                      "avatar",
-                      event.currentTarget.files[0],
-                    );
+                    const file = event.currentTarget.files[0];
+                    if (
+                      file.type === "image/jpeg" ||
+                      file.type === "image/png"
+                    ) {
+                      const reader = new FileReader();
+                      reader.readAsDataURL(file);
+                      reader.onloadend = () => {
+                        formik.setFieldValue("avatar", reader.result);
+                      };
+                    }
                   }
                 }}
                 className="form-control"
               />
-              <Avatar
-                avatar={
-                  formik.values.avatar === null
-                    ? ""
-                    : URL.createObjectURL(formik.values.avatar)
-                }
-              >
+              <Avatar avatar={formik.values.avatar}>
                 {formik.values.firstName !== "" &&
                   formik.values.avatar === null && (
                     <Initials>{formik.values.firstName[0]}</Initials>
