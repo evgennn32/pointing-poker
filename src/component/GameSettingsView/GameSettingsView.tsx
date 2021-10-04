@@ -21,7 +21,6 @@ import { cardAdd } from "../../app/slices/gameSlice";
 type GameSettingsProps = {
   setGameSetting: (gameSettings: GameSettings) => void;
 };
-console.log("game = ");
 
 export const GameSettingsView = (props: GameSettingsProps): JSX.Element => {
   const dispatch = useDispatch();
@@ -120,9 +119,12 @@ export const GameSettingsView = (props: GameSettingsProps): JSX.Element => {
         <OneSettingWrapper>
           <Label>Round time:</Label>
           <Timer
-            readOnly={true}
+            readOnly={false}
             started={false}
             roundTime={game.gameSettings.roundTime}
+            updateTimer={(roundTime) => {
+              setSettings({ ...settings, roundTime });
+            }}
           />
         </OneSettingWrapper>
       </InputsSwitchersWrapper>

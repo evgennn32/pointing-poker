@@ -10,6 +10,7 @@ type Props = {
   started: boolean;
   cb?: (setTicking: Dispatch<boolean>) => void;
   roundTime?: number;
+  updateTimer?: (timeValue: number) => void;
 };
 
 const changeHandler = (value: string, max: string) => {
@@ -21,8 +22,6 @@ const changeHandler = (value: string, max: string) => {
   if (Number(currentValue) < 10) currentValue = `0${currentValue}`;
   return currentValue;
 };
-
-/* eslint max-lines-per-function: 0 */
 
 const Timer = (props: Props): JSX.Element => {
   const time = props.roundTime;
@@ -38,6 +37,12 @@ const Timer = (props: Props): JSX.Element => {
   const [secondsValue, setSecondsValue] = React.useState(secondsString);
   const [ticking, setTicking] = React.useState(props.started);
   const [timerTimeout, setTimerTimeout] = useState(0);
+  const updateTimer = (): void => {
+    if (props.updateTimer) {
+      const timerValue = Number(minutesValue) * 60 + Number(secondsValue);
+      props.updateTimer(timerValue);
+    }
+  };
   React.useEffect(() => {
     setTicking(props.started);
     setMinutesValue(minutesString);
@@ -83,6 +88,7 @@ const Timer = (props: Props): JSX.Element => {
         step="1"
         type="number"
         value={minutesValue}
+        onBlur={updateTimer}
         onChange={(e) => {
           const updatedValue = changeHandler(e.target.value, e.target.max);
           setMinutesValue(updatedValue);
@@ -95,6 +101,7 @@ const Timer = (props: Props): JSX.Element => {
         step="1"
         type="number"
         value={secondsValue}
+        onBlur={updateTimer}
         onChange={(e) => {
           const updatedValue = changeHandler(e.target.value, e.target.max);
           setSecondsValue(updatedValue);
