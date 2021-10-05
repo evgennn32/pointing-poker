@@ -39,7 +39,6 @@ import {
   TimerAndBtn,
 } from "./GamePage.styled";
 import { stopGame, updateGameState } from "../../app/slices/gameSlice";
-import VoteResult from "../../models/VoteResult";
 import UserVoteResult from "../../models/UserVoteResult";
 
 const GamePage = (): JSX.Element => {
@@ -62,9 +61,6 @@ const GamePage = (): JSX.Element => {
   const [playingCards, setPlayingCards] = useState(game.cards);
   const [voteResult, setVoteResult] = useState<UserVoteResult | undefined>(
     undefined,
-  );
-  const voteResult11 = round.usersVoteResults.find(
-    (result) => user.id === result.id,
   );
   useEffect(() => {
     setTimerStarted(round.roundInProgress);
