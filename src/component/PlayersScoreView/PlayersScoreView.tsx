@@ -21,9 +21,8 @@ export const PlayersScoreView = (props: {
   );
   const [users, setUsers] = useState(props.users);
   useEffect(() => {
-    console.log(round);
     setUsers(props.users);
-  }, [round.roundInProgress, round.roundId]);
+  }, [round.roundInProgress, round.roundId, round.usersVoteResults]);
   return (
     <Wrapper>
       <ScoreWrapper>
@@ -50,7 +49,7 @@ export const PlayersScoreView = (props: {
       </ScoreWrapper>
       <MembersWrapper>
         <Title title="Players:" />
-        {props.users.map((singleUser) => (
+        {users.map((singleUser) => (
           <UserAvatar {...singleUser} key={singleUser.id} />
         ))}
       </MembersWrapper>

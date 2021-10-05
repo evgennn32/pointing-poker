@@ -25,8 +25,8 @@ const changeHandler = (value: string, max: string) => {
 
 const Timer = (props: Props): JSX.Element => {
   const time = props.roundTime;
-  let minutesString = "00";
-  let secondsString = "05";
+  let minutesString = "04";
+  let secondsString = "00";
   if (time) {
     const seconds = time % 60;
     const minutes = (time - seconds) / 60;
