@@ -39,6 +39,7 @@ import {
   TimerAndBtn,
 } from "./GamePage.styled";
 import { stopGame, updateGameState } from "../../app/slices/gameSlice";
+import UserVoteResult from "../../models/UserVoteResult";
 
 const GamePage = (): JSX.Element => {
   useEffect(() => window.scrollTo({ top: 0, behavior: "smooth" }), []);
@@ -58,6 +59,9 @@ const GamePage = (): JSX.Element => {
   );
   const [timerStarted, setTimerStarted] = useState(round.roundInProgress);
   const [playingCards, setPlayingCards] = useState(game.cards);
+  const [voteResult, setVoteResult] = useState<UserVoteResult | undefined>(
+    undefined,
+  );
   useEffect(() => {
     setTimerStarted(round.roundInProgress);
   }, [round.roundInProgress]);
@@ -65,6 +69,10 @@ const GamePage = (): JSX.Element => {
     const cards = playingCards.map((card) => ({ ...card, selected: false }));
     setPlayingCards(cards);
     dispatch(updateGameState(game.roomID));
+    const roundVoteResult = round.usersVoteResults.find(
+      (result) => user.id === result.id,
+    );
+    setVoteResult(roundVoteResult);
   }, [round.roundId, round.statistics]);
 
   if (!game.roomID || !user.id) {
@@ -150,7 +158,6 @@ const GamePage = (): JSX.Element => {
               if (!user.scrumMaster) {
                 return window.location.replace("/");
               }
-              /* TODO Stop game */
               dispatch(stopGame(game.roomID));
             }}
             isLightTheme={true}
@@ -262,16 +269,20 @@ const GamePage = (): JSX.Element => {
               />
             )}
           {game.gameSettings.scrumMasterAsPlayer && !user.observer
-            ? playingCards.map((el, ind) => (
-                <div
-                  onClick={() => {
-                    voteHandler(el);
-                  }}
-                  key={el.id}
-                >
-                  <PlayingCard {...el} editable={false} key={ind} />
-                </div>
-              ))
+            ? playingCards.map((el, ind) => {
+                if (voteResult && el.value === voteResult.score)
+                  el.selected = true;
+                return (
+                  <div
+                    onClick={() => {
+                      voteHandler(el);
+                    }}
+                    key={el.id}
+                  >
+                    <PlayingCard {...el} editable={false} key={ind} />
+                  </div>
+                );
+              })
             : null}
         </ButtomPart>
       </Main>
