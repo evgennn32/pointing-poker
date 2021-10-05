@@ -191,7 +191,7 @@ export function PopUpConnectToLobby(props: Props): JSX.Element {
                   )}
               </Avatar>
             </OneInputWrapperConnectToLobby>
-            <Button textContent="Confirm" isLightTheme={false}></Button>
+            <Button textContent="Confirm" isLightTheme={false} />
           </InputsWrapperConnectToLobby>
           <ConnectAsObserverAndCancel>
             <ConnectAsObserver>
@@ -219,7 +219,7 @@ export function PopUpConnectToLobby(props: Props): JSX.Element {
                 props.close();
               }}
               isLightTheme={true}
-            ></Button>
+            />
           </ConnectAsObserverAndCancel>
         </FormWrapper>
       </form>

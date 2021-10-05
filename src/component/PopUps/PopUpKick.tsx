@@ -20,8 +20,8 @@ export const PopUpKIck = (props: UserToKickOut): JSX.Element => {
         game session. Do you agree with it?
       </P>
       <ButtonsWrapper>
-        <Button textContent="Yes" isLightTheme={false}></Button>
-        <Button textContent="No" isLightTheme={true}></Button>
+        <Button textContent="Yes" isLightTheme={false} />
+        <Button textContent="No" isLightTheme={true} />
       </ButtonsWrapper>
     </Wrapper>
   );

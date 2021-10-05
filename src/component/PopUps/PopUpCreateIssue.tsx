@@ -121,7 +121,7 @@ export const PopUpCreateIssue = (props: ClosePopUp): JSX.Element => {
           </OneInputWrapper>
         </InputsWrapper>
         <ButtonsWrapper>
-          <Button textContent="Yes" isLightTheme={false}></Button>
+          <Button textContent="Yes" isLightTheme={false} />
           <Button
             textContent="No"
             onClick={(e) => {
@@ -129,7 +129,7 @@ export const PopUpCreateIssue = (props: ClosePopUp): JSX.Element => {
               props.close();
             }}
             isLightTheme={true}
-          ></Button>
+          />
         </ButtonsWrapper>
       </Form>
     </WrapperIssue>

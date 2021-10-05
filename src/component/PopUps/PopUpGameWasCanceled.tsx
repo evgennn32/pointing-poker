@@ -19,7 +19,7 @@ export const PopUpGameWasCanceled = (props: ClosePopUp): JSX.Element => {
           //TODO when call popup add closeOnDocumentClick={false} so it doesn't close on document click
         }}
         isLightTheme={false}
-      ></Button>
+      />
     </Wrapper>
   );
 };
