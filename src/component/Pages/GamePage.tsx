@@ -118,6 +118,9 @@ const GamePage = (): JSX.Element => {
       );
     }
   };
+  const voteResult = round.usersVoteResults.find(
+    (result) => user.id === result.id,
+  );
   if (!game.gameSettings.gameInProgress) {
     history.replace("/result");
   }
@@ -150,7 +153,6 @@ const GamePage = (): JSX.Element => {
               if (!user.scrumMaster) {
                 return window.location.replace("/");
               }
-              /* TODO Stop game */
               dispatch(stopGame(game.roomID));
             }}
             isLightTheme={true}
@@ -262,16 +264,20 @@ const GamePage = (): JSX.Element => {
               />
             )}
           {game.gameSettings.scrumMasterAsPlayer && !user.observer
-            ? playingCards.map((el, ind) => (
-                <div
-                  onClick={() => {
-                    voteHandler(el);
-                  }}
-                  key={el.id}
-                >
-                  <PlayingCard {...el} editable={false} key={ind} />
-                </div>
-              ))
+            ? playingCards.map((el, ind) => {
+                if (voteResult && el.value === voteResult.score)
+                  el.selected = true;
+                return (
+                  <div
+                    onClick={() => {
+                      voteHandler(el);
+                    }}
+                    key={el.id}
+                  >
+                    <PlayingCard {...el} editable={false} key={ind} />
+                  </div>
+                );
+              })
             : null}
         </ButtomPart>
       </Main>
