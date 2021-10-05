@@ -14,6 +14,7 @@ import {
 } from "../slices/gameSlice";
 import { roundUpdateState } from "../slices/roundSlice";
 import Round from "../../models/Round";
+import { ChatMessage, chatAddMessage } from "../slices/chatSlice";
 
 const APIService = {
   connected: false,
@@ -413,6 +414,26 @@ const APIService = {
       }
     }
   },
+  sendChatMessage: async (
+    message: ChatMessage,
+    roomId: string,
+  ): Promise<{ message?: ChatMessage; error?: string } | undefined> => {
+    if (APIService.connected) {
+      try {
+        return new Promise((resolve, reject) => {
+          const cb = (res: { error: string; message: ChatMessage }): void => {
+            if (res.error) {
+              reject(res);
+            }
+            resolve(res);
+          };
+          APIService.socket.emit("chat:send-message", message, roomId, cb);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
   handleSocketEvents: (dispatch: AppDispatch): void => {
     if (APIService.connected && !APIService.handleEventStarted) {
       APIService.handleEventStarted = true;
@@ -436,6 +457,9 @@ const APIService = {
       });
       socket.on("round:update", (data: { round: Round }): void => {
         if (data && data.round) dispatch(roundUpdateState(data.round));
+      });
+      socket.on("chat:new-message", (data: { message: ChatMessage }): void => {
+        if (data && data.message) dispatch(chatAddMessage(data.message));
       });
     }
   },
