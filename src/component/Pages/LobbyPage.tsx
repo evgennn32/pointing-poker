@@ -36,6 +36,7 @@ import {
 } from "./LobbyPage.styled";
 
 const LobbyPage = (): JSX.Element => {
+  useEffect(() => window.scrollTo({ top: 0, behavior: "smooth" }), []);
   const dispatch = useDispatch();
   const history = useHistory();
   useEffect(() => {
