@@ -34,8 +34,7 @@ const Chat = (): JSX.Element => {
   const dispatch = useDispatch();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (messagesEndRef.current) {
-      console.log("scroll");
+    if (messagesEndRef?.current) {
       messagesEndRef.current?.scrollIntoView({
         behavior: "smooth",
         block: "end",
@@ -44,7 +43,7 @@ const Chat = (): JSX.Element => {
     }
   }, [chat.messages]);
   const sendMessage = () => {
-    if (message === "") return;
+    if (!message) return;
     dispatch(
       sendChatMessage({
         message: { message, user },
