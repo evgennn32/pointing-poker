@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import {
@@ -32,6 +32,33 @@ const Chat = (): JSX.Element => {
     (state: { user: User }) => state.user,
   );
   const dispatch = useDispatch();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (messagesEndRef?.current) {
+      messagesEndRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest",
+      });
+    }
+  }, [chat.messages]);
+  const sendMessage = () => {
+    if (!message) return;
+    dispatch(
+      sendChatMessage({
+        message: { message, user },
+        roomId: game.roomID,
+      }),
+    );
+    setMessage("");
+  };
+  const handleKeyDown = (event: React.KeyboardEvent<unknown>) => {
+    console.log(event);
+    if (event?.key === "Enter") {
+      sendMessage();
+    }
+  };
+
   return (
     <ChatWrapper active={chat.isActive}>
       <CloseButton onClick={() => dispatch(changeChatActive())}>X</CloseButton>
@@ -42,23 +69,15 @@ const Chat = (): JSX.Element => {
             <UserAvatar {...message.user} />
           </ChatMessageWrapper>
         ))}
+        <div ref={messagesEndRef} />
       </ChatHistoryWrapper>
       <ChatEnterWrapper>
         <EnterInput
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
-        <EnterButton
-          isLight={true}
-          onClick={() =>
-            dispatch(
-              sendChatMessage({
-                message: { message, user },
-                roomId: game.roomID,
-              }),
-            )
-          }
-        >
+        <EnterButton isLight={true} onClick={sendMessage}>
           ➔
         </EnterButton>
       </ChatEnterWrapper>
