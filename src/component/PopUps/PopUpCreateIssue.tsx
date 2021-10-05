@@ -113,7 +113,7 @@ export const PopUpCreateIssue = (props: ClosePopUp): JSX.Element => {
               <option value="Select priority" label="Select priority" />
               <option value="Low" label="Low" />
               <option value="Medium" label="Medium" />
-              <option value="Hight" label="Hight" />
+              <option value="High" label="High" />
             </Select>
             {formik.errors.priority && formik.touched.priority && (
               <Error className="input-feedback">{formik.errors.priority}</Error>

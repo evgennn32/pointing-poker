@@ -25,7 +25,6 @@ export const ChatWrapper = styled.aside<{ active: boolean }>`
 export const CloseButton = styled.span`
   position: absolute;
   z-index: 30;
-  top: 20px;
   right: 20px;
   font-size: 36px;
   cursor: pointer;
@@ -39,14 +38,13 @@ export const ChatHistoryWrapper = styled.div`
 export const ChatEnterWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-end;
   height: 50px;
-  border-top: 1px solid black;
   border-radius: 3px;
 `;
 export const EnterButton = styled(ButtonStyled)`
-  width: 66px;
-  height: 48px;
+  width: 68px;
+  height: 43px;
 `;
 export const EnterInput = styled(Input).attrs({ type: "Text" })`
   @media (${MediaQuery.tablet}) {

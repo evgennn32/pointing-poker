@@ -63,7 +63,11 @@ const LobbyPage = (): JSX.Element => {
   const gameLink = game.roomID
     ? `${window.location.host}?gameId=${game.roomID}`
     : "No game";
-
+  useEffect(() => {
+    game.issues.length === 0
+      ? setAllowedToStartGame(false)
+      : setAllowedToStartGame(true);
+  }, [game.issues.length]);
   useEffect(() => {
     if (game.gameSettings.gameInProgress && game.rounds.length) {
       dispatch(roundUpdateState(game.rounds[0]));
@@ -99,9 +103,9 @@ const LobbyPage = (): JSX.Element => {
                   isLightTheme={false}
                   textContent="Start Game"
                   onClick={() => {
-                    game.issues.length === 0
-                      ? setAllowedToStartGame(false)
-                      : dispatch(startGame(game.roomID));
+                    if (allowedToStartGame) {
+                      dispatch(startGame(game.roomID));
+                    }
                   }}
                 />
                 {!allowedToStartGame && <Error>Add issue(s) to start</Error>}
