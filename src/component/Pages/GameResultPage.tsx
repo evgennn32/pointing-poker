@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Chat from "../Chat/Chat";
 import { Main } from "../styledComponents/Main/Main";
 import Title from "../Title/Title";
@@ -9,6 +9,7 @@ import { GameRoomEntity } from "../../models/GameRoomEntity";
 import { Button } from "../Button/Button";
 
 const GameResultPage = (): JSX.Element => {
+  useEffect(() => window.scrollTo({ top: 0, behavior: "smooth" }));
   const game = useSelector<RootState, GameRoomEntity>(
     (state: { game: GameRoomEntity }) => state.game,
   );

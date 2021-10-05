@@ -41,6 +41,7 @@ import {
 import { stopGame, updateGameState } from "../../app/slices/gameSlice";
 
 const GamePage = (): JSX.Element => {
+  useEffect(() => window.scrollTo({ top: 0, behavior: "smooth" }), []);
   const dispatch = useDispatch();
   const history = useHistory();
   useEffect(() => {
@@ -182,7 +183,7 @@ const GamePage = (): JSX.Element => {
             <>
               <TimerAndBtn>
                 <Timer
-                  readOnly={false}
+                  readOnly={true}
                   started={round.roundInProgress}
                   cb={stopTimerHandler}
                   roundTime={game.gameSettings.roundTime}
@@ -230,6 +231,7 @@ const GamePage = (): JSX.Element => {
                   textContent="Next Issue"
                   onClick={createNewRound}
                   isLightTheme={false}
+                  disabled={round.roundInProgress}
                 />
               </NextIssueBtn>
             </>
