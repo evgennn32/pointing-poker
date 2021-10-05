@@ -48,7 +48,7 @@ export const EnterButton = styled(ButtonStyled)`
   width: 66px;
   height: 48px;
 `;
-export const EnterInput = styled(Input)`
+export const EnterInput = styled(Input).attrs({ type: "Text" })`
   @media (${MediaQuery.tablet}) {
     width: 270px;
     height: 41px;
@@ -67,4 +67,5 @@ export const ChatMessageWrapper = styled.div`
 export const ChatMessageStyled = styled.div`
   flex-basis: 60%;
   display: flex;
+  padding: 10px;
 `;
