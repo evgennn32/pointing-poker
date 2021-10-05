@@ -64,9 +64,7 @@ const LobbyPage = (): JSX.Element => {
     ? `${window.location.host}?gameId=${game.roomID}`
     : "No game";
   useEffect(() => {
-    game.issues.length === 0
-      ? setAllowedToStartGame(false)
-      : setAllowedToStartGame(true);
+    setAllowedToStartGame(game?.issues?.length > 0);
   }, [game.issues.length]);
   useEffect(() => {
     if (game.gameSettings.gameInProgress && game.rounds.length) {
