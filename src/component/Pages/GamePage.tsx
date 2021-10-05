@@ -183,7 +183,7 @@ const GamePage = (): JSX.Element => {
             <>
               <TimerAndBtn>
                 <Timer
-                  readOnly={false}
+                  readOnly={true}
                   started={round.roundInProgress}
                   cb={stopTimerHandler}
                   roundTime={game.gameSettings.roundTime}

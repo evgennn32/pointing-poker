@@ -15,7 +15,7 @@ export const ButtonStyled = styled.button<{
   font-weight: bold;
   font-size: 24px;
   line-height: 30px;
-  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   border: 1px solid #496a81;
   border-radius: 3px;
   box-sizing: border-box;
