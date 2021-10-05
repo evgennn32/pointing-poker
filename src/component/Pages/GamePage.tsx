@@ -39,6 +39,8 @@ import {
   TimerAndBtn,
 } from "./GamePage.styled";
 import { stopGame, updateGameState } from "../../app/slices/gameSlice";
+import VoteResult from "../../models/VoteResult";
+import UserVoteResult from "../../models/UserVoteResult";
 
 const GamePage = (): JSX.Element => {
   useEffect(() => window.scrollTo({ top: 0, behavior: "smooth" }), []);
@@ -58,6 +60,12 @@ const GamePage = (): JSX.Element => {
   );
   const [timerStarted, setTimerStarted] = useState(round.roundInProgress);
   const [playingCards, setPlayingCards] = useState(game.cards);
+  const [voteResult, setVoteResult] = useState<UserVoteResult | undefined>(
+    undefined,
+  );
+  const voteResult11 = round.usersVoteResults.find(
+    (result) => user.id === result.id,
+  );
   useEffect(() => {
     setTimerStarted(round.roundInProgress);
   }, [round.roundInProgress]);
@@ -65,6 +73,10 @@ const GamePage = (): JSX.Element => {
     const cards = playingCards.map((card) => ({ ...card, selected: false }));
     setPlayingCards(cards);
     dispatch(updateGameState(game.roomID));
+    const roundVoteResult = round.usersVoteResults.find(
+      (result) => user.id === result.id,
+    );
+    setVoteResult(roundVoteResult);
   }, [round.roundId, round.statistics]);
 
   if (!game.roomID || !user.id) {
@@ -118,9 +130,6 @@ const GamePage = (): JSX.Element => {
       );
     }
   };
-  const voteResult = round.usersVoteResults.find(
-    (result) => user.id === result.id,
-  );
   if (!game.gameSettings.gameInProgress) {
     history.replace("/result");
   }
