@@ -183,7 +183,7 @@ const GamePage = (): JSX.Element => {
               }
             />
             {game.scrumMaster.id === user.id && <CreateIssue />}
-            {user.scrumMaster &&
+            {game.scrumMaster.id !== user.id &&
               !round.roundInProgress &&
               !!round.statistics?.length && <Title title="Statistics:" />}
           </IssuesBlockWrap>
@@ -245,7 +245,7 @@ const GamePage = (): JSX.Element => {
               </NextIssueBtn>
             </>
           )}
-          {!user.scrumMaster &&
+          {game.scrumMaster.id === user.id &&
             !round.roundInProgress &&
             !!round.statistics?.length && (
               <StatistForPlayer>
@@ -260,7 +260,7 @@ const GamePage = (): JSX.Element => {
             )}
         </DIV>
         <ButtomPart>
-          {game.scrumMaster.id === user.id &&
+          {game.scrumMaster.id !== user.id &&
             !round.roundInProgress &&
             !!round.statistics?.length && (
               <VoteResults
