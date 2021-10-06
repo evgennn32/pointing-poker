@@ -17,6 +17,7 @@ import { Redirect, useHistory } from "react-router";
 import GameSettings from "../../models/GameSettings";
 import {
   deleteGame,
+  gameUpdateName,
   startGame,
   updateGameSettings,
   updateGameUsers,
@@ -34,6 +35,7 @@ import {
   ScrumMasterLabel,
   UserAvatarStyled,
 } from "./LobbyPage.styled";
+import TitleEditable from "../Title/TitleEditable";
 
 const LobbyPage = (): JSX.Element => {
   useEffect(() => window.scrollTo({ top: 0, behavior: "smooth" }), []);
@@ -80,7 +82,15 @@ const LobbyPage = (): JSX.Element => {
     <Page sidebarActive={chatActive}>
       <Main>
         <Container>
-          <Title title={game.roomName} />
+          {user.scrumMaster && (
+            <TitleEditable
+              title={game.roomName}
+              changeTitle={(name) => {
+                dispatch(gameUpdateName({ name, roomId: game.roomID }));
+              }}
+            />
+          )}
+          {!user.scrumMaster && <Title title={game.roomName} />}
           <ScrumMasterLabel>Scrum master:</ScrumMasterLabel>
           <UserAvatarStyled {...game.scrumMaster} />
           {user.id === game.scrumMaster.id && (

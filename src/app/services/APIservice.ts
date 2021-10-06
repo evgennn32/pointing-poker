@@ -123,6 +123,30 @@ const APIService = {
       }
     }
   },
+  gameUpdateName: async ({
+    name,
+    roomId,
+  }: {
+    name: string;
+    roomId: string;
+  }): Promise<{ game?: GameRoomEntity; error?: string } | undefined> => {
+    if (APIService.connected) {
+      try {
+        return new Promise((resolve, reject) => {
+          const cb = (res: { error: string; game: GameRoomEntity }): void => {
+            if (!res) reject({ error: "bad request" });
+            if (res.error) {
+              reject({ error: res.error });
+            }
+            resolve(res);
+          };
+          APIService.socket.emit("game:update-name", roomId, name, cb);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
   userCreate: async (
     user: User,
     roomId: string,
