@@ -145,13 +145,14 @@ const GamePage = (): JSX.Element => {
             <Paragraph>Scrum master:</Paragraph>
             <UserAvatar {...game.scrumMaster} />
           </div>
-          {game.scrumMaster.id !== user.id && (
-            <Timer
-              readOnly={true}
-              started={timerStarted}
-              roundTime={game.gameSettings.roundTime}
-            />
-          )}
+          {game.scrumMaster.id !== user.id &&
+            game.gameSettings.isTimerNeeded && (
+              <Timer
+                readOnly={true}
+                started={timerStarted}
+                roundTime={game.gameSettings.roundTime}
+              />
+            )}
           <Button
             textContent={game.scrumMaster.id === user.id ? "Stop Game" : "Exit"}
             onClick={() => {
@@ -189,12 +190,14 @@ const GamePage = (): JSX.Element => {
           {game.scrumMaster.id === user.id && (
             <>
               <TimerAndBtn>
-                <Timer
-                  readOnly={true}
-                  started={round.roundInProgress}
-                  cb={stopTimerHandler}
-                  roundTime={game.gameSettings.roundTime}
-                />
+                {game.gameSettings.isTimerNeeded && (
+                  <Timer
+                    readOnly={true}
+                    started={round.roundInProgress}
+                    cb={stopTimerHandler}
+                    roundTime={game.gameSettings.roundTime}
+                  />
+                )}
                 {!round.roundInProgress && (
                   <Button
                     textContent={
