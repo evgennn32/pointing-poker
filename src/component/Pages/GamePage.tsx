@@ -1,4 +1,3 @@
-import { title } from "process";
 import React, { useEffect, useState } from "react";
 import Issue from "../../models/Issue";
 import { Button } from "../Button/Button";
@@ -38,7 +37,11 @@ import {
   StatistForPlayer,
   TimerAndBtn,
 } from "./GamePage.styled";
-import { stopGame, updateGameState } from "../../app/slices/gameSlice";
+import {
+  gameUpdateName,
+  stopGame,
+  updateGameState,
+} from "../../app/slices/gameSlice";
 import UserVoteResult from "../../models/UserVoteResult";
 
 const GamePage = (): JSX.Element => {
@@ -135,9 +138,8 @@ const GamePage = (): JSX.Element => {
       <Main>
         <TitleEditable
           title={game.roomName}
-          changeTitle={() => {
-            // TODO change game title
-            console.log(title);
+          changeTitle={(name) => {
+            dispatch(gameUpdateName({ name, roomId: game.roomID }));
           }}
         />
         <MasterWrapper>
@@ -180,8 +182,6 @@ const GamePage = (): JSX.Element => {
                     })
               }
             />
-            {/* TODO add issues with no ability to edit/del */}
-
             {game.scrumMaster.id === user.id && <CreateIssue />}
             {user.scrumMaster &&
               !round.roundInProgress &&
@@ -216,7 +216,6 @@ const GamePage = (): JSX.Element => {
                     isLightTheme={false}
                   />
                 )}
-                {/* TODO round restart button and action */}
                 {round.roundInProgress && (
                   <Button
                     textContent="Round Stop"
