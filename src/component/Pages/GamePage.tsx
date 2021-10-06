@@ -43,6 +43,7 @@ import {
   updateGameState,
 } from "../../app/slices/gameSlice";
 import UserVoteResult from "../../models/UserVoteResult";
+import Chat from "../Chat/Chat";
 
 const GamePage = (): JSX.Element => {
   useEffect(() => window.scrollTo({ top: 0, behavior: "smooth" }), []);
@@ -289,6 +290,7 @@ const GamePage = (): JSX.Element => {
         </ButtomPart>
       </Main>
       <SideBar>
+        <Chat />
         <PlayersScoreView
           users={round.usersVoteResults}
           scoreType={game.gameSettings.scoreTypeShort}
