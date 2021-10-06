@@ -24,9 +24,11 @@ const Header = (): JSX.Element => {
           <LogoWrapper href="/">
             <Logo />
           </LogoWrapper>
-          <ChatIconWrapper onClick={() => dispatch(changeChatActive())}>
-            <ChatIcon />
-          </ChatIconWrapper>
+          {window.location.pathname !== "/" && (
+            <ChatIconWrapper onClick={() => dispatch(changeChatActive())}>
+              <ChatIcon />
+            </ChatIconWrapper>
+          )}
         </Content>
       </ContentWrapper>
     </HeaderWrapper>
