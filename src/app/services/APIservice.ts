@@ -21,7 +21,7 @@ const APIService = {
   handleEventStarted: false,
   socket: {} as Socket,
   connect: (): void => {
-    APIService.socket = io("http://localhost:4000/", {
+    APIService.socket = io("https://pointing-poker-api.herokuapp.com", {
       reconnection: true,
       reconnectionDelay: 500,
       reconnectionAttempts: Infinity,
