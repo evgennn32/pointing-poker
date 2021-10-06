@@ -20,6 +20,7 @@ const TitleEditable = (props: TitleEditableProps): JSX.Element => {
       textInput.current.focus();
     }
   };
+  const [title, setTitle] = useState(props.title);
   useEffect(() => {
     if (isEditing) {
       focusInput();
@@ -33,14 +34,21 @@ const TitleEditable = (props: TitleEditableProps): JSX.Element => {
       props.changeTitle(e.target.value);
     }
   };
+  const titleOnBlurHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    showHideEditInput();
+    editTitle(e);
+  };
+  const titleOnChangeHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
   return (
     <TitleWrapper>
       {!isEditing && <TitleContent>{props.title}</TitleContent>}
       {isEditing && (
         <TitleInput
-          onChange={editTitle}
-          onBlur={showHideEditInput}
-          value={props.title}
+          onChange={titleOnChangeHandle}
+          onBlur={titleOnBlurHandle}
+          value={title}
           ref={textInput}
         />
       )}

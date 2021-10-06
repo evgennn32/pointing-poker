@@ -53,7 +53,6 @@ const Chat = (): JSX.Element => {
     setMessage("");
   };
   const handleKeyDown = (event: React.KeyboardEvent<unknown>) => {
-    console.log(event);
     if (event?.key === "Enter") {
       sendMessage();
     }
