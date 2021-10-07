@@ -37,7 +37,7 @@
     "prettier": "^2.3.2"
   },
   "scripts": {
-    "start": "react-scripts build",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "lint": "eslint --ext .ts --ext .tsx .",
