@@ -1,0 +1,8 @@
+div.popup-content {
+  position: absolute;
+  margin: auto;
+  background: transparent;
+  padding: 5px;
+  border: none;
+  width: 100%;
+}
