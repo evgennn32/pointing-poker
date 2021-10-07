@@ -61,8 +61,6 @@ export const PopUpCreateIssue = (props: ClosePopUp): JSX.Element => {
       };
       const roomId = game.roomID;
       dispatch(issueAdd({ issue, roomId }));
-
-      console.log(JSON.stringify(values, null, 2));
       props.close();
       formik.resetForm();
     },

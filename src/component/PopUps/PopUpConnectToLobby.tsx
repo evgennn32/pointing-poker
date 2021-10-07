@@ -53,8 +53,8 @@ export function PopUpConnectToLobby(props: Props): JSX.Element {
   const formik = useFormik<Inputs>({
     initialValues: {
       email: "",
-      firstName: "Jhon",
-      lastName: "Gold",
+      firstName: "",
+      lastName: "",
       jobPosition: "",
       avatar: null,
       connectAsObserver: false,
@@ -83,7 +83,6 @@ export function PopUpConnectToLobby(props: Props): JSX.Element {
         setCreateGameProcess(true);
         props.dispatch(createGame(user));
       } else {
-        console.log("popup user", user);
         props.dispatch(userCreate({ user, roomId: game.roomID }));
       }
       //props.close();
@@ -100,7 +99,6 @@ export function PopUpConnectToLobby(props: Props): JSX.Element {
     if (props.createNewSession && game.roomID && createGameProcess) {
       setRedirectToLobby(true);
     }
-    console.log("popup useffect user = ", user);
   }, [user]);
 
   if (redirectToLobby) {

@@ -3,6 +3,7 @@ import Logo from "../Logo/Logo";
 import { useDispatch } from "react-redux";
 import { changeChatActive } from "../../app/slices/chatSlice";
 import { ReactComponent as ChatIcon } from "./../../assets/icons/chat-icon.svg";
+import { useLocation } from "react-router-dom";
 import {
   BottomBackground,
   ChatIconWrapper,
@@ -14,6 +15,7 @@ import {
 } from "./Header.styled";
 
 const Header = (): JSX.Element => {
+  const location = useLocation();
   const dispatch = useDispatch();
   return (
     <HeaderWrapper>
@@ -24,9 +26,11 @@ const Header = (): JSX.Element => {
           <LogoWrapper href="/">
             <Logo />
           </LogoWrapper>
-          <ChatIconWrapper onClick={() => dispatch(changeChatActive())}>
-            <ChatIcon />
-          </ChatIconWrapper>
+          {location.pathname !== "/" && (
+            <ChatIconWrapper onClick={() => dispatch(changeChatActive())}>
+              <ChatIcon />
+            </ChatIconWrapper>
+          )}
         </Content>
       </ContentWrapper>
     </HeaderWrapper>

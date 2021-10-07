@@ -3,7 +3,6 @@ import Popup from "reactjs-popup";
 import { Button } from "../Button/Button";
 import { PopUpConnectToLobby } from "../PopUps/PopUpConnectToLobby";
 import "reactjs-popup/dist/index.css";
-import Chat from "../Chat/Chat";
 import { useDispatch, useSelector } from "react-redux";
 import { GameRoomEntity } from "../../models/GameRoomEntity";
 import { RootState } from "../../app/store";
@@ -59,7 +58,6 @@ export const MainPage = (): JSX.Element => {
   return (
     <Main>
       <Loader show={game.isLoading ? game.isLoading : false} />
-      <Chat />
       <MainLogo src="./images/MainLogo.png" />
       <Content>
         <MainPageTitle>Start your planning:</MainPageTitle>
